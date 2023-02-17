@@ -3,7 +3,10 @@ import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from '@/styles/Home.module.css'
 import Sidebar from '@/components/sidebar'
+import { useUser } from '@auth0/nextjs-auth0/client';
+
 export default function Home() {
+  const { user, error, isLoading } = useUser();
   return (
     <>
       <Head>
@@ -13,8 +16,10 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className='flex justify-center items-center h-screen'>
-        <div className='bg-gray-300 w-60 h-80 drop-shadow-lg flex justify-center items-center'>
-          <h1>Signing form</h1>
+        <div className=' container bg-gray-300 w-60 h-80 drop-shadow-lg flex justify-center items-center flex-col'>
+          <a href="/api/auth/login">Login</a>
+          <h2>Username: {user.nickname}</h2>
+          <p>Email: {user.email}</p>
         </div>
       </main>
     </>
