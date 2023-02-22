@@ -18,8 +18,7 @@ export default function Home() {
       <main className='flex justify-center items-center h-screen'>
         <div className=' container bg-gray-300 w-60 h-80 drop-shadow-lg flex justify-center items-center flex-col'>
           <a href="/api/auth/login">Login</a>
-          <h2>Username: {user.nickname}</h2>
-          <p>Email: {user.email}</p>
+          {/* <p>{user.email}</p> */}
         </div>
       </main>
     </>
