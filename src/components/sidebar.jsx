@@ -38,7 +38,7 @@ export default function sidebar() {
             </div>
 
             <div>
-                <div id="time" className="my-10 p-5">
+                <div id="time" className="my-15 p-5">
                     <time datetime="2022-02-21" className="text-4xl font-bold">
                         <span className="block text-base font-normal">Friday, February 21st</span> 7:26am
                     </time>

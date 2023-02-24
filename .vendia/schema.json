@@ -1,0 +1,172 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "PharmaStudy Uni Schema",
+  "description": "PharmaStudy uni schema",
+  "type": "object",
+  "x-vendia-acls": {
+    "PatientAcl": {
+      "type": "Patient"
+    },
+    "TreatmentAcl": {
+      "type": "Treatment"
+    },
+    "TrackerAcl": {
+      "type": "Tracker"
+    }
+  },
+  "properties": {
+    "Patient": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "pictureUrl": {
+            "type": "string"
+          },
+          "dob": {
+            "type": "string",
+            "format": "date"
+          },
+          "insuranceNumber": {
+            "type": "string"
+          },
+          "height": {
+            "type": "number"
+          },
+          "weight": {
+            "type": "number"
+          },
+          "bloodPressure": {
+            "type": "number"
+          },
+          "bloodType": {
+            "type": "string"
+          },
+          "temperature": {
+            "type": "number"
+          },
+          "oxygenSaturation": {
+            "type": "number"
+          },
+          "address": {
+            "type": "object",
+            "properties": {
+              "streetAddress": {
+                "type": "string"
+              },
+              "city": {
+                "type": "string"
+              },
+              "state": {
+                "type": "string"
+              },
+              "zipCode": {
+                "type": "integer"
+              },
+              "country": {
+                "type": "string"
+              }
+            }
+          },
+          "allergies": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "medications": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "treatmentId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "familyHistory": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "isEmployed": {
+            "type": "boolean"
+          },
+          "isInsured": {
+            "type": "boolean"
+          },
+          "icdHealthCodes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "visits": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "dateTime": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "notes": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "hivViralLoad": {
+                  "type": "number"
+                }
+              }
+            }
+          },
+          "isElligible": {
+            "type": "boolean"
+          }
+        }
+      },
+      "uniqueItems": true
+    },
+    "Treatment": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "isGeneric": {
+            "type": "boolean"
+          },
+          "numberOfDoses": {
+            "type": "integer"
+          }
+        }
+      },
+      "uniqueItems": true
+    },
+    "Tracker": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "treatmentId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "patientId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "uniqueItems": true
+    }
+  }
+}
