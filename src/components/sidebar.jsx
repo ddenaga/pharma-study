@@ -1,9 +1,81 @@
 import React from 'react';
-import Image from 'next/image';
-import image from '../../public/logo.svg';
 import Calendar from './icons/Calendar';
 import Patient from './icons/Patient';
+import Logout from './icons/Logout';
+import { useUser } from '@auth0/nextjs-auth0/client';
+
 export default function sidebar() {
+    const { user, error, isLoading } = useUser();
+    function renderNav() {
+        if (user?.role == "doctor") {
+            return (
+                <nav>
+                    <ul className="space-y-6 uppercase">
+                        <li className="flex gap-2">
+                            <Calendar className="hover:bg-green-500" />
+                            <a href="/jhopkins/appointments">Appointments</a>
+                        </li>
+                        <li className="flex gap-2">
+                            <Patient />
+                            <a href="/jhopkins/mypatients">My Patients</a>
+                        </li>
+                    </ul>
+                </nav>
+            )
+        }
+        if (user?.role == "admin") {
+            return (
+                <nav>
+                    <ul className="space-y-6 uppercase">
+                        <li className="flex gap-2">
+                            <Calendar className="hover:bg-green-500" />
+                            <a href="/admin/allpatients">All Patients</a>
+                        </li>
+                        <li className="flex gap-2">
+                            <Patient />
+                            <a href="/admin/liveresults">Live Results</a>
+                        </li>
+                    </ul>
+                </nav>
+            )
+        }
+        if (user?.role == "fda") {
+            return (
+                <nav>
+                    <ul className="space-y-6 uppercase">
+                        <li className="flex gap-2">
+                            <Calendar className="hover:bg-green-500" />
+                            <a href="/fda/assigndrugs">Assign Drugs</a>
+                        </li>
+                        <li className="flex gap-2">
+                            <Patient />
+                            <a href="/fda/liveresults">Live Results</a>
+                        </li>
+                    </ul>
+                </nav>
+            )
+        }
+        if (user?.role == "bavaria") {
+            return (
+                <nav>
+                    <ul className="space-y-6 uppercase">
+                        <li className="flex gap-2">
+                            <Calendar className="hover:bg-green-500" />
+                            <a href="/bavaria/senddrugs">Send Drugs</a>
+                        </li>
+                        <li className="flex gap-2">
+                            <Patient />
+                            <a href="/bavaria/trailresults">Trial Results</a>
+                        </li>
+                        <li className="flex gap-2">
+                            <Patient />
+                            <a href="/jhopkins/reports">Reports</a>
+                        </li>
+                    </ul>
+                </nav>
+            )
+        }
+    }
     return (
         <aside className="h-full flex flex-col justify-between max-w-xs w-full border-r border-slate-400 ">
             <div className="flex flex-col gap-20 p-5 ">
@@ -23,18 +95,7 @@ export default function sidebar() {
                         />
                     </svg>
                 </div>
-                <nav>
-                    <ul className="space-y-6 uppercase">
-                        <li className="flex gap-2">
-                            <Calendar className="hover:bg-green-500" />
-                            <a href="/jhopkins/appointments">Appointments</a>
-                        </li>
-                        <li className="flex gap-2">
-                            <Patient />
-                            <a href="/jhopkins/mypatients">My Patients</a>
-                        </li>
-                    </ul>
-                </nav>
+                {renderNav()}
             </div>
 
             <div>
@@ -44,14 +105,19 @@ export default function sidebar() {
                     </time>
                 </div>
 
-                <div id="profile" className="flex flex-row gap-4 bg-slate-100 p-5">
-                    <picture className="w-[50px] h-[50px] rounded-full overflow-hidden">
-                        <img src="https://peprojects.dev/images/portrait.jpg" alt="" />
-                    </picture>
-                    <div>
-                        <p className="font-medium">Dr. Victor Severin</p>
-                        <p>Doctor Specialist</p>
+                <div id="profile" className="flex flex-row gap-4 bg-slate-100 p-5 justify-between">
+                    <div className='flex'>
+                        <picture className="w-[50px] h-[50px] rounded-full overflow-hidden mr-2">
+                            <img src="https://peprojects.dev/images/portrait.jpg" alt="" />
+                        </picture>
+                        <div>
+                            <p className="font-medium">Dr. Victor Severin</p>
+                            <p>Doctor Specialist</p>
+                        </div>
                     </div>
+                    <a href='/api/auth/logout' title="Logout" className='mt-1'>
+                        <Logout />
+                    </a>
                 </div>
             </div>
         </aside>
