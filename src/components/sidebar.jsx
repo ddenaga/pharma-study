@@ -69,7 +69,7 @@ export default function sidebar() {
                         </li>
                         <li className="flex gap-2">
                             <Patient />
-                            <a href="/jhopkins/reports">Reports</a>
+                            <a href="/bavaria/reports">Reports</a>
                         </li>
                     </ul>
                 </nav>

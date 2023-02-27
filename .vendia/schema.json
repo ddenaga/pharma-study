@@ -40,7 +40,7 @@
             "type": "number"
           },
           "bloodPressure": {
-            "type": "number"
+            "type": "string"
           },
           "bloodType": {
             "type": "string"
@@ -126,7 +126,7 @@
               }
             }
           },
-          "isElligible": {
+          "isEligible": {
             "type": "boolean"
           }
         }

@@ -199,14 +199,14 @@ enum Vendia_SyncMode {
 input Self_Patient_ConditionInput_ {
   address: Self_Patient_address_ConditionInput_
   allergies: Vendia_ModelStringInput_
-  bloodPressure: Vendia_ModelFloatInput_
+  bloodPressure: Vendia_ModelStringInput_
   bloodType: Vendia_ModelStringInput_
   dob: Vendia_ModelStringInput_
   familyHistory: Vendia_ModelStringInput_
   height: Vendia_ModelFloatInput_
   icdHealthCodes: Vendia_ModelStringInput_
   insuranceNumber: Vendia_ModelStringInput_
-  isElligible: Vendia_ModelBooleanInput_
+  isEligible: Vendia_ModelBooleanInput_
   isEmployed: Vendia_ModelBooleanInput_
   isInsured: Vendia_ModelBooleanInput_
   medications: Vendia_ModelStringInput_
@@ -226,14 +226,14 @@ input Self_Patient_FilterInput_ {
   _owner: Vendia_ModelStringInput_
   address: Self_Patient_address_FilterInput_
   allergies: Vendia_ModelStringInput_
-  bloodPressure: Vendia_ModelFloatInput_
+  bloodPressure: Vendia_ModelStringInput_
   bloodType: Vendia_ModelStringInput_
   dob: Vendia_ModelStringInput_
   familyHistory: Vendia_ModelStringInput_
   height: Vendia_ModelFloatInput_
   icdHealthCodes: Vendia_ModelStringInput_
   insuranceNumber: Vendia_ModelStringInput_
-  isElligible: Vendia_ModelBooleanInput_
+  isEligible: Vendia_ModelBooleanInput_
   isEmployed: Vendia_ModelBooleanInput_
   isInsured: Vendia_ModelBooleanInput_
   medications: Vendia_ModelStringInput_
@@ -257,14 +257,14 @@ type Self_Patient {
   _id: ID!
   address: Self_Patient_address
   allergies: [String]
-  bloodPressure: Float
+  bloodPressure: String
   bloodType: String
   dob: String
   familyHistory: [String]
   height: Float
   icdHealthCodes: [String]
   insuranceNumber: String
-  isElligible: Boolean
+  isEligible: Boolean
   isEmployed: Boolean
   isInsured: Boolean
   medications: [String]
@@ -283,14 +283,14 @@ type Self_Patient_Partial_ {
   _id: ID!
   address: Self_Patient_address_Partial_
   allergies: [String]
-  bloodPressure: Float
+  bloodPressure: String
   bloodType: String
   dob: String
   familyHistory: [String]
   height: Float
   icdHealthCodes: [String]
   insuranceNumber: String
-  isElligible: Boolean
+  isEligible: Boolean
   isEmployed: Boolean
   isInsured: Boolean
   medications: [String]
@@ -329,14 +329,14 @@ type Self_Patient_Connection_ {
 input Self_Patient_Input_ {
   address: Self_Patient_address_Input_
   allergies: [String]
-  bloodPressure: Float
+  bloodPressure: String
   bloodType: String
   dob: String
   familyHistory: [String]
   height: Float
   icdHealthCodes: [String]
   insuranceNumber: String
-  isElligible: Boolean
+  isEligible: Boolean
   isEmployed: Boolean
   isInsured: Boolean
   medications: [String]
@@ -352,14 +352,14 @@ input Self_Patient_Input_ {
 input Self_Patient_UpdateInput_ {
   address: Self_Patient_address_UpdateInput_
   allergies: [String]
-  bloodPressure: Float
+  bloodPressure: String
   bloodType: String
   dob: String
   familyHistory: [String]
   height: Float
   icdHealthCodes: [String]
   insuranceNumber: String
-  isElligible: Boolean
+  isEligible: Boolean
   isEmployed: Boolean
   isInsured: Boolean
   medications: [String]
@@ -375,14 +375,14 @@ input Self_Patient_UpdateInput_ {
 input Self_Patient_PartialInput_ {
   address: Self_Patient_address_PartialInput_
   allergies: [String]
-  bloodPressure: Float
+  bloodPressure: String
   bloodType: String
   dob: String
   familyHistory: [String]
   height: Float
   icdHealthCodes: [String]
   insuranceNumber: String
-  isElligible: Boolean
+  isEligible: Boolean
   isEmployed: Boolean
   isInsured: Boolean
   medications: [String]
