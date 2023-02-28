@@ -16,12 +16,10 @@ export default function mypatients(props) {
             <Sidebar />
             <div className="bg-gray-100 w-full">
                 <div className='flex mt-16 justify-between'>
-                    <h1 className="text-4xl font-bold ml-8 text-zinc-600">My Patients</h1>
-                    <h2 className="text-4xl font-bold mr-10 text-gray-500">
-                        {showTime}
-                    </h2>
+                    <h1 className="text-4xl font-bold ml-8 text-zinc-600" onClick={console.log(props.data.items)}>My Patients</h1>
+                    <a href='/patient/createPatient'><button className='border-1 mr-8'>New Patient</button></a>
                 </div>
-                <div className='flex flex-wrap justify-between'>
+                <div className='flex flex-wrap justify-between' >
                     {props.data.items.map((patient) =>
                         <Patient key={patient._id} name={patient.name} dob={patient.dob} familyHistory={patient.familyHistory} id={patient._id} />
                     )}

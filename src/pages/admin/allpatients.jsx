@@ -23,7 +23,7 @@ export default function mypatients(props) {
                 </div>
                 <div className='flex flex-wrap justify-between'>
                     {props.data.items.map((patient) =>
-                        <Patient key={patient._id} name={patient.name} dob={patient.dob} familyHistory={patient.familyHistory} id={patient._id} />
+                        <Patient key={patient._id} name={patient.name} dob={patient.dob} familyHistory={patient.familyHistory} id={patient._id} eligibility={patient.isEligible} />
                     )}
                 </div>
             </div>

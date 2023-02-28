@@ -4,6 +4,10 @@ import Patient from './icons/Patient';
 import Logout from './icons/Logout';
 import { useUser } from '@auth0/nextjs-auth0/client';
 
+
+const date = new Date();
+const showTime = date.getHours()
+    + ':' + date.getMinutes();
 export default function sidebar() {
     const { user, error, isLoading } = useUser();
     function renderNav() {
@@ -101,7 +105,7 @@ export default function sidebar() {
             <div>
                 <div id="time" className="my-15 p-5">
                     <time dateTime="2022-02-21" className="text-4xl font-bold">
-                        <span className="block text-base font-normal">Friday, February 21st</span> 7:26am
+                        <span className="block text-base font-normal">Friday, February 21st</span> {showTime}
                     </time>
                 </div>
 
