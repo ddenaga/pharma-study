@@ -14,6 +14,6 @@ export const fdaClient = createVendiaClient({
 export const bavariaClient = createVendiaClient({
     apiUrl: process.env.BAVARIA_API_URL,
     websocketUrl: process.env.BAVARIA_WEBSOCKET,
-    apiKey: process.env.BAVARIA_API_KEYS, // <---- API key
+    apiKey: process.env.BAVARIA_API_KEY, // <---- API key
 })
 
