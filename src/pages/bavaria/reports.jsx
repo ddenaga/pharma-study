@@ -19,13 +19,4 @@ export async function getServerSideProps() {
             data: myData,
         },
     }
-    // try {
-    // }
-    // catch {
-    //     return {
-    //         props: {
-    //             data: ['Error']
-    //         }
-    //     }
-    // }
 }

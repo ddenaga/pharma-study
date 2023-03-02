@@ -35,19 +35,22 @@ const patient = {
 };
 
 export default function mypatients(props) {
+  const [patients, setPatients] = useState(props.patients);
+
+  jhClient.entities.patient.onAdd((data) => {
+    setPatients([...patients, data.result]);
+    console.log("new patient added")
+  });
+
   const { user, error, isLoading } = useUser();
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
 
-  const [patients, setPatients] = useState(props.patients);
-  jhClient.entities.patient.onAdd((data) => {
-    setPatients([...patients, data.result]);
-  });
 
   return (
     <div className="flex" id="site-content">
       <Sidebar />
-      <div className="bg-gray-100 w-full">
+      <div className="bg-gray-100 w-full" >
         <div className="flex mt-16 justify-between">
           <h1
             className="text-4xl font-bold ml-8 text-zinc-600"
