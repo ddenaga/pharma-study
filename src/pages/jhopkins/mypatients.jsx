@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "@/components/sidebar";
 import { jhClient } from "../../lib/vendia.js";
 import Patient from "../../components/patient_card.jsx";
@@ -37,45 +37,57 @@ const patient = {
 export default function mypatients(props) {
   const [patients, setPatients] = useState(props.patients);
 
-  jhClient.entities.patient.onAdd((data) => {
-    setPatients([...patients, data.result]);
-    console.log("new patient added")
-  });
-
+  async function deletePatients() {
+    for (const p of patients) {
+      const res = await jhClient.entities.patient.remove(p._id)
+    }
+    setPatients([])
+  }
+  async function addPatient() { //update the UI on every patient add
+    const newPatient = await createPatient(patient)
+    console.log(newPatient.result)
+    setPatients([...patients, newPatient.result]);
+  }
   const { user, error, isLoading } = useUser();
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
+  if (!user) {
+    return (
+      <h1>Unotharized</h1>
+    )
+  }
+  else {
+    return (
+      <div className="flex" id="site-content">
+        <Sidebar />
+        <div className="bg-gray-100 w-full h-screen" >
+          <div className="flex mt-16 justify-between">
+            <h1
+              className="text-4xl font-bold ml-8 text-zinc-600"
 
-
-  return (
-    <div className="flex" id="site-content">
-      <Sidebar />
-      <div className="bg-gray-100 w-full" >
-        <div className="flex mt-16 justify-between">
-          <h1
-            className="text-4xl font-bold ml-8 text-zinc-600"
-            onClick={() => createPatient(patient)}
-          >
-            My Patients
-          </h1>
-          <a href="/patient/createPatient">
-            <button className="border-1 mr-8">New Patient</button>
-          </a>
-        </div>
-        <div className="flex flex-wrap justify-between">
-          {patients.map((patient) => (
-            <Patient
-              key={patient._id}
-              name={patient.name}
-              dob={patient.dob}
-              familyHistory={patient.familyHistory}
-              id={patient._id}
-            />
-          ))}
+            >
+              My Patients
+            </h1>
+            <a href="#" onClick={addPatient}>
+              New Patient
+            </a>
+            <span onClick={deletePatients}>Delete all Patient</span>
+          </div>
+          <div className="flex flex-wrap justify-between">
+            {patients.map((patient) => (
+              <Patient
+                key={patient._id}
+                name={patient.name}
+                dob={patient.dob}
+                familyHistory={patient.familyHistory}
+                id={patient._id}
+              />
+            ))}
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 export async function getServerSideProps() {
