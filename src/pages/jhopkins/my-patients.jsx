@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import Sidebar from "@/components/sidebar";
+import Sidebar from "@/components/Sidebar";
 import { jhClient } from "../../lib/vendia.js";
-import Patient from "../../components/patient_card.jsx";
+import Patient from "../../components/PatientCard.jsx/index.js";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import createPatient from "../../lib/createPatient.js";
 
@@ -34,7 +34,7 @@ const patient = {
   isEligible: false,
 };
 
-export default function mypatients(props) {
+export default function MyPatients(props) {
   const { user, error, isLoading } = useUser();
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;

@@ -1,10 +1,10 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from '@next/font/google'
-import styles from '@/styles/Home.module.css'
-import Sidebar from '@/components/sidebar'
-import { useUser } from '@auth0/nextjs-auth0/client';
-import { useEffect, useState } from 'react'
+import Head from "next/head";
+import Image from "next/image";
+import { Inter } from "@next/font/google";
+import styles from "@/styles/Home.module.css";
+import Sidebar from "@/components/Sidebar";
+import { useUser } from "@auth0/nextjs-auth0/client";
+import { useEffect, useState } from "react";
 export default function Home() {
   const { user, error, isLoading } = useUser();
   let href_path;
@@ -17,16 +17,13 @@ export default function Home() {
   }
   if (user) {
     if (user.role == "doctor") {
-      href_path = "jhopkins/mypatients"
-    }
-    else if (user.role == "fda") {
-      href_path = "fda/liveresults"
-    }
-    else if (user.role == "bavaria") {
-      href_path = "bavaria/reports"
-    }
-    else if (user.role == "admin") {
-      href_path = "admin/allpatients"
+      href_path = "jhopkins/mypatients";
+    } else if (user.role == "fda") {
+      href_path = "fda/liveresults";
+    } else if (user.role == "bavaria") {
+      href_path = "bavaria/reports";
+    } else if (user.role == "admin") {
+      href_path = "admin/allpatients";
     }
     return (
       <>
@@ -36,17 +33,28 @@ export default function Home() {
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <link rel="icon" href="/favicon.ico" />
         </Head>
-        <main className='flex justify-center items-center h-screen'>
-          <div className=' container bg-gray-300 w-60 h-80 drop-shadow-lg flex justify-center items-center flex-col'>
-            <span onClick={console.log(user)}>{`Logged in as ${user.name}`}</span>
-            <a href={href_path} className='p-2 border-2 border-black hover:bg-blue-500'>Go to Dashboard</a>
-            <a href="/api/auth/logout" className='p-2 border-2 border-black hover:bg-blue-500'>Logout</a>
+        <main className="flex justify-center items-center h-screen">
+          <div className=" container bg-gray-300 w-60 h-80 drop-shadow-lg flex justify-center items-center flex-col">
+            <span
+              onClick={console.log(user)}
+            >{`Logged in as ${user.name}`}</span>
+            <a
+              href={href_path}
+              className="p-2 border-2 border-black hover:bg-blue-500"
+            >
+              Go to Dashboard
+            </a>
+            <a
+              href="/api/auth/logout"
+              className="p-2 border-2 border-black hover:bg-blue-500"
+            >
+              Logout
+            </a>
           </div>
         </main>
       </>
-    )
-  }
-  else {
+    );
+  } else {
     return (
       <>
         <Head>
@@ -55,12 +63,17 @@ export default function Home() {
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <link rel="icon" href="/favicon.ico" />
         </Head>
-        <main className='flex justify-center items-center h-screen'>
-          <div className=' container bg-gray-300 w-60 h-80 drop-shadow-lg flex justify-center items-center flex-col'>
-            <a href="/api/auth/login" className='p-2 border-2 border-black hover:bg-blue-500'>Login </a>
+        <main className="flex justify-center items-center h-screen">
+          <div className=" container bg-gray-300 w-60 h-80 drop-shadow-lg flex justify-center items-center flex-col">
+            <a
+              href="/api/auth/login"
+              className="p-2 border-2 border-black hover:bg-blue-500"
+            >
+              Login{" "}
+            </a>
           </div>
         </main>
       </>
-    )
+    );
   }
 }
