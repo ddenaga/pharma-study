@@ -1,7 +1,7 @@
 import React from 'react'
 import Sidebar from '@/components/sidebar';
 import { jhClient } from '../../lib/vendia.js'
-import Patient from "../../components/patient_card.jsx"
+import AdminPatient from "../../components/patient_card_admin.jsx"
 import { useUser } from '@auth0/nextjs-auth0/client';
 
 
@@ -19,7 +19,7 @@ export default function mypatients(props) {
                 </div>
                 <div className='flex flex-wrap justify-between'>
                     {props.data.items.map((patient) =>
-                        <Patient key={patient._id} name={patient.name} dob={patient.dob} familyHistory={patient.familyHistory} id={patient._id} eligibility={patient.isEligible} />
+                        <AdminPatient key={patient._id} name={patient.name} dob={patient.dob} familyHistory={patient.familyHistory} id={patient._id} eligibility={patient.isEligible} />
                     )}
                 </div>
             </div>

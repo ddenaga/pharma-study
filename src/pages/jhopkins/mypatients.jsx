@@ -30,9 +30,13 @@ const patient = {
   isEmployed: true,
   isInsured: false,
   icdHealthCodes: [],
-  visits: [],
+  visits: {
+    dateTime: "2023-03-16T09:30:00Z",
+    notes: "He's Sick"
+  },
   isEligible: false,
 };
+
 
 export default function mypatients(props) {
   const [patients, setPatients] = useState(props.patients);
@@ -47,6 +51,7 @@ export default function mypatients(props) {
     const newPatient = await createPatient(patient)
     console.log(newPatient.result)
     setPatients([...patients, newPatient.result]);
+    console.log(patients)
   }
   const { user, error, isLoading } = useUser();
   if (isLoading) return <div>Loading...</div>;
