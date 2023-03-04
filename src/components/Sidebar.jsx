@@ -3,6 +3,7 @@ import Calendar from "./icons/Calendar";
 import Patient from "./icons/Patient";
 import Logout from "./icons/Logout";
 import { useUser } from "@auth0/nextjs-auth0/client";
+import { motion } from "framer-motion";
 
 const date = new Date();
 const showTime = date.getHours() + ":" + date.getMinutes();
@@ -13,14 +14,14 @@ export default function Sidebar() {
       return (
         <nav>
           <ul className="space-y-6 uppercase">
-            <li className="flex gap-2">
+            <motion.li className="flex gap-2" whileHover={{ scale: 1.1 }}>
               <Calendar className="hover:bg-green-500" />
               <a href="/jhopkins/appointments">Appointments</a>
-            </li>
-            <li className="flex gap-2">
+            </motion.li>
+            <motion.li className="flex gap-2" whileHover={{ scale: 1.1, }}>
               <Patient />
-              <a href="/jhopkins/my-patients">My Patients</a>
-            </li>
+              <a href="/jhopkins/my-patients" >My Patients</a>
+            </motion.li>
           </ul>
         </nav>
       );

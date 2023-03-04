@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import Sidebar from "@/components/Sidebar";
 import { jhClient } from "@/lib/vendia.js";
-import Patient from "@/components/PatientCard";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import createPatient from "@/lib/createPatient.js";
+import { motion } from "framer-motion";
 import PatientList from "@/components/PatientList";
 const patient = {
   name: "Anthony",
@@ -75,10 +75,10 @@ export default function MyPatients(props) {
           >
             My Patients
           </h1>
-          <a href="#" onClick={addPatient} className="p-2 border bg-teal-600 text-white rounded-2xl">
+          <motion.a whileHover={{ scale: 1.2 }} href="#" onClick={addPatient} className="p-2 border bg-teal-600 text-white rounded-2xl">
             + New Patient
-          </a>
-          <span onClick={deletePatients} className="p-2 border bg-red-500 text-white">Delete all Patient</span>
+          </motion.a>
+          <motion.span onClick={deletePatients} className="p-2 border bg-red-500 text-white" whileHover={{ scale: 1.2 }}>Delete all Patient</motion.span>
         </div>
         <div>
           <form className="max-w-sm px-4 mt-10 ml-5 w-92" >

@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import { motion } from "framer-motion";
 export default function PatientCard({
   name,
   dob,
@@ -9,7 +10,12 @@ export default function PatientCard({
   eligibility,
 }) {
   return (
-    <div className="flex w-96 h-30 drop-shadow-sm border-2 m-9 bg-white rounded-xl justify-between items-center p-4">
+    <motion.div className="flex w-96 h-30 drop-shadow-sm border-2 m-9 bg-white rounded-xl justify-between items-center p-4"
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.8 }}
+      initial={{ opacity: 0.5, scale: 0.8 }}
+      whileHover={{ scale: 1.1 }}
+    >
       <div>
         <div className="flex flex-col">
           <span className="text-2xl">{name}</span>
@@ -31,6 +37,6 @@ export default function PatientCard({
           alt="patient avatar"
         />
       </div>
-    </div>
+    </motion.div>
   );
 }
