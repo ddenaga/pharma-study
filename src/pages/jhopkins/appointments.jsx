@@ -1,6 +1,6 @@
 import Sidebar from '@/components/sidebar';
 import { useUser } from '@auth0/nextjs-auth0/client';
-import { jhClient } from '../../lib/vendia.js'
+import { jhClient } from '@/lib/vendia.js'
 import React, { useState, useEffect } from "react";
 import sorter from "sort-nested-json";
 

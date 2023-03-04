@@ -30,7 +30,6 @@ export default function PatientCard({
           height="50"
           alt="patient avatar"
         />
-        {eligibility ? <span>Eligible</span> : <span>NotEligible</span>}
       </div>
     </div>
   );

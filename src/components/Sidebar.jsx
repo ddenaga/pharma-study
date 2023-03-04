@@ -19,7 +19,7 @@ export default function Sidebar() {
             </li>
             <li className="flex gap-2">
               <Patient />
-              <a href="/jhopkins/mypatients">My Patients</a>
+              <a href="/jhopkins/my-patients">My Patients</a>
             </li>
           </ul>
         </nav>
@@ -31,11 +31,11 @@ export default function Sidebar() {
           <ul className="space-y-6 uppercase">
             <li className="flex gap-2">
               <Calendar className="hover:bg-green-500" />
-              <a href="/admin/allpatients">All Patients</a>
+              <a href="/admin/all-patients">All Patients</a>
             </li>
             <li className="flex gap-2">
               <Patient />
-              <a href="/admin/liveresults">Live Results</a>
+              <a href="/admin/live-results">Live Results</a>
             </li>
           </ul>
         </nav>
@@ -47,11 +47,11 @@ export default function Sidebar() {
           <ul className="space-y-6 uppercase">
             <li className="flex gap-2">
               <Calendar className="hover:bg-green-500" />
-              <a href="/fda/assigndrugs">Assign Drugs</a>
+              <a href="/fda/assign-drugs">Assign Drugs</a>
             </li>
             <li className="flex gap-2">
               <Patient />
-              <a href="/fda/liveresults">Live Results</a>
+              <a href="/fda/live-results">Live Results</a>
             </li>
           </ul>
         </nav>
@@ -63,11 +63,11 @@ export default function Sidebar() {
           <ul className="space-y-6 uppercase">
             <li className="flex gap-2">
               <Calendar className="hover:bg-green-500" />
-              <a href="/bavaria/senddrugs">Send Drugs</a>
+              <a href="/bavaria/send-drugs">Send Drugs</a>
             </li>
             <li className="flex gap-2">
               <Patient />
-              <a href="/bavaria/trailresults">Trial Results</a>
+              <a href="/bavaria/trial-results">Trial Results</a>
             </li>
             <li className="flex gap-2">
               <Patient />
