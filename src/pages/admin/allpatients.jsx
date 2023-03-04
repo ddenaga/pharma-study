@@ -1,7 +1,7 @@
 import React from 'react'
 import Sidebar from '@/components/sidebar';
 import { jhClient } from '../../lib/vendia.js'
-import AdminPatient from "../../components/patient_card_admin.jsx"
+import AdminPatient from "../../components/patientCardAdmin.jsx"
 import { useUser } from '@auth0/nextjs-auth0/client';
 
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "@/components/sidebar";
 import { jhClient } from "../../lib/vendia.js";
-import Patient from "../../components/patient_card.jsx";
+import Patient from "../../components/patientCard.jsx";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import createPatient from "../../lib/createPatient.js";
 
