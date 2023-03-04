@@ -1,4 +1,4 @@
-import Sidebar from '@/components/sidebar';
+import Sidebar from '@/components/Sidebar';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { jhClient } from '@/lib/vendia.js'
 import React, { useState, useEffect } from "react";
@@ -6,16 +6,20 @@ import sorter from "sort-nested-json";
 
 
 function sortByAppointmentTime(patients) {
-    const now = new Date();
-    //const futurePatients = patients.visits.filter(visit => new Date(visit.dateTime) > now);
-
-    patients.map((patient) => {
-        patient.visits.map((visit) => {
-            console.log(visit.dateTime);
-        })
-
-        //if (typeof patient.visits != 'undefined') {}
-    })
+    let now = new Date(patients[0].visits[0].dateTime);
+    let futurePatients;
+    //console.log(patients[0].visits[0].dateTime)
+    let modifiedDate = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate() + 'T' + now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds() + 'Z'
+    console.log(now)
+    for (let i = 0; i < patients.length; i++) {
+        for (let j = 0; j < patients[i].visits.length; j++) {
+            //console.log(patients[i].visits[j].dateTime)
+            if (patients[i].visits[j].dateTime > now) {
+                futurePatients.push(patients[i])
+            }
+        }
+        //console.log(futurePatients)
+    }
     //console.log(futurePatients)
     // futurePatients.sort((a, b) => {
     //     const apptTimeA = new Date(a.visits.dateTime).getTime();
@@ -35,11 +39,11 @@ function appointments(props) {
     const [sortedPatients, setSortedPatients] = useState([]);
 
     useEffect(() => {
-        // const sorted = sortByAppointmentTime(props.data);
+        const sorted = sortByAppointmentTime(props.data);
         // setSortedPatients(sorted);
         //console.log(sorted)
         const newList = sorter.sort(props.data).asc("visits.dateTime")
-        console.log(newList)
+        //console.log(newList)
     }, [props]);
     function display() {
         console.log(user)
@@ -50,7 +54,15 @@ function appointments(props) {
         <div className="flex" id="site-content">
             <Sidebar />
             <div className="bg-gray-100 w-full">
-                <h1 className="text-2xl font-bold" onClick={display}>{user.name}</h1>
+                <div className='flex justify-between'>
+                    <div className='m-10'>
+                        <h1 className="text-5xl font-bold text-gray-600 text-gray-600" onClick={display}>Appointments</h1>
+                        <p className="mt-6 text-gray-500 text-lg">You have the following appointments for today</p>
+                    </div>
+                    <a href="/jhopkins/new-appointment" className="p-2 border bg-teal-600 text-white rounded-2xl m-20 text-lg">
+                        + New Appointment
+                    </a>
+                </div>
                 {/* View content goes here */}
             </div>
         </div>
