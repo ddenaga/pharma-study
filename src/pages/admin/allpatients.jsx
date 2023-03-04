@@ -26,12 +26,3 @@ export default function mypatients(props) {
         </div >
     )
 }
-
-export async function getServerSideProps() {
-    const myData = await jhClient.entities.patient.list();
-    return {
-        props: {
-            data: myData,
-        },
-    };
-}
