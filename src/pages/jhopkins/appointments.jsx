@@ -4,47 +4,28 @@ import { jhClient } from '@/lib/vendia.js'
 import React, { useState, useEffect } from "react";
 import sorter from "sort-nested-json";
 
-
-function sortByAppointmentTime(patients) {
-    let now = new Date(patients[0].visits[0].dateTime);
-    let futurePatients;
-    //console.log(patients[0].visits[0].dateTime)
-    let modifiedDate = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate() + 'T' + now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds() + 'Z'
-    console.log(now)
-    for (let i = 0; i < patients.length; i++) {
-        for (let j = 0; j < patients[i].visits.length; j++) {
-            //console.log(patients[i].visits[j].dateTime)
-            if (patients[i].visits[j].dateTime > now) {
-                futurePatients.push(patients[i])
-            }
-        }
-        //console.log(futurePatients)
-    }
-    //console.log(futurePatients)
-    // futurePatients.sort((a, b) => {
-    //     const apptTimeA = new Date(a.visits.dateTime).getTime();
-    //     const apptTimeB = new Date(b.visits.dateTime).getTime()
-    //     if (apptTimeA < apptTimeB) {
-    //         return -1;
-    //     } else if (apptTimeA > apptTimeB) {
-    //         return 1;
-    //     } else {
-    //         return 0;
-    //     }
-    // });
-    // return futurePatients;
-}
 function appointments(props) {
     const { user, error, isLoading } = useUser();
     const [sortedPatients, setSortedPatients] = useState([]);
 
     useEffect(() => {
-        const sorted = sortByAppointmentTime(props.data);
-        // setSortedPatients(sorted);
-        //console.log(sorted)
-        const newList = sorter.sort(props.data).asc("visits.dateTime")
-        //console.log(newList)
+        const patients = props.data
+        const now = new Date().toISOString();
+        const clientOffset = new Date().getTimezoneOffset();
+        const formatedNow = new Date(now.getTime() - (clientOffset * 60000))
+        let appt
+        const scheduledToday = Array();
+        for (let i = 0; i < patients.length; i++) {
+            appt = new Date(patients[i].visits[0].dateTime).toISOString()
+            let formatedAppt = new Date(appt)
+            console.log((formatedNow) + "   " + formatedAppt)
+            if (formatedAppt.getDate() == formatedNow.getDate()) {
+                scheduledToday.push(patients[i])
+            }
+        }
+        console.log(scheduledToday)
     }, [props]);
+
     function display() {
         console.log(user)
     }

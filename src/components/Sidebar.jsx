@@ -121,7 +121,7 @@ export default function Sidebar() {
               <img src="https://peprojects.dev/images/portrait.jpg" alt="" />
             </picture>
             <div>
-              <p className="font-medium">Dr. Victor Severin</p>
+              <p className="font-medium">{user.name}</p>
               <p>Doctor Specialist</p>
             </div>
           </div>

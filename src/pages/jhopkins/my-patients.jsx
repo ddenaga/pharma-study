@@ -6,7 +6,7 @@ import createPatient from "@/lib/createPatient.js";
 import { motion } from "framer-motion";
 import PatientList from "@/components/PatientList";
 const patient = {
-  name: "Anthony",
+  name: "alex",
   pictureUrl: "",
   dob: "2000-01-01",
   insuranceNumber: "",
@@ -32,7 +32,7 @@ const patient = {
   icdHealthCodes: [],
   visits: [
     {
-      "dateTime": "2023-03-04T15:00:00Z",
+      "dateTime": "2023-03-04T09:15:00Z",
       "notes": "He's sick"
     }
   ],
