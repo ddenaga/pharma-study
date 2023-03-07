@@ -10,12 +10,12 @@ const patient = {
   pictureUrl: "",
   dob: "2000-01-01",
   insuranceNumber: "",
-  height: 0,
-  weight: 0,
+  height: "100",
+  weight: "100",
   bloodPressure: "",
   bloodType: "A",
-  temperature: 100,
-  oxygenSaturation: 100,
+  temperature: "100",
+  oxygenSaturation: "100",
   address: {
     streetAddress: "1234 ABC Street",
     city: "City",
@@ -32,8 +32,9 @@ const patient = {
   icdHealthCodes: [],
   visits: [
     {
-      "dateTime": "2023-03-05T09:15:00Z",
-      "notes": "He's sick"
+      "dateTime": "2023-03-06T09:15:00Z",
+      "note": "He's sick",
+      "hivViralLoad": 12.5
     }
   ],
   isEligible: false,
@@ -68,7 +69,7 @@ export default function MyPatients(props) {
     <div className="flex" id="site-content">
       <Sidebar />
       <div className="bg-gray-100 w-full ">
-        <div className="flex mt-16 justify-between">
+        <div className="flex mt-16 justify-between" >
           <h1
             className="text-4xl font-bold ml-10 text-zinc-600"
             onClick={() => createPatient(patient)}

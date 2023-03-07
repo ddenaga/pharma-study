@@ -34,10 +34,10 @@
             "type": "string"
           },
           "height": {
-            "type": "number"
+            "type": "string"
           },
           "weight": {
-            "type": "number"
+            "type": "string"
           },
           "bloodPressure": {
             "type": "string"
@@ -46,10 +46,10 @@
             "type": "string"
           },
           "temperature": {
-            "type": "number"
+            "type": "string"
           },
           "oxygenSaturation": {
-            "type": "number"
+            "type": "string"
           },
           "address": {
             "type": "object",
@@ -114,11 +114,8 @@
                   "type": "string",
                   "format": "date-time"
                 },
-                "notes": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
+                "note": {
+                  "type": "string"
                 },
                 "hivViralLoad": {
                   "type": "number"

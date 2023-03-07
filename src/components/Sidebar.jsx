@@ -106,7 +106,7 @@ export default function Sidebar() {
         <div id="time" className="my-15 p-5">
           <time dateTime="2022-02-21" className="text-4xl font-bold">
             <span className="block text-base font-normal">
-              Friday, February 21st
+              {date.toDateString()}
             </span>{" "}
             {showTime}
           </time>
@@ -121,7 +121,7 @@ export default function Sidebar() {
               <img src="https://peprojects.dev/images/portrait.jpg" alt="" />
             </picture>
             <div>
-              <p className="font-medium">{user.name}</p>
+              <p className="font-medium">{user?.name}</p>
               <p>Doctor Specialist</p>
             </div>
           </div>

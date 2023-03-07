@@ -3,13 +3,16 @@ import { useUser } from '@auth0/nextjs-auth0/client';
 import { jhClient } from '@/lib/vendia.js'
 import React, { useState, useEffect } from "react";
 import PatientCardAppts from "@/components/patientCardAppts"
+import { motion } from "framer-motion";
 function appointments(props) {
+
     const { user, error, isLoading } = useUser();
     const [sortedPatients, setSortedPatients] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [hivReading, setHivReading] = useState()
     const [dose, setDose] = useState(false)
     const [currentPatient, setCurrentPatient] = useState()
+    const [notes, setNotes] = useState()
     useEffect(() => {
         const patients = props.data
         const now = new Date().toISOString();
@@ -35,10 +38,13 @@ function appointments(props) {
         const res = await jhClient.entities.patient.update({
             _id: currentPatient,
             visits: {
-                "hivViralLoad": parseFloat(hivReading).toFixed(1),
+                "dateTime": "2023-03-06T09:15:00Z",
+                "hivViralLoad": hivReading,
+                "note": notes,
             }
         })
         console.log(res)
+        console.log(notes)
     }
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>{error.message}</div>;
@@ -46,7 +52,10 @@ function appointments(props) {
         <div className="flex" id="site-content">
             {showModal ? (
                 <>
-                    <div
+                    <motion.div
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.3 }}
+                        initial={{ opacity: 0.5, scale: 0.5 }}
                         className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
                     >
                         <div className="relative w-auto my-6 mx-auto max-w-3xl">
@@ -78,7 +87,13 @@ function appointments(props) {
                                         <div className='mt-5'>
                                             <label>
                                                 Adminstered Dose:
-                                                <input type="checkbox" name="name" className='p-5 ml-5' onClick={(e) => setDose(!dose)} />
+                                                <input type="checkbox" name="doseAdministered" className='p-5 ml-5' onClick={(e) => setDose(!dose)} />
+                                            </label>
+                                        </div>
+                                        <div className='mt-5'>
+                                            <label>
+                                                Notes:
+                                                <input type="textarea" name="notes" className='border ml-28 py-10' onChange={(e) => setNotes(e.target.value)} />
                                             </label>
                                         </div>
                                     </div>
@@ -102,7 +117,7 @@ function appointments(props) {
                                 </form>
                             </div>
                         </div>
-                    </div>
+                    </motion.div>
                     <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
                 </>
             ) : null}
@@ -119,9 +134,9 @@ function appointments(props) {
                 </div>
                 <div className="flex flex-wrap justify-between">
                     {sortedPatients.map((patient) => (
-                        <div onClick={() => { setShowModal(true); setCurrentPatient(patient._id) }}>
+                        <div key={patient._id} onClick={() => { setShowModal(true); setCurrentPatient(patient._id) }}>
                             <PatientCardAppts
-                                key={patient._id}
+
                                 name={patient.name}
                                 dob={patient.dob}
                                 familyHistory={patient.familyHistory}

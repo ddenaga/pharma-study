@@ -203,7 +203,7 @@ input Self_Patient_ConditionInput_ {
   bloodType: Vendia_ModelStringInput_
   dob: Vendia_ModelStringInput_
   familyHistory: Vendia_ModelStringInput_
-  height: Vendia_ModelFloatInput_
+  height: Vendia_ModelStringInput_
   icdHealthCodes: Vendia_ModelStringInput_
   insuranceNumber: Vendia_ModelStringInput_
   isEligible: Vendia_ModelBooleanInput_
@@ -211,12 +211,12 @@ input Self_Patient_ConditionInput_ {
   isInsured: Vendia_ModelBooleanInput_
   medications: Vendia_ModelStringInput_
   name: Vendia_ModelStringInput_
-  oxygenSaturation: Vendia_ModelFloatInput_
+  oxygenSaturation: Vendia_ModelStringInput_
   pictureUrl: Vendia_ModelStringInput_
-  temperature: Vendia_ModelFloatInput_
+  temperature: Vendia_ModelStringInput_
   treatmentId: Vendia_ModelStringInput_
   _visitsItem: Self_Patient_visits_visitsItem_ConditionInput_
-  weight: Vendia_ModelFloatInput_
+  weight: Vendia_ModelStringInput_
   _and: [Self_Patient_ConditionInput_]
   _or: [Self_Patient_ConditionInput_]
   _not: Self_Patient_ConditionInput_
@@ -230,7 +230,7 @@ input Self_Patient_FilterInput_ {
   bloodType: Vendia_ModelStringInput_
   dob: Vendia_ModelStringInput_
   familyHistory: Vendia_ModelStringInput_
-  height: Vendia_ModelFloatInput_
+  height: Vendia_ModelStringInput_
   icdHealthCodes: Vendia_ModelStringInput_
   insuranceNumber: Vendia_ModelStringInput_
   isEligible: Vendia_ModelBooleanInput_
@@ -238,12 +238,12 @@ input Self_Patient_FilterInput_ {
   isInsured: Vendia_ModelBooleanInput_
   medications: Vendia_ModelStringInput_
   name: Vendia_ModelStringInput_
-  oxygenSaturation: Vendia_ModelFloatInput_
+  oxygenSaturation: Vendia_ModelStringInput_
   pictureUrl: Vendia_ModelStringInput_
-  temperature: Vendia_ModelFloatInput_
+  temperature: Vendia_ModelStringInput_
   treatmentId: Vendia_ModelStringInput_
   _visitsItem: Self_Patient_visits_visitsItem_FilterInput_
-  weight: Vendia_ModelFloatInput_
+  weight: Vendia_ModelStringInput_
   _and: [Self_Patient_FilterInput_]
   _or: [Self_Patient_FilterInput_]
   _not: Self_Patient_FilterInput_
@@ -261,7 +261,7 @@ type Self_Patient {
   bloodType: String
   dob: String
   familyHistory: [String]
-  height: Float
+  height: String
   icdHealthCodes: [String]
   insuranceNumber: String
   isEligible: Boolean
@@ -269,12 +269,12 @@ type Self_Patient {
   isInsured: Boolean
   medications: [String]
   name: String
-  oxygenSaturation: Float
+  oxygenSaturation: String
   pictureUrl: String
-  temperature: Float
+  temperature: String
   treatmentId: String
   visits: [Self_Patient_visits_visitsItem]
-  weight: Float
+  weight: String
   _acl: [Vendia_Acl!]
   _owner: String
 }
@@ -287,7 +287,7 @@ type Self_Patient_Partial_ {
   bloodType: String
   dob: String
   familyHistory: [String]
-  height: Float
+  height: String
   icdHealthCodes: [String]
   insuranceNumber: String
   isEligible: Boolean
@@ -295,12 +295,12 @@ type Self_Patient_Partial_ {
   isInsured: Boolean
   medications: [String]
   name: String
-  oxygenSaturation: Float
+  oxygenSaturation: String
   pictureUrl: String
-  temperature: Float
+  temperature: String
   treatmentId: String
   visits: [Self_Patient_visits_visitsItem_Partial_]
-  weight: Float
+  weight: String
   _acl: [Vendia_Acl!]
   _owner: String
 }
@@ -333,7 +333,7 @@ input Self_Patient_Input_ {
   bloodType: String
   dob: String
   familyHistory: [String]
-  height: Float
+  height: String
   icdHealthCodes: [String]
   insuranceNumber: String
   isEligible: Boolean
@@ -341,12 +341,12 @@ input Self_Patient_Input_ {
   isInsured: Boolean
   medications: [String]
   name: String
-  oxygenSaturation: Float
+  oxygenSaturation: String
   pictureUrl: String
-  temperature: Float
+  temperature: String
   treatmentId: String
   visits: [Self_Patient_visits_visitsItem_Input_]
-  weight: Float
+  weight: String
 }
 
 input Self_Patient_UpdateInput_ {
@@ -356,7 +356,7 @@ input Self_Patient_UpdateInput_ {
   bloodType: String
   dob: String
   familyHistory: [String]
-  height: Float
+  height: String
   icdHealthCodes: [String]
   insuranceNumber: String
   isEligible: Boolean
@@ -364,12 +364,12 @@ input Self_Patient_UpdateInput_ {
   isInsured: Boolean
   medications: [String]
   name: String
-  oxygenSaturation: Float
+  oxygenSaturation: String
   pictureUrl: String
-  temperature: Float
+  temperature: String
   treatmentId: String
   visits: [Self_Patient_visits_visitsItem_UpdateInput_]
-  weight: Float
+  weight: String
 }
 
 input Self_Patient_PartialInput_ {
@@ -379,7 +379,7 @@ input Self_Patient_PartialInput_ {
   bloodType: String
   dob: String
   familyHistory: [String]
-  height: Float
+  height: String
   icdHealthCodes: [String]
   insuranceNumber: String
   isEligible: Boolean
@@ -387,12 +387,12 @@ input Self_Patient_PartialInput_ {
   isInsured: Boolean
   medications: [String]
   name: String
-  oxygenSaturation: Float
+  oxygenSaturation: String
   pictureUrl: String
-  temperature: Float
+  temperature: String
   treatmentId: String
   visits: [Self_Patient_visits_visitsItem_PartialInput_]
-  weight: Float
+  weight: String
 }
 
 input Self_Tracker_ConditionInput_ {
@@ -603,7 +603,7 @@ type Self_Patient_address_Delete_Transaction_Result_ {
 input Self_Patient_visits_visitsItem_ConditionInput_ {
   dateTime: Vendia_ModelStringInput_
   hivViralLoad: Vendia_ModelFloatInput_
-  notes: Vendia_ModelStringInput_
+  note: Vendia_ModelStringInput_
   _and: [Self_Patient_visits_visitsItem_ConditionInput_]
   _or: [Self_Patient_visits_visitsItem_ConditionInput_]
   _not: Self_Patient_visits_visitsItem_ConditionInput_
@@ -612,7 +612,7 @@ input Self_Patient_visits_visitsItem_ConditionInput_ {
 input Self_Patient_visits_visitsItem_FilterInput_ {
   dateTime: Vendia_ModelStringInput_
   hivViralLoad: Vendia_ModelFloatInput_
-  notes: Vendia_ModelStringInput_
+  note: Vendia_ModelStringInput_
   _and: [Self_Patient_visits_visitsItem_FilterInput_]
   _or: [Self_Patient_visits_visitsItem_FilterInput_]
   _not: Self_Patient_visits_visitsItem_FilterInput_
@@ -621,13 +621,13 @@ input Self_Patient_visits_visitsItem_FilterInput_ {
 type Self_Patient_visits_visitsItem {
   dateTime: String
   hivViralLoad: Float
-  notes: [String]
+  note: String
 }
 
 type Self_Patient_visits_visitsItem_Partial_ {
   dateTime: String
   hivViralLoad: Float
-  notes: [String]
+  note: String
 }
 
 type Self_Patient_visits_visitsItem_Result_ {
@@ -703,6 +703,134 @@ type Vendia_Block_transactions_transactionsItem_Transaction_Result_ {
 }
 
 type Vendia_Block_transactions_transactionsItem_Delete_Transaction_Result_ {
+  transaction: Vendia_Transaction!
+}
+
+input Vendia_Block__erasure_ConditionInput_ {
+  _transactionsItem: Vendia_Block__erasure_transactions_transactionsItem_ConditionInput_
+  _and: [Vendia_Block__erasure_ConditionInput_]
+  _or: [Vendia_Block__erasure_ConditionInput_]
+  _not: Vendia_Block__erasure_ConditionInput_
+}
+
+input Vendia_Block__erasure_FilterInput_ {
+  _transactionsItem: Vendia_Block__erasure_transactions_transactionsItem_FilterInput_
+  _and: [Vendia_Block__erasure_FilterInput_]
+  _or: [Vendia_Block__erasure_FilterInput_]
+  _not: Vendia_Block__erasure_FilterInput_
+}
+
+type Vendia_Block__erasure {
+  transactions: [Vendia_Block__erasure_transactions_transactionsItem]!
+}
+
+type Vendia_Block__erasure_Partial_ {
+  transactions: [Vendia_Block__erasure_transactions_transactionsItem_Partial_]
+}
+
+type Vendia_Block__erasure_Result_ {
+  error: String
+  result: Vendia_Block__erasure
+}
+
+type Vendia_Block__erasure_Transaction_Result_ {
+  transaction: Vendia_Transaction!
+  result: Vendia_Block__erasure
+}
+
+type Vendia_Block__erasure_Delete_Transaction_Result_ {
+  transaction: Vendia_Transaction!
+}
+
+input Vendia_Block__erasure_transactions_transactionsItem_ConditionInput_ {
+  transactionId: Vendia_ModelStringInput_
+  alias: Vendia_ModelStringInput_
+  _fieldsItem: Vendia_Block__erasure_transactions_transactionsItem_fields_fieldsItem_ConditionInput_
+  _and: [Vendia_Block__erasure_transactions_transactionsItem_ConditionInput_]
+  _or: [Vendia_Block__erasure_transactions_transactionsItem_ConditionInput_]
+  _not: Vendia_Block__erasure_transactions_transactionsItem_ConditionInput_
+}
+
+input Vendia_Block__erasure_transactions_transactionsItem_FilterInput_ {
+  transactionId: Vendia_ModelStringInput_
+  alias: Vendia_ModelStringInput_
+  _fieldsItem: Vendia_Block__erasure_transactions_transactionsItem_fields_fieldsItem_FilterInput_
+  _and: [Vendia_Block__erasure_transactions_transactionsItem_FilterInput_]
+  _or: [Vendia_Block__erasure_transactions_transactionsItem_FilterInput_]
+  _not: Vendia_Block__erasure_transactions_transactionsItem_FilterInput_
+}
+
+type Vendia_Block__erasure_transactions_transactionsItem {
+  transactionId: String!
+  alias: String
+  fields: [Vendia_Block__erasure_transactions_transactionsItem_fields_fieldsItem]!
+}
+
+type Vendia_Block__erasure_transactions_transactionsItem_Partial_ {
+  transactionId: String
+  alias: String
+  fields: [Vendia_Block__erasure_transactions_transactionsItem_fields_fieldsItem_Partial_]
+}
+
+type Vendia_Block__erasure_transactions_transactionsItem_Result_ {
+  error: String
+  result: Vendia_Block__erasure_transactions_transactionsItem
+}
+
+type Vendia_Block__erasure_transactions_transactionsItem_Transaction_Result_ {
+  transaction: Vendia_Transaction!
+  result: Vendia_Block__erasure_transactions_transactionsItem
+}
+
+type Vendia_Block__erasure_transactions_transactionsItem_Delete_Transaction_Result_ {
+  transaction: Vendia_Transaction!
+}
+
+input Vendia_Block__erasure_transactions_transactionsItem_fields_fieldsItem_ConditionInput_ {
+  path: Vendia_ModelStringInput_
+  hash: Vendia_ModelStringInput_
+  salt: Vendia_ModelStringInput_
+  value: Vendia_ModelStringInput_
+  _and: [Vendia_Block__erasure_transactions_transactionsItem_fields_fieldsItem_ConditionInput_]
+  _or: [Vendia_Block__erasure_transactions_transactionsItem_fields_fieldsItem_ConditionInput_]
+  _not: Vendia_Block__erasure_transactions_transactionsItem_fields_fieldsItem_ConditionInput_
+}
+
+input Vendia_Block__erasure_transactions_transactionsItem_fields_fieldsItem_FilterInput_ {
+  path: Vendia_ModelStringInput_
+  hash: Vendia_ModelStringInput_
+  salt: Vendia_ModelStringInput_
+  value: Vendia_ModelStringInput_
+  _and: [Vendia_Block__erasure_transactions_transactionsItem_fields_fieldsItem_FilterInput_]
+  _or: [Vendia_Block__erasure_transactions_transactionsItem_fields_fieldsItem_FilterInput_]
+  _not: Vendia_Block__erasure_transactions_transactionsItem_fields_fieldsItem_FilterInput_
+}
+
+type Vendia_Block__erasure_transactions_transactionsItem_fields_fieldsItem {
+  path: String!
+  hash: String!
+  salt: String
+  value: String
+}
+
+type Vendia_Block__erasure_transactions_transactionsItem_fields_fieldsItem_Partial_ {
+  path: String
+  hash: String
+  salt: String
+  value: String
+}
+
+type Vendia_Block__erasure_transactions_transactionsItem_fields_fieldsItem_Result_ {
+  error: String
+  result: Vendia_Block__erasure_transactions_transactionsItem_fields_fieldsItem
+}
+
+type Vendia_Block__erasure_transactions_transactionsItem_fields_fieldsItem_Transaction_Result_ {
+  transaction: Vendia_Transaction!
+  result: Vendia_Block__erasure_transactions_transactionsItem_fields_fieldsItem
+}
+
+type Vendia_Block__erasure_transactions_transactionsItem_fields_fieldsItem_Delete_Transaction_Result_ {
   transaction: Vendia_Transaction!
 }
 
@@ -981,6 +1109,7 @@ input Vendia_Settings_azure_ConditionInput_ {
   _deadLetterFunctionsItem: Vendia_Settings_azure_deadLetterFunctions_deadLetterFunctionsItem_ConditionInput_
   _blockReportQueuesItem: Vendia_Settings_azure_blockReportQueues_blockReportQueuesItem_ConditionInput_
   _deadLetterQueuesItem: Vendia_Settings_azure_deadLetterQueues_deadLetterQueuesItem_ConditionInput_
+  _storageAccountReadersItem: Vendia_Settings_azure_storageAccountReaders_storageAccountReadersItem_ConditionInput_
   _and: [Vendia_Settings_azure_ConditionInput_]
   _or: [Vendia_Settings_azure_ConditionInput_]
   _not: Vendia_Settings_azure_ConditionInput_
@@ -993,6 +1122,7 @@ input Vendia_Settings_azure_FilterInput_ {
   _deadLetterFunctionsItem: Vendia_Settings_azure_deadLetterFunctions_deadLetterFunctionsItem_FilterInput_
   _blockReportQueuesItem: Vendia_Settings_azure_blockReportQueues_blockReportQueuesItem_FilterInput_
   _deadLetterQueuesItem: Vendia_Settings_azure_deadLetterQueues_deadLetterQueuesItem_FilterInput_
+  _storageAccountReadersItem: Vendia_Settings_azure_storageAccountReaders_storageAccountReadersItem_FilterInput_
   _and: [Vendia_Settings_azure_FilterInput_]
   _or: [Vendia_Settings_azure_FilterInput_]
   _not: Vendia_Settings_azure_FilterInput_
@@ -1005,6 +1135,7 @@ type Vendia_Settings_azure {
   deadLetterFunctions: [Vendia_Settings_azure_deadLetterFunctions_deadLetterFunctionsItem]
   blockReportQueues: [Vendia_Settings_azure_blockReportQueues_blockReportQueuesItem]
   deadLetterQueues: [Vendia_Settings_azure_deadLetterQueues_deadLetterQueuesItem]
+  storageAccountReaders: [Vendia_Settings_azure_storageAccountReaders_storageAccountReadersItem]
 }
 
 type Vendia_Settings_azure_Partial_ {
@@ -1014,6 +1145,7 @@ type Vendia_Settings_azure_Partial_ {
   deadLetterFunctions: [Vendia_Settings_azure_deadLetterFunctions_deadLetterFunctionsItem_Partial_]
   blockReportQueues: [Vendia_Settings_azure_blockReportQueues_blockReportQueuesItem_Partial_]
   deadLetterQueues: [Vendia_Settings_azure_deadLetterQueues_deadLetterQueuesItem_Partial_]
+  storageAccountReaders: [Vendia_Settings_azure_storageAccountReaders_storageAccountReadersItem_Partial_]
 }
 
 type Vendia_Settings_azure_Result_ {
@@ -1203,6 +1335,42 @@ type Vendia_Settings_azure_deadLetterQueues_deadLetterQueuesItem_Transaction_Res
 }
 
 type Vendia_Settings_azure_deadLetterQueues_deadLetterQueuesItem_Delete_Transaction_Result_ {
+  transaction: Vendia_Transaction!
+}
+
+input Vendia_Settings_azure_storageAccountReaders_storageAccountReadersItem_ConditionInput_ {
+  applicationId: Vendia_ModelStringInput_
+  _and: [Vendia_Settings_azure_storageAccountReaders_storageAccountReadersItem_ConditionInput_]
+  _or: [Vendia_Settings_azure_storageAccountReaders_storageAccountReadersItem_ConditionInput_]
+  _not: Vendia_Settings_azure_storageAccountReaders_storageAccountReadersItem_ConditionInput_
+}
+
+input Vendia_Settings_azure_storageAccountReaders_storageAccountReadersItem_FilterInput_ {
+  applicationId: Vendia_ModelStringInput_
+  _and: [Vendia_Settings_azure_storageAccountReaders_storageAccountReadersItem_FilterInput_]
+  _or: [Vendia_Settings_azure_storageAccountReaders_storageAccountReadersItem_FilterInput_]
+  _not: Vendia_Settings_azure_storageAccountReaders_storageAccountReadersItem_FilterInput_
+}
+
+type Vendia_Settings_azure_storageAccountReaders_storageAccountReadersItem {
+  applicationId: String!
+}
+
+type Vendia_Settings_azure_storageAccountReaders_storageAccountReadersItem_Partial_ {
+  applicationId: String
+}
+
+type Vendia_Settings_azure_storageAccountReaders_storageAccountReadersItem_Result_ {
+  error: String
+  result: Vendia_Settings_azure_storageAccountReaders_storageAccountReadersItem
+}
+
+type Vendia_Settings_azure_storageAccountReaders_storageAccountReadersItem_Transaction_Result_ {
+  transaction: Vendia_Transaction!
+  result: Vendia_Settings_azure_storageAccountReaders_storageAccountReadersItem
+}
+
+type Vendia_Settings_azure_storageAccountReaders_storageAccountReadersItem_Delete_Transaction_Result_ {
   transaction: Vendia_Transaction!
 }
 
@@ -2042,6 +2210,7 @@ input Vendia_Block_ConditionInput_ {
   status: Vendia_ModelStringInput_
   commitTime: Vendia_ModelStringInput_
   _transactionsItem: Vendia_Block_transactions_transactionsItem_ConditionInput_
+  _erasure: Vendia_Block__erasure_ConditionInput_
   _and: [Vendia_Block_ConditionInput_]
   _or: [Vendia_Block_ConditionInput_]
   _not: Vendia_Block_ConditionInput_
@@ -2059,6 +2228,7 @@ input Vendia_Block_FilterInput_ {
   status: Vendia_ModelStringInput_
   commitTime: Vendia_ModelStringInput_
   _transactionsItem: Vendia_Block_transactions_transactionsItem_FilterInput_
+  _erasure: Vendia_Block__erasure_FilterInput_
   _and: [Vendia_Block_FilterInput_]
   _or: [Vendia_Block_FilterInput_]
   _not: Vendia_Block_FilterInput_
@@ -2080,6 +2250,7 @@ type Vendia_Block {
   status: Vendia_Block_statusEnum
   commitTime: String!
   transactions: [Vendia_Block_transactions_transactionsItem]!
+  _erasure: Vendia_Block__erasure
   _owner: String
 }
 
@@ -2095,6 +2266,7 @@ type Vendia_Block_Partial_ {
   status: Vendia_Block_statusEnum
   commitTime: String
   transactions: [Vendia_Block_transactions_transactionsItem_Partial_]
+  _erasure: Vendia_Block__erasure_Partial_
   _owner: String
 }
 
@@ -2130,6 +2302,7 @@ input Vendia_Block_Input_ {
   status: Vendia_Block_statusEnum
   commitTime: String!
   transactions: [Vendia_Block_transactions_transactionsItem_Input_]!
+  _erasure: Vendia_Block__erasure_Input_
 }
 
 input Vendia_Block_UpdateInput_ {
@@ -2143,6 +2316,7 @@ input Vendia_Block_UpdateInput_ {
   status: Vendia_Block_statusEnum
   commitTime: String
   transactions: [Vendia_Block_transactions_transactionsItem_UpdateInput_]
+  _erasure: Vendia_Block__erasure_UpdateInput_
 }
 
 input Vendia_Block_PartialInput_ {
@@ -2156,6 +2330,7 @@ input Vendia_Block_PartialInput_ {
   status: Vendia_Block_statusEnum
   commitTime: String
   transactions: [Vendia_Block_transactions_transactionsItem_PartialInput_]
+  _erasure: Vendia_Block__erasure_PartialInput_
 }
 
 input Vendia_File_ConditionInput_ {
@@ -3136,19 +3311,19 @@ input Self_Patient_address_PartialInput_ {
 input Self_Patient_visits_visitsItem_Input_ {
   dateTime: String
   hivViralLoad: Float
-  notes: [String]
+  note: String
 }
 
 input Self_Patient_visits_visitsItem_UpdateInput_ {
   dateTime: String
   hivViralLoad: Float
-  notes: [String]
+  note: String
 }
 
 input Self_Patient_visits_visitsItem_PartialInput_ {
   dateTime: String
   hivViralLoad: Float
-  notes: [String]
+  note: String
 }
 
 input Vendia_Block_transactions_transactionsItem_Input_ {
@@ -3182,6 +3357,57 @@ input Vendia_Block_transactions_transactionsItem_PartialInput_ {
   submissionTime: String
   mutations: [String]
   _owner: String
+}
+
+input Vendia_Block__erasure_Input_ {
+  transactions: [Vendia_Block__erasure_transactions_transactionsItem_Input_]!
+}
+
+input Vendia_Block__erasure_UpdateInput_ {
+  transactions: [Vendia_Block__erasure_transactions_transactionsItem_UpdateInput_]
+}
+
+input Vendia_Block__erasure_PartialInput_ {
+  transactions: [Vendia_Block__erasure_transactions_transactionsItem_PartialInput_]
+}
+
+input Vendia_Block__erasure_transactions_transactionsItem_Input_ {
+  transactionId: String!
+  alias: String
+  fields: [Vendia_Block__erasure_transactions_transactionsItem_fields_fieldsItem_Input_]!
+}
+
+input Vendia_Block__erasure_transactions_transactionsItem_UpdateInput_ {
+  transactionId: String
+  alias: String
+  fields: [Vendia_Block__erasure_transactions_transactionsItem_fields_fieldsItem_UpdateInput_]
+}
+
+input Vendia_Block__erasure_transactions_transactionsItem_PartialInput_ {
+  transactionId: String
+  alias: String
+  fields: [Vendia_Block__erasure_transactions_transactionsItem_fields_fieldsItem_PartialInput_]
+}
+
+input Vendia_Block__erasure_transactions_transactionsItem_fields_fieldsItem_Input_ {
+  path: String!
+  hash: String!
+  salt: String
+  value: String
+}
+
+input Vendia_Block__erasure_transactions_transactionsItem_fields_fieldsItem_UpdateInput_ {
+  path: String
+  hash: String
+  salt: String
+  value: String
+}
+
+input Vendia_Block__erasure_transactions_transactionsItem_fields_fieldsItem_PartialInput_ {
+  path: String
+  hash: String
+  salt: String
+  value: String
 }
 
 input Vendia_File_vendia_Input_ {
@@ -3296,6 +3522,7 @@ input Vendia_Settings_azure_Input_ {
   deadLetterFunctions: [Vendia_Settings_azure_deadLetterFunctions_deadLetterFunctionsItem_Input_]
   blockReportQueues: [Vendia_Settings_azure_blockReportQueues_blockReportQueuesItem_Input_]
   deadLetterQueues: [Vendia_Settings_azure_deadLetterQueues_deadLetterQueuesItem_Input_]
+  storageAccountReaders: [Vendia_Settings_azure_storageAccountReaders_storageAccountReadersItem_Input_]
 }
 
 input Vendia_Settings_azure_UpdateInput_ {
@@ -3305,6 +3532,7 @@ input Vendia_Settings_azure_UpdateInput_ {
   deadLetterFunctions: [Vendia_Settings_azure_deadLetterFunctions_deadLetterFunctionsItem_UpdateInput_]
   blockReportQueues: [Vendia_Settings_azure_blockReportQueues_blockReportQueuesItem_UpdateInput_]
   deadLetterQueues: [Vendia_Settings_azure_deadLetterQueues_deadLetterQueuesItem_UpdateInput_]
+  storageAccountReaders: [Vendia_Settings_azure_storageAccountReaders_storageAccountReadersItem_UpdateInput_]
 }
 
 input Vendia_Settings_azure_PartialInput_ {
@@ -3314,6 +3542,7 @@ input Vendia_Settings_azure_PartialInput_ {
   deadLetterFunctions: [Vendia_Settings_azure_deadLetterFunctions_deadLetterFunctionsItem_PartialInput_]
   blockReportQueues: [Vendia_Settings_azure_blockReportQueues_blockReportQueuesItem_PartialInput_]
   deadLetterQueues: [Vendia_Settings_azure_deadLetterQueues_deadLetterQueuesItem_PartialInput_]
+  storageAccountReaders: [Vendia_Settings_azure_storageAccountReaders_storageAccountReadersItem_PartialInput_]
 }
 
 input Vendia_Settings_azure_blockReportFunctions_blockReportFunctionsItem_Input_ {
@@ -3386,6 +3615,18 @@ input Vendia_Settings_azure_deadLetterQueues_deadLetterQueuesItem_PartialInput_ 
   resourceGroupName: String
   storageAccountName: String
   queueName: String
+}
+
+input Vendia_Settings_azure_storageAccountReaders_storageAccountReadersItem_Input_ {
+  applicationId: String!
+}
+
+input Vendia_Settings_azure_storageAccountReaders_storageAccountReadersItem_UpdateInput_ {
+  applicationId: String
+}
+
+input Vendia_Settings_azure_storageAccountReaders_storageAccountReadersItem_PartialInput_ {
+  applicationId: String
 }
 
 input Vendia_Settings_apiSettings_Input_ {

@@ -11,7 +11,7 @@ export default function PatientList({ patients, searchInput }) {
     })
 
     return (
-        <div className="flex flex-wrap justify-between bg-scroll">
+        <div className="flex flex-wrap justify-between bg-scroll" onClick={console.log(patients)}>
             {filteredData.map((patient) => (
                 <Patient
                     key={patient._id}
