@@ -17,13 +17,13 @@ export default function Home() {
   }
   if (user) {
     if (user.role == "doctor") {
-      href_path = "jhopkins/mypatients";
+      href_path = "jhopkins/my-patients";
     } else if (user.role == "fda") {
-      href_path = "fda/liveresults";
+      href_path = "fda/live-results";
     } else if (user.role == "bavaria") {
       href_path = "bavaria/reports";
     } else if (user.role == "admin") {
-      href_path = "admin/allpatients";
+      href_path = "admin/all-patients";
     }
     return (
       <>

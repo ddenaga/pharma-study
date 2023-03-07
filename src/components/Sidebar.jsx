@@ -3,6 +3,7 @@ import Calendar from "./icons/Calendar";
 import Patient from "./icons/Patient";
 import Logout from "./icons/Logout";
 import { useUser } from "@auth0/nextjs-auth0/client";
+import { motion } from "framer-motion";
 
 const date = new Date();
 const showTime = date.getHours() + ":" + date.getMinutes();
@@ -13,14 +14,14 @@ export default function Sidebar() {
       return (
         <nav>
           <ul className="space-y-6 uppercase">
-            <li className="flex gap-2">
+            <motion.li className="flex gap-2" whileHover={{ scale: 1.1 }}>
               <Calendar className="hover:bg-green-500" />
               <a href="/jhopkins/appointments">Appointments</a>
-            </li>
-            <li className="flex gap-2">
+            </motion.li>
+            <motion.li className="flex gap-2" whileHover={{ scale: 1.1, }}>
               <Patient />
-              <a href="/jhopkins/mypatients">My Patients</a>
-            </li>
+              <a href="/jhopkins/my-patients" >My Patients</a>
+            </motion.li>
           </ul>
         </nav>
       );
@@ -31,11 +32,11 @@ export default function Sidebar() {
           <ul className="space-y-6 uppercase">
             <li className="flex gap-2">
               <Calendar className="hover:bg-green-500" />
-              <a href="/admin/allpatients">All Patients</a>
+              <a href="/admin/all-patients">All Patients</a>
             </li>
             <li className="flex gap-2">
               <Patient />
-              <a href="/admin/liveresults">Live Results</a>
+              <a href="/admin/live-results">Live Results</a>
             </li>
           </ul>
         </nav>
@@ -47,11 +48,11 @@ export default function Sidebar() {
           <ul className="space-y-6 uppercase">
             <li className="flex gap-2">
               <Calendar className="hover:bg-green-500" />
-              <a href="/fda/assigndrugs">Assign Drugs</a>
+              <a href="/fda/assign-drugs">Assign Drugs</a>
             </li>
             <li className="flex gap-2">
               <Patient />
-              <a href="/fda/liveresults">Live Results</a>
+              <a href="/fda/live-results">Live Results</a>
             </li>
           </ul>
         </nav>
@@ -63,11 +64,11 @@ export default function Sidebar() {
           <ul className="space-y-6 uppercase">
             <li className="flex gap-2">
               <Calendar className="hover:bg-green-500" />
-              <a href="/bavaria/senddrugs">Send Drugs</a>
+              <a href="/bavaria/send-drugs">Send Drugs</a>
             </li>
             <li className="flex gap-2">
               <Patient />
-              <a href="/bavaria/trailresults">Trial Results</a>
+              <a href="/bavaria/trial-results">Trial Results</a>
             </li>
             <li className="flex gap-2">
               <Patient />
@@ -105,7 +106,7 @@ export default function Sidebar() {
         <div id="time" className="my-15 p-5">
           <time dateTime="2022-02-21" className="text-4xl font-bold">
             <span className="block text-base font-normal">
-              Friday, February 21st
+              {date.toDateString()}
             </span>{" "}
             {showTime}
           </time>
@@ -120,7 +121,7 @@ export default function Sidebar() {
               <img src="https://peprojects.dev/images/portrait.jpg" alt="" />
             </picture>
             <div>
-              <p className="font-medium">Dr. Victor Severin</p>
+              <p className="font-medium">{user?.name}</p>
               <p>Doctor Specialist</p>
             </div>
           </div>

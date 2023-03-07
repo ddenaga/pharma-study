@@ -1,6 +1,6 @@
 import React from "react";
 import Sidebar from "@/components/Sidebar";
-import { jhClient } from "../../lib/vendia.js";
+import { jhClient } from "@/lib/vendia.js";
 
 export async function getServerSideProps(context) {
   const { id } = context.params;

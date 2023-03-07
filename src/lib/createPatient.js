@@ -114,4 +114,5 @@ export default async function createPatient(data) {
       },
     }
   );
+  return addResponse
 }
