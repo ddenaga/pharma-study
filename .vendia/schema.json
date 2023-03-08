@@ -84,8 +84,7 @@
             }
           },
           "treatmentId": {
-            "type": "string",
-            "format": "uuid"
+            "type": "string"
           },
           "familyHistory": {
             "type": "array",
@@ -118,7 +117,7 @@
                   "type": "string"
                 },
                 "hivViralLoad": {
-                  "type": "number"
+                  "type": "string"
                 }
               }
             }

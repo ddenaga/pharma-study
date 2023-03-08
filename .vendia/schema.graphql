@@ -602,7 +602,7 @@ type Self_Patient_address_Delete_Transaction_Result_ {
 
 input Self_Patient_visits_visitsItem_ConditionInput_ {
   dateTime: Vendia_ModelStringInput_
-  hivViralLoad: Vendia_ModelFloatInput_
+  hivViralLoad: Vendia_ModelStringInput_
   note: Vendia_ModelStringInput_
   _and: [Self_Patient_visits_visitsItem_ConditionInput_]
   _or: [Self_Patient_visits_visitsItem_ConditionInput_]
@@ -611,7 +611,7 @@ input Self_Patient_visits_visitsItem_ConditionInput_ {
 
 input Self_Patient_visits_visitsItem_FilterInput_ {
   dateTime: Vendia_ModelStringInput_
-  hivViralLoad: Vendia_ModelFloatInput_
+  hivViralLoad: Vendia_ModelStringInput_
   note: Vendia_ModelStringInput_
   _and: [Self_Patient_visits_visitsItem_FilterInput_]
   _or: [Self_Patient_visits_visitsItem_FilterInput_]
@@ -620,13 +620,13 @@ input Self_Patient_visits_visitsItem_FilterInput_ {
 
 type Self_Patient_visits_visitsItem {
   dateTime: String
-  hivViralLoad: Float
+  hivViralLoad: String
   note: String
 }
 
 type Self_Patient_visits_visitsItem_Partial_ {
   dateTime: String
-  hivViralLoad: Float
+  hivViralLoad: String
   note: String
 }
 
@@ -3310,19 +3310,19 @@ input Self_Patient_address_PartialInput_ {
 
 input Self_Patient_visits_visitsItem_Input_ {
   dateTime: String
-  hivViralLoad: Float
+  hivViralLoad: String
   note: String
 }
 
 input Self_Patient_visits_visitsItem_UpdateInput_ {
   dateTime: String
-  hivViralLoad: Float
+  hivViralLoad: String
   note: String
 }
 
 input Self_Patient_visits_visitsItem_PartialInput_ {
   dateTime: String
-  hivViralLoad: Float
+  hivViralLoad: String
   note: String
 }
 
