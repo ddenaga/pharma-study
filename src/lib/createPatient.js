@@ -99,9 +99,27 @@ export default async function createPatient(data) {
     },
   };
 
+  // Determine Patient eligibility
+  let isEligible = true;
+
+  let dob = new Date(data.dob);
+  let deadLine = new Date("01-01-2005");
+  if (dob > deadLine) isEligible = false;
+
+  for (const icd in data.icdHealthCodes) {
+    if (icd.toUpperCase()[0] == "O") {
+      isEligible = false;
+      break;
+    }
+  }
+
+  data.isEligible = isEligible;
+
   // Add the patient
   const addResponse = await jhClient.entities.patient.add(data, patientAcl);
 
+  // Note: Abandon using Vendia Smart Contracts. Too slow for our purposes.
+  /*
   // Get the patient ID from the add response
   const patientId = addResponse.result._id;
 
@@ -110,9 +128,11 @@ export default async function createPatient(data) {
     "vrn:JaneHopkins:smart-contract:PatientEligibilityContract",
     {
       input: {
-        queryArgs: `{ "id": "${patientId}" }`,
+        queryArgs: '{ "id": "' + patientId + '" }',
       },
     }
   );
-  return addResponse
+  */
+
+  return addResponse;
 }
