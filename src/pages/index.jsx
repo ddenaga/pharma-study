@@ -156,7 +156,7 @@ function renderContent({ user, error, isLoading }) {
 	if (user) {
 		return (
 			<>
-				<span onClick={console.log(user)} className="block text-right">{`${user.name}`}</span>
+				{/* <span onClick={console.log(user)} className="block text-right">{`${user.name}`}</span> */}
 				<ul className="mt-2 flex flex-row gap-4">
 					<li>
 						<Link href="/api/auth/logout" className="btn-outline btn-sm btn">

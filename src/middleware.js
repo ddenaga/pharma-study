@@ -74,7 +74,8 @@ export default withMiddlewareAuthRequired(async (req) => {
 	// console.log('here 3');
 	// redirect to home page if no user
 	// (never should be the case though due to auth required wrapper)
-	return NextResponse.redirect(new URL('/', req.url));
+	return new NextResponse.redirect(new URL("/404", req.url));
+
 });
 
 // only work on the '/' path
