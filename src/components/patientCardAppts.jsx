@@ -12,9 +12,9 @@ export default function patient_card({ name, dob, familyHistory, img, id, eligib
                     <span className='text-gray-400'>{dob}</span>
                     <span className='text-gray-400'>{familyHistory}</span>
                 </div>
-                <div>
-                    <a href={`/patient/${id}`} className='mt-5'>More Info</a>
-                </div>
+                {/* <div>
+                    <span>Enter Dose</span>
+                </div> */}
             </div>
             {/* TODO change eligibility to icons */}
             <div className='flex flex-col justify-between h-full '>

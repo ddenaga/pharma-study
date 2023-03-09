@@ -18,16 +18,20 @@ function Appointments(props) {
 		const now = new Date().toISOString();
 		const clientOffset = new Date().getTimezoneOffset();
 		const formatedNow = new Date(now);
-
 		let appt;
 		const scheduledToday = Array();
-		for (let i = 0; i < patients.length; i++) {
-			console.log(patients[i]);
-			if (patients[i].visits.length > 0) {
-				appt = new Date(patients[i].visits[0].dateTime).toISOString();
-				let formatedAppt = new Date(appt);
-				if (formatedAppt.getDate() == formatedNow.getDate()) {
-					scheduledToday.push(patients[i]);
+		if (patients.length > 0) {
+			for (let i = 0; i < patients.length; i++) {
+				if (patients[i].visits.length > 0) {
+					for (let j = 0; j < patients[i].visits.length; j++) {
+						if (patients[i].visits[j] != undefined) {
+							appt = new Date(patients[i].visits[j].dateTime).toISOString();
+							let formatedAppt = new Date(appt);
+							if (formatedAppt.getDate() == formatedNow.getDate()) {
+								scheduledToday.push(patients[i]);
+							}
+						}
+					}
 				}
 			}
 		}
