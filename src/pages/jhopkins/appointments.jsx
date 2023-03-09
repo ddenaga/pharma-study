@@ -22,10 +22,13 @@ function Appointments(props) {
 		let appt;
 		const scheduledToday = Array();
 		for (let i = 0; i < patients.length; i++) {
-			appt = new Date(patients[i].visits[0].dateTime).toISOString();
-			let formatedAppt = new Date(appt);
-			if (formatedAppt.getDate() == formatedNow.getDate()) {
-				scheduledToday.push(patients[i]);
+			console.log(patients[i]);
+			if (patients[i].visits.length > 0) {
+				appt = new Date(patients[i].visits[0].dateTime).toISOString();
+				let formatedAppt = new Date(appt);
+				if (formatedAppt.getDate() == formatedNow.getDate()) {
+					scheduledToday.push(patients[i]);
+				}
 			}
 		}
 		setSortedPatients(scheduledToday);
@@ -56,26 +59,26 @@ function Appointments(props) {
 						animate={{ opacity: 1, scale: 1 }}
 						transition={{ duration: 0.3 }}
 						initial={{ opacity: 0.5, scale: 0.5 }}
-						className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
+						className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden outline-none focus:outline-none"
 					>
-						<div className="relative w-auto my-6 mx-auto max-w-3xl">
+						<div className="relative my-6 mx-auto w-auto max-w-3xl">
 							{/*content*/}
-							<div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+							<div className="relative flex w-full flex-col rounded-lg border-0 bg-white shadow-lg outline-none focus:outline-none">
 								{/*header*/}
-								<div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+								<div className="flex items-start justify-between rounded-t border-b border-solid border-slate-200 p-5">
 									<h3 className="text-3xl font-semibold">Enter Dose & HIV Reading</h3>
 									<button
-										className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+										className="float-right ml-auto border-0 bg-transparent p-1 text-3xl font-semibold leading-none text-black opacity-5 outline-none focus:outline-none"
 										onClick={() => setShowModal(false)}
 									>
-										<span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+										<span className="block h-6 w-6 bg-transparent text-2xl text-black opacity-5 outline-none focus:outline-none">
 											×
 										</span>
 									</button>
 								</div>
 								{/*body*/}
 								<form onSubmit={(e) => handleSubmit(e.event.target)}>
-									<div className="relative p-6 flex flex-col justify-between">
+									<div className="relative flex flex-col justify-between p-6">
 										<div>
 											<label className="mr-2">
 												Hiv Reading:
@@ -83,7 +86,7 @@ function Appointments(props) {
 													required
 													type="text"
 													name="name"
-													className="py-2 border ml-16"
+													className="ml-16 border py-2"
 													onChange={(e) => setHivReading(e.target.value)}
 												/>
 											</label>
@@ -94,7 +97,7 @@ function Appointments(props) {
 												<input
 													type="checkbox"
 													name="doseAdministered"
-													className="p-5 ml-5"
+													className="ml-5 p-5"
 													onClick={(e) => setDose(!dose)}
 												/>
 											</label>
@@ -105,23 +108,23 @@ function Appointments(props) {
 												<input
 													type="textarea"
 													name="notes"
-													className="border ml-28 py-10"
+													className="ml-28 border py-10"
 													onChange={(e) => setNotes(e.target.value)}
 												/>
 											</label>
 										</div>
 									</div>
 									{/*footer*/}
-									<div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+									<div className="flex items-center justify-end rounded-b border-t border-solid border-slate-200 p-6">
 										<button
-											className="text-red-500 background-transparent font-semibold px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+											className="background-transparent mr-1 mb-1 px-6 py-2 text-sm font-semibold text-red-500 outline-none transition-all duration-150 ease-linear focus:outline-none"
 											type="submit"
 											onClick={() => setShowModal(false)}
 										>
 											Close
 										</button>
 										<button
-											className="bg-teal-600 text-white active:bg-teal-600 font-semibold text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+											className="mr-1 mb-1 rounded bg-teal-600 px-6 py-3 text-sm font-semibold text-white shadow outline-none transition-all duration-150 ease-linear hover:shadow-lg focus:outline-none active:bg-teal-600"
 											type="button"
 											onClick={handleSubmit}
 										>
@@ -132,19 +135,19 @@ function Appointments(props) {
 							</div>
 						</div>
 					</motion.div>
-					<div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+					<div className="fixed inset-0 z-40 bg-black opacity-25"></div>
 				</>
 			) : null}
 			<Sidebar />
-			<div className="bg-gray-100 w-full">
+			<div className="w-full bg-gray-100">
 				<div className="flex justify-between">
 					<div className="m-10">
 						<h1 className="text-5xl font-bold text-gray-600 text-gray-600">Appointments</h1>
-						<p className="mt-6 text-gray-500 text-lg">You have the following appointments for today</p>
+						<p className="mt-6 text-lg text-gray-500">You have the following appointments for today</p>
 					</div>
 					<Link
 						href="/jhopkins/new-appointment"
-						className="p-2 border bg-teal-600 text-white rounded-2xl m-20 text-lg"
+						className="m-20 rounded-2xl border bg-teal-600 p-2 text-lg text-white"
 					>
 						+ New Appointment
 					</Link>
