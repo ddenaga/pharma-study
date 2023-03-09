@@ -44,9 +44,20 @@ export default withMiddlewareAuthRequired(async (req) => {
 		let roleRoutes = Routes[user.role];
 
 		if (roleRoutes) {
+			let valid = false;
+			roleRoutes.validDynamic.forEach((dynamicRoute) => {
+				if (currentRoute.startsWith(dynamicRoute)) {
+					valid = true;
+				}
+			});
+			if (valid) {
+				return res;
+			}
 			if (roleRoutes.valid.includes(currentRoute)) {
+				console.log('valid');
 				return res;
 			} else if (currentRoute === '/redirect') {
+				console.log('currentRoute === /redirect');
 				route = roleRoutes.default;
 			}
 		}
@@ -54,7 +65,7 @@ export default withMiddlewareAuthRequired(async (req) => {
 		// console.log('here 2', route, currentRoute);
 		// redirect to specific route
 		if (currentRoute != route) {
-			console.log('test');
+			console.log('currentRoute != route');
 			return NextResponse.redirect(new URL(route, req.url));
 		} else {
 			return res;
