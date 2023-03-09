@@ -1,7 +1,6 @@
 import React from 'react';
 import Sidebar from '@/components/Sidebar';
 import { jhClient } from '@/lib/vendia.js';
-import PatientCard from '@/components/PatientCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDroplet, faGauge, faWind, faTemperatureHalf } from '@fortawesome/free-solid-svg-icons';
 import Image from "next/image";
