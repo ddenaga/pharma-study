@@ -5,7 +5,7 @@ const Routes = {
 	doctor: {
 		default: '/jhopkins/doctor/appointments',
 		valid: ['/jhopkins/doctor/my-patients', '/jhopkins/doctor/appointments', '/jhopkins/doctor/new-appointment'],
-		validDynamic: ['/patient'],
+		validDynamic: [`/patient/`],
 	},
 	admin: {
 		default: '/jhopkins/admin/all-patients',
@@ -17,7 +17,7 @@ const Routes = {
 			'/jhopkins/doctor/appointments',
 			'/jhopkins/doctor/new-appointment',
 		],
-		validDynamic: ['/patient'],
+		validDynamic: ['/patient/:id'],
 	},
 	fda: {
 		default: '/fda/assign-drugs',
