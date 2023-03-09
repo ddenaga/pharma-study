@@ -25,11 +25,11 @@ export default function Sidebar() {
 					<ul className="space-y-6 uppercase">
 						<motion.li className="flex gap-2" whileHover={{ scale: 1.1 }}>
 							<Calendar className="hover:bg-green-500" />
-							<Link href="/jhopkins/appointments">Appointments</Link>
+							<Link href="/jhopkins/doctor/appointments">Appointments</Link>
 						</motion.li>
 						<motion.li className="flex gap-2" whileHover={{ scale: 1.1 }}>
 							<Patient />
-							<Link href="/jhopkins/my-patients">My Patients</Link>
+							<Link href="/jhopkins/doctor/my-patients">My Patients</Link>
 						</motion.li>
 					</ul>
 				</nav>
