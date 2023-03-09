@@ -93,7 +93,7 @@ export default function Sidebar() {
 		}
 	}
 	return (
-		<aside className="flex h-full w-full max-w-xs flex-col justify-between border-r border-slate-400">
+		<aside className="flex w-full max-w-xs flex-col justify-between border-r border-slate-400">
 			<div className="flex flex-col gap-20 p-5">
 				<div id="logo" className="max-w-[50px]">
 					<Link href="/">

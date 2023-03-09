@@ -6,7 +6,9 @@ function CreatePatient() {
 	return (
 		<div className="flex" id="site-content">
 			<Sidebar />
-			<CreatePatientForm />
+			<div className="w-full overflow-y-scroll">
+				<CreatePatientForm />
+			</div>
 		</div>
 	);
 }
