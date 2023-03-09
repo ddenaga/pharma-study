@@ -5,7 +5,7 @@ const FormikCheckbox = ({ label, children, className, ...props }) => {
 
 	return (
 		<>
-			<div className="flex items-start gap-2">
+			<div className="flex items-center gap-2">
 				<div className="flex h-6 items-center">
 					<input
 						className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
@@ -14,7 +14,7 @@ const FormikCheckbox = ({ label, children, className, ...props }) => {
 						{...props}
 					/>
 				</div>
-				<label htmlFor={props.id || props.name} className="font-medium text-gray-900">
+				<label htmlFor={props.id || props.name} className="text-sm font-medium text-gray-900">
 					{label}
 				</label>
 			</div>
