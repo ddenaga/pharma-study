@@ -5,6 +5,7 @@ const Routes = {
 	doctor: {
 		default: '/jhopkins/doctor/appointments',
 		valid: ['/jhopkins/doctor/my-patients', '/jhopkins/doctor/appointments', '/jhopkins/doctor/new-appointment'],
+		validDynamic: ['/patient'],
 	},
 	admin: {
 		default: '/jhopkins/admin/all-patients',
@@ -16,6 +17,7 @@ const Routes = {
 			'/jhopkins/doctor/appointments',
 			'/jhopkins/doctor/new-appointment',
 		],
+		validDynamic: ['/patient'],
 	},
 	fda: {
 		default: '/fda/assign-drugs',
@@ -33,10 +35,10 @@ export default withMiddlewareAuthRequired(async (req) => {
 
 	const session = await getSession(req, res);
 	const user = session.user;
-	console.log('route', req.nextUrl.pathname);
+	// console.log('route', req.nextUrl.pathname);
 	if (user) {
 		// Do what you want...
-		console.log(user, 'here 1');
+		// console.log(user, 'here 1');
 		let route = '/';
 		let currentRoute = req.nextUrl.pathname;
 		let roleRoutes = Routes[user.role];
@@ -49,7 +51,7 @@ export default withMiddlewareAuthRequired(async (req) => {
 			}
 		}
 
-		console.log('here 2', route, currentRoute);
+		// console.log('here 2', route, currentRoute);
 		// redirect to specific route
 		if (currentRoute != route) {
 			console.log('test');
@@ -58,7 +60,7 @@ export default withMiddlewareAuthRequired(async (req) => {
 			return res;
 		}
 	}
-	console.log('here 3');
+	// console.log('here 3');
 	// redirect to home page if no user
 	// (never should be the case though due to auth required wrapper)
 	return NextResponse.redirect(new URL('/', req.url));

@@ -47,6 +47,10 @@ export default function Sidebar() {
 							<Patient />
 							<Link href="/jhopkins/admin/live-results">Live Results</Link>
 						</li>
+						<li className="flex gap-2">
+							<Patient />
+							<Link href="/jhopkins/admin/create-patient">Create patient</Link>
+						</li>
 					</ul>
 				</nav>
 			);

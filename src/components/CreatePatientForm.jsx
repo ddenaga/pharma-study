@@ -111,6 +111,12 @@ const CreatePatientForm = () => {
 					{/* ICD Health Codes */}
 					<FormikList label="ICD Health Codes" name="icdHealthCodes" />
 
+					<FormikList label="ICD Health Codes" name="icdHealthCodes" />
+
+					<FormikList label="ICD Health Codes" name="icdHealthCodes" />
+
+					<FormikList label="ICD Health Codes" name="icdHealthCodes" />
+
 					<button type="submit">Submit</button>
 				</Form>
 			</Formik>
