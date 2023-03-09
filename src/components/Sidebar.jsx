@@ -41,11 +41,11 @@ export default function Sidebar() {
 					<ul className="space-y-6 uppercase">
 						<li className="flex gap-2">
 							<Calendar className="hover:bg-green-500" />
-							<Link href="/admin/all-patients">All Patients</Link>
+							<Link href="/jhopkins/admin/all-patients">All Patients</Link>
 						</li>
 						<li className="flex gap-2">
 							<Patient />
-							<Link href="/admin/live-results">Live Results</Link>
+							<Link href="/jhopkins/admin/live-results">Live Results</Link>
 						</li>
 					</ul>
 				</nav>

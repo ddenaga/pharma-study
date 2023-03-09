@@ -3,8 +3,19 @@ import { withMiddlewareAuthRequired, getSession } from '@auth0/nextjs-auth0/edge
 
 const Routes = {
 	doctor: {
-		default: '/jhopkins/appointments',
-		valid: ['/jhopkins/my-patients', '/jhopkins/appointments', '/jhopkins/new-appointment'],
+		default: '/jhopkins/doctor/appointments',
+		valid: ['/jhopkins/doctor/my-patients', '/jhopkins/doctor/appointments', '/jhopkins/doctor/new-appointment'],
+	},
+	admin: {
+		default: '/jhopkins/admin/all-patients',
+		valid: [
+			'/jhopkins/admin/all-patients',
+			'/jhopkins/admin/live-results',
+			'/jhopkins/admin/create-patient',
+			'/jhopkins/doctor/my-patients',
+			'/jhopkins/doctor/appointments',
+			'/jhopkins/doctor/new-appointment',
+		],
 	},
 	fda: {
 		default: '/fda/assign-drugs',
@@ -14,11 +25,8 @@ const Routes = {
 		default: '/bavaria/send-drugs',
 		valid: ['/bavaria/send-drugs', '/bavaria/reports', '/bavaria/trial-results'],
 	},
-	// jhopkins: {
-	// 	default: '',
-	// 	valid: ['', '', ''],
-	// },
 };
+//$todo: make an all-patients page for admin?
 
 export default withMiddlewareAuthRequired(async (req) => {
 	const res = NextResponse.next();
@@ -58,6 +66,13 @@ export default withMiddlewareAuthRequired(async (req) => {
 
 // only work on the '/' path
 export const config = {
-	matcher: ['/bavaria/:path*', '/fda/:path*', '/jhopkin/:path*', '/patients/:path*', '/redirect'],
+	matcher: [
+		'/bavaria/:path*',
+		'/fda/:path*',
+		'/jhopkins/admin/:path*',
+		'/jhopkins/doctor/:path*',
+		'/patient/:path*',
+		'/redirect',
+	],
 	// matcher: ['/sdasasdasdasd']
 };
