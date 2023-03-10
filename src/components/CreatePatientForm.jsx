@@ -1,3 +1,4 @@
+import createPatient from '@/lib/createPatient';
 import { Form, Formik, Field, FieldArray } from 'formik';
 import FormikCheckbox from './formik/FormikCheckbox';
 import FormikDatePicker from './formik/FormikDatePicker';
@@ -9,7 +10,7 @@ const CreatePatientForm = () => {
 	const initialValues = {
 		name: '',
 		pictureUrl: '',
-		dob: '2000-01-01',
+		dob: new Date(),
 		insuranceNumber: '',
 		height: '',
 		weight: '',
@@ -38,8 +39,12 @@ const CreatePatientForm = () => {
 	const validationSchema = {};
 
 	const onSubmit = async (values) => {
-		await new Promise((r) => setTimeout(r, 500));
+		// await new Promise((r) => setTimeout(r, 500));
+		if (values.dob instanceof Date) values.dob = values.dob.toISOString().substring(0, 10);
+
 		alert(JSON.stringify(values, null, 2));
+		const createResponse = await createPatient(values);
+		console.log(createResponse);
 	};
 
 	return (
@@ -102,7 +107,7 @@ const CreatePatientForm = () => {
 						</div>
 						{/* Address */}
 						<div className="col-span-6 row-start-[8]">
-							<FormikTextInput label="Street Address" name="bloodPressure" type="text" />
+							<FormikTextInput label="Street Address" name="address.streetAddress" type="text" />
 						</div>
 						<div className="col-span-3 row-start-[9]">
 							<FormikTextInput label="City" name="address.city" type="text" />
@@ -114,7 +119,7 @@ const CreatePatientForm = () => {
 							<FormikTextInput label="Country" name="address.country" type="text" />
 						</div>
 						<div className="col-span-3 row-start-[10]">
-							<FormikTextInput label="Zip Code" name="address.zipCode" type="text" />
+							<FormikTextInput label="Zip Code" name="address.zipCode" type="number" />
 						</div>
 						{/* Allergies */}
 						<div className="col-span-6 row-start-[11]">
