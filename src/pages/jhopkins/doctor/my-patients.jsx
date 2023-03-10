@@ -7,24 +7,26 @@ import { motion } from "framer-motion";
 import PatientList from "@/components/PatientList";
 
 const patient = {
-  name: "Alex",
+  name: "Anthony",
   pictureUrl: "",
   dob: "2000-01-01",
-  insuranceNumber: "",
-  height: "100",
-  weight: "100",
-  bloodPressure: "",
+  insuranceNumber: "AC1234H",
+  height: "200",
+  weight: "180",
+  bloodPressure: "12.3",
   bloodType: "A",
   temperature: "100",
   oxygenSaturation: "100",
   address: {
-    streetAddress: "1234 ABC Street",
-    city: "City",
-    state: "State",
+    streetAddress: "1234 Hollywood Street",
+    city: "Los Angeles",
+    state: "CA",
     zipCode: 12345,
     country: "US",
   },
-  allergies: [],
+  allergies: [
+
+  ],
   medications: [],
   treatmentId: "",
   familyHistory: [],

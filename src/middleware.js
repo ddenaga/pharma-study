@@ -5,7 +5,7 @@ const Routes = {
 	doctor: {
 		default: '/jhopkins/doctor/appointments',
 		valid: ['/jhopkins/doctor/my-patients', '/jhopkins/doctor/appointments', '/jhopkins/doctor/new-appointment'],
-		validDynamic: ['/patient'],
+		validDynamic: [`/patient/`],
 	},
 	admin: {
 		default: '/jhopkins/admin/all-patients',
@@ -17,7 +17,7 @@ const Routes = {
 			'/jhopkins/doctor/appointments',
 			'/jhopkins/doctor/new-appointment',
 		],
-		validDynamic: ['/patient'],
+		validDynamic: ['/patient/'],
 	},
 	fda: {
 		default: '/fda/assign-drugs',
@@ -78,7 +78,8 @@ export default withMiddlewareAuthRequired(async (req) => {
 	// console.log('here 3');
 	// redirect to home page if no user
 	// (never should be the case though due to auth required wrapper)
-	return NextResponse.redirect(new URL('/', req.url));
+	return new NextResponse.redirect(new URL("/404", req.url));
+
 });
 
 // only work on the '/' path
