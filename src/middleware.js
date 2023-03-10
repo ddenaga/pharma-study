@@ -45,14 +45,18 @@ export default withMiddlewareAuthRequired(async (req) => {
 
 		if (roleRoutes) {
 			let valid = false;
-			roleRoutes.validDynamic.forEach((dynamicRoute) => {
-				if (currentRoute.startsWith(dynamicRoute)) {
-					valid = true;
-				}
-			});
+			if (roleRoutes.validDynamic != undefined) {
+				roleRoutes.validDynamic.forEach((dynamicRoute) => {
+					if (currentRoute.startsWith(dynamicRoute)) {
+						valid = true;
+					}
+				});
+			}
+
 			if (valid) {
 				return res;
 			}
+
 			if (roleRoutes.valid.includes(currentRoute)) {
 				console.log('valid');
 				return res;
