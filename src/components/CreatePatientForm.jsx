@@ -25,7 +25,7 @@ const CreatePatientForm = () => {
 			zipCode: '',
 			country: '',
 		},
-		allergies: [''],
+		allergies: [],
 		medications: [],
 		treatmentId: '',
 		familyHistory: [],
