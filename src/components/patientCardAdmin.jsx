@@ -1,6 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
-export default function patient_card({ name, dob, familyHistory, img, id, eligibility }) {
+export default function patient_card({ name, dob, familyHistory, img, id, eligibility, pic }) {
     return (
         <div className='flex w-96 h-30 drop-shadow-sm border-2 m-9 bg-white rounded-xl justify-between items-center p-4'>
             <div>
@@ -15,7 +15,12 @@ export default function patient_card({ name, dob, familyHistory, img, id, eligib
             </div>
             {/* TODO change eligibility to icons */}
             <div className='flex flex-col justify-between h-full '>
-                <Image src="/../public/favicon.ico" width="50" height="50" alt="patient avatar" />
+                <Image
+                    src={pic == "" ? "/../public/favicon.ico" : pic}
+                    width="50"
+                    height="50"
+                    alt="patient avatar"
+                />
                 {eligibility ? <span>Eligible</span> : <span>NotEligible</span>}
             </div>
         </div >

@@ -24,6 +24,7 @@ export default function AllPatients(props) {
               familyHistory={patient.familyHistory}
               id={patient._id}
               eligibility={patient.isEligible}
+              pic={patient.pictureUrl}
             />
           ))}
         </div>

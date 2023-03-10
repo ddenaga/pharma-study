@@ -8,7 +8,7 @@ import PatientList from "@/components/PatientList";
 
 const patient = {
   name: "Anthony",
-  pictureUrl: "",
+  pictureUrl: "https://this-person-does-not-exist.com/gen/avatar-116f3545e8c6f0287451eda42144424a.jpg",
   dob: "2000-01-01",
   insuranceNumber: "AC1234H",
   height: "200",
@@ -25,17 +25,19 @@ const patient = {
     country: "US",
   },
   allergies: [
-
+    "Peanuts"
   ],
   medications: [],
   treatmentId: "",
-  familyHistory: [],
+  familyHistory: [
+    "Cancer"
+  ],
   isEmployed: true,
   isInsured: false,
   icdHealthCodes: [],
   visits: [
     {
-      dateTime: "2023-03-08T09:15:00Z",
+      dateTime: "2023-03-09T09:15:00Z",
       note: "He's sick",
       hivViralLoad: "12.5",
     },
@@ -84,17 +86,17 @@ export default function MyPatients(props) {
             whileHover={{ scale: 1.2 }}
             href="#"
             onClick={addPatient}
-            className="p-2 border bg-teal-600 text-white rounded-2xl"
+            className="p-2 border bg-teal-600 text-white rounded-2xl mr-10"
           >
             + New Patient
           </motion.a>
-          <motion.span
+          {/* <motion.span
             onClick={deletePatients}
             className="p-2 border bg-red-500 text-white"
             whileHover={{ scale: 1.2 }}
           >
             Delete all Patient
-          </motion.span>
+          </motion.span> */}
         </div>
         <div>
           <form className="max-w-sm px-4 mt-10 ml-5 w-92">
