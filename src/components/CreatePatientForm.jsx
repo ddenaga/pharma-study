@@ -117,7 +117,7 @@ const CreatePatientForm = () => {
 							<FormikTextInput label="Country" name="address.country" type="text" />
 						</div>
 						<div className="col-span-3 row-start-[10]">
-							<FormikTextInput label="Zip Code" name="address.zipCode" type="number" />
+							<FormikTextInput label="Zip Code" name="address.zipCode" type="text" />
 						</div>
 						{/* Allergies */}
 						<div className="col-span-6 row-start-[11]">
