@@ -12,7 +12,7 @@ const Routes = {
 		valid: [
 			'/jhopkins/admin/all-patients',
 			'/jhopkins/admin/live-results',
-			'/jhopkins/admin/create-patient',
+			'/jhopkins/patient/create',
 			'/jhopkins/doctor/my-patients',
 			'/jhopkins/doctor/appointments',
 			'/jhopkins/doctor/new-appointment',
