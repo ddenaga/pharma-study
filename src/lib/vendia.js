@@ -7,7 +7,7 @@ export const jhClient = createVendiaClient({
 });
 
 export const fdaClient = createVendiaClient({
-  apiUrl: process.env.NEXT_PUBLIC_JHOPKINS_API_URL,
+  apiUrl: process.env.NEXT_PUBLIC_FDA_API_URL,
   websocketUrl: process.env.NEXT_PUBLIC_FDA_WEBSOCKET,
   apiKey: process.env.NEXT_PUBLIC_FDA_API_KEY,
 });
