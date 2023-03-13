@@ -132,9 +132,6 @@
       "items": {
         "type": "object",
         "properties": {
-          "name": {
-            "type": "string"
-          },
           "isGeneric": {
             "type": "boolean"
           },
