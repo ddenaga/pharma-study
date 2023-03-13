@@ -27,8 +27,7 @@
             "type": "string"
           },
           "dob": {
-            "type": "string",
-            "format": "date"
+            "type": "string"
           },
           "insuranceNumber": {
             "type": "string"
@@ -64,7 +63,7 @@
                 "type": "string"
               },
               "zipCode": {
-                "type": "integer"
+                "type": "string"
               },
               "country": {
                 "type": "string"
@@ -110,8 +109,7 @@
               "type": "object",
               "properties": {
                 "dateTime": {
-                  "type": "string",
-                  "format": "date-time"
+                  "type": "string"
                 },
                 "note": {
                   "type": "string"

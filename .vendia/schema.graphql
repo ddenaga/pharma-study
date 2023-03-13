@@ -553,7 +553,7 @@ input Self_Patient_address_ConditionInput_ {
   country: Vendia_ModelStringInput_
   state: Vendia_ModelStringInput_
   streetAddress: Vendia_ModelStringInput_
-  zipCode: Vendia_ModelIntInput_
+  zipCode: Vendia_ModelStringInput_
   _and: [Self_Patient_address_ConditionInput_]
   _or: [Self_Patient_address_ConditionInput_]
   _not: Self_Patient_address_ConditionInput_
@@ -564,7 +564,7 @@ input Self_Patient_address_FilterInput_ {
   country: Vendia_ModelStringInput_
   state: Vendia_ModelStringInput_
   streetAddress: Vendia_ModelStringInput_
-  zipCode: Vendia_ModelIntInput_
+  zipCode: Vendia_ModelStringInput_
   _and: [Self_Patient_address_FilterInput_]
   _or: [Self_Patient_address_FilterInput_]
   _not: Self_Patient_address_FilterInput_
@@ -575,7 +575,7 @@ type Self_Patient_address {
   country: String
   state: String
   streetAddress: String
-  zipCode: Int
+  zipCode: String
 }
 
 type Self_Patient_address_Partial_ {
@@ -583,7 +583,7 @@ type Self_Patient_address_Partial_ {
   country: String
   state: String
   streetAddress: String
-  zipCode: Int
+  zipCode: String
 }
 
 type Self_Patient_address_Result_ {
@@ -3289,7 +3289,7 @@ input Self_Patient_address_Input_ {
   country: String
   state: String
   streetAddress: String
-  zipCode: Int
+  zipCode: String
 }
 
 input Self_Patient_address_UpdateInput_ {
@@ -3297,7 +3297,7 @@ input Self_Patient_address_UpdateInput_ {
   country: String
   state: String
   streetAddress: String
-  zipCode: Int
+  zipCode: String
 }
 
 input Self_Patient_address_PartialInput_ {
@@ -3305,7 +3305,7 @@ input Self_Patient_address_PartialInput_ {
   country: String
   state: String
   streetAddress: String
-  zipCode: Int
+  zipCode: String
 }
 
 input Self_Patient_visits_visitsItem_Input_ {

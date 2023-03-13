@@ -10,7 +10,7 @@ const CreatePatientForm = () => {
 	const initialValues = {
 		name: '',
 		pictureUrl: '',
-		dob: new Date(),
+		dob: new Date('1990/1/1'),
 		insuranceNumber: '',
 		height: '',
 		weight: '',
@@ -40,8 +40,6 @@ const CreatePatientForm = () => {
 
 	const onSubmit = async (values) => {
 		// await new Promise((r) => setTimeout(r, 500));
-		if (values.dob instanceof Date) values.dob = values.dob.toISOString().substring(0, 10);
-
 		alert(JSON.stringify(values, null, 2));
 		const createResponse = await createPatient(values);
 		console.log(createResponse);
