@@ -470,7 +470,6 @@ input Self_Tracker_PartialInput_ {
 
 input Self_Treatment_ConditionInput_ {
   isGeneric: Vendia_ModelBooleanInput_
-  name: Vendia_ModelStringInput_
   numberOfDoses: Vendia_ModelIntInput_
   _and: [Self_Treatment_ConditionInput_]
   _or: [Self_Treatment_ConditionInput_]
@@ -480,7 +479,6 @@ input Self_Treatment_ConditionInput_ {
 input Self_Treatment_FilterInput_ {
   _owner: Vendia_ModelStringInput_
   isGeneric: Vendia_ModelBooleanInput_
-  name: Vendia_ModelStringInput_
   numberOfDoses: Vendia_ModelIntInput_
   _and: [Self_Treatment_FilterInput_]
   _or: [Self_Treatment_FilterInput_]
@@ -494,7 +492,6 @@ input Self_Treatment_OrderInput_ {
 type Self_Treatment {
   _id: ID!
   isGeneric: Boolean
-  name: String
   numberOfDoses: Int
   _acl: [Vendia_Acl!]
   _owner: String
@@ -503,7 +500,6 @@ type Self_Treatment {
 type Self_Treatment_Partial_ {
   _id: ID!
   isGeneric: Boolean
-  name: String
   numberOfDoses: Int
   _acl: [Vendia_Acl!]
   _owner: String
@@ -532,19 +528,16 @@ type Self_Treatment_Connection_ {
 
 input Self_Treatment_Input_ {
   isGeneric: Boolean
-  name: String
   numberOfDoses: Int
 }
 
 input Self_Treatment_UpdateInput_ {
   isGeneric: Boolean
-  name: String
   numberOfDoses: Int
 }
 
 input Self_Treatment_PartialInput_ {
   isGeneric: Boolean
-  name: String
   numberOfDoses: Int
 }
 
