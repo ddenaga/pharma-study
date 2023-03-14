@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Sidebar from '@/components/Sidebar';
 import { fdaClient } from '@/lib/vendia';
-
+import { motion } from 'framer-motion';
 export async function getServerSideProps() {
 	const data = await fdaClient.entities.tracker.list();
 	const mappings = data.items;
@@ -33,6 +33,7 @@ function LiveResults(props) {
 	const [patients, setPatients] = useState(props.entities)
 	const [studyStatus, setStudyStatus] = useState(true)
 	useEffect(() => {
+
 		for (const patient of patients) {
 			if (patient.isDone == false) {
 				setStudyStatus(false)
@@ -45,9 +46,32 @@ function LiveResults(props) {
 			<div className="bg-gray-100 w-full overflow-y-scroll" onClick={console.log(props.entities)}>
 				<div className='flex justify-between items-center'>
 					<h1 className='text-4xl m-20 '>Live Results</h1>
+
+					<div className="stats stats-vertical lg:stats-horizontal shadow">
+
+						<div className="stat m-2">
+							<div className="stat-title">Downloads</div>
+							<div className="stat-value">31K</div>
+							<div className="stat-desc">Jan 1st - Feb 1st</div>
+						</div>
+
+						<div className="stat">
+							<div className="stat-title">New Users</div>
+							<div className="stat-value">4,200</div>
+							<div className="stat-desc">↗︎ 400 (22%)</div>
+						</div>
+
+						<div className="stat">
+							<div className="stat-title">New Registers</div>
+							<div className="stat-value">1,200</div>
+							<div className="stat-desc">↘︎ 90 (14%)</div>
+						</div>
+
+					</div>
 					{studyStatus ?
 						<span className="inline-block rounded-full py-2 px-4 bg-green-600 text-white text-md mr-20 shadow-lg">Study is Complete</span> :
-						<span className="inline-block animate-pulse rounded-full py-2 px-4 bg-red-600 text-white text-md mr-20 shadow-lg">Study still Ongoing</span>}
+						<span className="inline-block animate-pulse rounded-full py-2 px-4 bg-red-600 text-white text-md mr-20 shadow-lg">Study still Ongoing</span>
+					}
 				</div>
 				<div className="overflow-x-auto p-16 ">
 					<table className="table table-zebra w-full shadow-xl">
@@ -64,7 +88,7 @@ function LiveResults(props) {
 							{patients.map((item) => (
 								<tr key={item._id}>
 									<td>{item._id}</td>
-									<td className='flex flex-col'>{item.treatment.numberOfDoses}/5<progress className={item.treatment.numberOfDoses == 5 ? "progress progress-success w-40" : "progress progress-warning  w-40"} value={(item.treatment.numberOfDoses / 5) * 100} max="100"></progress></td>
+									<td className='flex flex-col'>{item.treatment.numberOfDoses}/5<motion.progress animate={{ x: 100 }} className={item.treatment.numberOfDoses == 5 ? "progress progress-success w-40" : "progress progress-warning  w-40"} value={(item.treatment.numberOfDoses / 5) * 100} max="100"></motion.progress></td>
 									<td>{item.patient.visits == null ? "No Reading yet" : item.patient.visits[0].hivViralLoad}</td>
 									<td>{item.treatment.numberOfDoses == 5 ? <span className='badge badge-success'>Done</span> : <span className='badge badge-warning'>Ongoing</span>}</td>
 									<td>{item.treatment.isGeneric == null ? "Bavaria" : "Generic"}</td>
