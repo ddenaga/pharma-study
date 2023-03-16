@@ -36,16 +36,18 @@ function LiveResults(props) {
 	const [refresh, setRefresh] = useState(false);
 
 	async function updateDoses(id) {
+		console.log("called")
 		const updatedTreatment = await fdaClient.entities.treatment.get(id)
 		const tempArray = patients
-		for (const patient of patients) {
+		for (const patient of tempArray) {
 			if (patient.treatment._id == updatedTreatment._id) {
 				delete patient.treatment
 				patient.treatment = updatedTreatment
-
 			}
 		}
-		return patients
+
+		return tempArray
+
 	}
 	useEffect(() => {
 		for (const patient of patients) {
@@ -53,16 +55,17 @@ function LiveResults(props) {
 				setStudyStatus(false)
 			}
 		}
-		const res = fdaClient.entities.treatment.onUpdate(({ result }) => {
-			const updatedArray = updateDoses(result._id)
-			setPatients(updatedArray)
+		fdaClient.entities.treatment.onUpdate(({ result }) => {
+			updateDoses(result._id).then((result) => {
+				setPatients(result)
+				setRefresh(!refresh)
+			})
 		})
-		return () => res()
 	}, [])
 	return (
 		<div className="flex" id="site-content">
 			<Sidebar />
-			<div className="bg-gray-100 w-full overflow-y-scroll" onClick={console.log(props.entities)}>
+			<div className="bg-gray-100 w-full overflow-y-scroll" >
 				<div className='flex justify-between items-center'>
 					<h1 className='text-4xl m-20 '>Live Results</h1>
 					{studyStatus ?
