@@ -33,33 +33,28 @@ export async function getServerSideProps() {
 function LiveResults(props) {
 	const [patients, setPatients] = useState(props.entities);
 	const [studyStatus, setStudyStatus] = useState(true);
-	const [refresh, setRefresh] = useState(false);
 
 	async function updateDoses(id) {
-		console.log("called")
 		const updatedTreatment = await fdaClient.entities.treatment.get(id)
-		const tempArray = patients
+		const tempArray = [...patients]
+		//remove the patient that had a change and add back with the change
 		for (const patient of tempArray) {
 			if (patient.treatment._id == updatedTreatment._id) {
 				delete patient.treatment
 				patient.treatment = updatedTreatment
 			}
 		}
-
-		return tempArray
-
+		setPatients(tempArray)
 	}
 	useEffect(() => {
+		//only checks on page mount
 		for (const patient of patients) {
-			if (patient.isDone == false) {
+			if (patient.isDone === false) {
 				setStudyStatus(false)
 			}
 		}
 		fdaClient.entities.treatment.onUpdate(({ result }) => {
-			updateDoses(result._id).then((result) => {
-				setPatients(result)
-				setRefresh(!refresh)
-			})
+			updateDoses(result._id)
 		})
 	}, [])
 	return (
@@ -68,7 +63,7 @@ function LiveResults(props) {
 			<div className="bg-gray-100 w-full overflow-y-scroll" >
 				<div className='flex justify-between items-center'>
 					<h1 className='text-4xl m-20 '>Live Results</h1>
-					{studyStatus ?
+					{studyStatus == true ?
 						<span className="inline-block rounded-full py-2 px-4 bg-green-600 text-white text-md mr-20 shadow-lg">Study is Complete</span> :
 						<span className="inline-block animate-pulse rounded-full py-2 px-4 bg-red-600 text-white text-md mr-20 shadow-lg">Study still Ongoing</span>
 					}
@@ -86,12 +81,12 @@ function LiveResults(props) {
 						</thead>
 						<tbody>
 							{patients.map((item) => (
-								<tr key={item._id}>
+								<tr key={item.patient._id}>
 									<td>{item._id}</td>
-									<td className='flex flex-col'>{item.treatment?.numberOfDoses}/5<motion.progress animate={{ x: 0 }} className={item.treatment.numberOfDoses == 5 ? "progress progress-success w-40" : "progress progress-warning  w-40"} value={(item.treatment.numberOfDoses / 5) * 100} max="100"></motion.progress></td>
+									<td className='flex flex-col'>{item.treatment?.numberOfDoses}/5<motion.progress animate={{ x: [50, 0] }} className={item.treatment.numberOfDoses >= 5 ? "progress progress-success w-40" : "progress progress-warning  w-40"} value={(item.treatment.numberOfDoses / 5) * 100} max="100"></motion.progress></td>
 									<td>{item.patient.visits == null ? "No Reading yet" : item.patient.visits[0].hivViralLoad}</td>
-									<td>{item.treatment.numberOfDoses == 5 ? <span className='badge badge-success'>Done</span> : <span className='badge badge-warning'>Ongoing</span>}</td>
-									<td>{item.treatment.isGeneric == null ? "Bavaria" : "Generic"}</td>
+									<td>{item.treatment.numberOfDoses >= 5 ? <motion.span animate={{ scale: [1, 2, 1] }} transition={{ duration: 0.2 }} className='badge badge-success'>Done</motion.span> : <motion.span animate={{ scale: [1, 2, 1] }} transition={{ duration: 0.2 }} className='badge badge-warning'>Ongoing</motion.span>}</td>
+									<td>{item.treatment.isGeneric == true ? "Generic" : "Bavaria"}</td>
 								</tr>
 							))}
 						</tbody>
