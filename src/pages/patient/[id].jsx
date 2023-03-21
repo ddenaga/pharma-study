@@ -30,10 +30,11 @@ export default function Patient(props) {
 					<div className='flex flex-col items-center'>
 						<Image
 							onClick={() => console.log(patient)}
-							src="/../public/snoop1.png"
+							src={patient.pictureUrl == "" ? "/../public/favicon.ico" : patient.pictureUrl}
 							width="150"
 							height="150"
 							alt="patient avatar"
+							className='rounded-full'
 						//className='rounded-full'
 						/>
 						<span className='font-bold text-5xl mt-2 text-slate-600'>{patient.name}</span>

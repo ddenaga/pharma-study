@@ -70,33 +70,36 @@ export default function MyPatients(props) {
 	return (
 		<div className="flex" id="site-content">
 			<Sidebar />
-			<div className="w-full bg-gray-100 ">
-				<div className="mt-16 flex justify-between">
-					<h1 className="ml-10 text-4xl font-bold text-zinc-600" onClick={() => createPatient(patient)}>
+			<div className="bg-gray-100 w-full ">
+				<div className="flex mt-16 justify-between">
+					<h1
+						className="text-4xl font-bold ml-10 text-zinc-600"
+						onClick={() => createPatient(patient)}
+					>
 						My Patients
 					</h1>
 					<motion.a
 						whileHover={{ scale: 1.2 }}
 						href="#"
 						onClick={addPatient}
-						className="rounded-2xl border bg-teal-600 p-2 text-white"
+						className="p-2 border bg-teal-600 text-white rounded-2xl mr-10"
 					>
 						+ New Patient
 					</motion.a>
-					<motion.span
-						onClick={deletePatients}
-						className="border bg-red-500 p-2 text-white"
-						whileHover={{ scale: 1.2 }}
-					>
-						Delete all Patient
-					</motion.span>
+					{/* <motion.span
+            onClick={deletePatients}
+            className="p-2 border bg-red-500 text-white"
+            whileHover={{ scale: 1.2 }}
+          >
+            Delete all Patient
+          </motion.span> */}
 				</div>
 				<div>
-					<form className="w-92 mt-10 ml-5 max-w-sm px-4">
+					<form className="max-w-sm px-4 mt-10 ml-5 w-92">
 						<div className="relative">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
-								className="absolute top-0 bottom-0 left-3 my-auto h-6 w-6 text-gray-400"
+								className="absolute top-0 bottom-0 w-6 h-6 my-auto text-gray-400 left-3"
 								fill="none"
 								viewBox="0 0 24 24"
 								stroke="currentColor"
@@ -111,7 +114,7 @@ export default function MyPatients(props) {
 							<input
 								type="text"
 								placeholder="Search"
-								className="w-full rounded-md border py-3 pl-12 pr-4 text-gray-500 outline-none  focus:border-indigo-600 focus:bg-white"
+								className="w-full py-3 pl-12 pr-4 text-gray-500 border rounded-md outline-none  focus:bg-white focus:border-indigo-600"
 								onChange={handleChange}
 								value={searchInput}
 							/>
