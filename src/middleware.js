@@ -17,10 +17,10 @@ const Routes = {
 			'/jhopkins/doctor/appointments',
 			'/jhopkins/doctor/new-appointment',
 		],
-		validDynamic: ['/patient/'],
+		validDynamic: [`/patient/`,`/patient/edit`],
 	},
 	fda: {
-		default: '/fda/assign-drugs',
+		default: '/fda/live-results',
 		valid: ['/fda/assign-drugs', '/fda/live-results'],
 	},
 	bavaria: {
