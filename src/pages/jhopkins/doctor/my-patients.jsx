@@ -70,7 +70,7 @@ export default function MyPatients(props) {
 	return (
 		<div className="flex" id="site-content">
 			<Sidebar />
-			<div className="bg-gray-100 w-full ">
+			<div className="bg-gray-100 w-full overflow-y-scroll">
 				<div className="flex mt-16 justify-between">
 					<h1
 						className="text-4xl font-bold ml-10 text-zinc-600"
@@ -80,19 +80,11 @@ export default function MyPatients(props) {
 					</h1>
 					<motion.a
 						whileHover={{ scale: 1.2 }}
-						href="#"
-						onClick={addPatient}
+						href="/patient/create"
 						className="p-2 border bg-teal-600 text-white rounded-2xl mr-10"
 					>
 						+ New Patient
 					</motion.a>
-					{/* <motion.span
-            onClick={deletePatients}
-            className="p-2 border bg-red-500 text-white"
-            whileHover={{ scale: 1.2 }}
-          >
-            Delete all Patient
-          </motion.span> */}
 				</div>
 				<div>
 					<form className="max-w-sm px-4 mt-10 ml-5 w-92">
