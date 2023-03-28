@@ -8,7 +8,7 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'this-person-does-not-exist.com',
         port: '',
-        pathname: '/gen/**',
+        pathname: '/img/**',
       },
     ],
   },

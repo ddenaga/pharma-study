@@ -47,7 +47,7 @@ function LiveResults(props) {
 
 	function checkStatus() {
 		setStudyStatus(true)
-		patient.forEach((patient) => {
+		patients.forEach((patient) => {
 			if (patient.treatment.numberOfDoses < 5) {
 				setStudyStatus(false)
 			}
