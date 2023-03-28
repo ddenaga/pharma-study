@@ -7,7 +7,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
-
+import favicon from "@/public/favicon.ico"
 export default function AllPatients(props) {
 	const { user, error, isLoading } = useUser();
 	const [viewType, setViewType] = useState(true);
@@ -90,7 +90,7 @@ export default function AllPatients(props) {
 													<div className="avatar">
 														<div className="mask mask-squircle h-12 w-12">
 															<Image
-																src={patient.pictureUrl}
+																src={patient.pictureUrl ? patient.pictureUrl : favicon}
 																width="50"
 																height="50"
 																alt="patient avatar"
