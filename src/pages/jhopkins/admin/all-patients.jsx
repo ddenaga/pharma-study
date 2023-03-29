@@ -81,7 +81,7 @@ export default function AllPatients(props) {
 									{props.data.items.map((patient) => (
 										<tr>
 											<th>
-												<Link href={`patient/edit/${patient._id}`}>
+												<Link href={`../../patient/edit/${patient._id}`}>
 													<FontAwesomeIcon icon={faPenToSquare} className="font-thin" />
 												</Link>
 											</th>
