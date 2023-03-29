@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 import PatientCardAppts from '@/components/patientCardAppts';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { setIn } from 'formik';
 function Appointments(props) {
 	const { user, error, isLoading } = useUser();
 	const [sortedPatients, setSortedPatients] = useState([]);
@@ -13,6 +14,7 @@ function Appointments(props) {
 	const [dose, setDose] = useState(false);
 	const [currentPatient, setCurrentPatient] = useState();
 	const [notes, setNotes] = useState();
+	const [index,setIndex] = useState()
 	useEffect(() => {
 		const patients = props.data;
 		const now = new Date().toISOString();
@@ -50,8 +52,14 @@ function Appointments(props) {
 				note: notes,
 			},
 		});
-		console.log(res);
-		console.log(notes);
+		const treatmentRes = await jhClient.entities.tracker.list({
+			filter: {
+				patientId: {
+					eq: currentPatient,
+				}
+			}
+		})
+		console.log(treatmentRes);
 	}
 	if (isLoading) return <div>Loading...</div>;
 	if (error) return <div>{error.message}</div>;
@@ -144,7 +152,7 @@ function Appointments(props) {
 			) : null}
 			<Sidebar />
 			<div className="w-full bg-gray-100">
-				<div className="flex justify-between">
+				<div className="flex justify-between" onClick={console.log(sortedPatients)}>
 					<div className="m-10">
 						<h1 className="text-5xl font-bold text-gray-600 text-gray-600">Appointments</h1>
 						<p className="mt-6 text-lg text-gray-500">You have the following appointments for today</p>
@@ -157,12 +165,14 @@ function Appointments(props) {
 					</Link>
 				</div>
 				<div className="flex flex-wrap justify-between">
-					{sortedPatients.map((patient) => (
+					{sortedPatients.map((patient,index) => (
 						<div
-							key={patient._id}
+							key={index}
 							onClick={() => {
 								setShowModal(true);
 								setCurrentPatient(patient._id);
+								setIndex(index)
+								console.log(index)
 							}}
 						>
 							<PatientCardAppts
