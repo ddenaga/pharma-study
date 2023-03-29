@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 import PatientList from '@/components/PatientList';
 
 const patient = {
-	name: 'Anthony',
+	name: 'Jess',
 	pictureUrl: '',
 	dob: '2000-01-01',
 	insuranceNumber: 'AC1234H',
@@ -26,16 +26,20 @@ const patient = {
 	},
 	allergies: [],
 	medications: [],
-	treatmentId: '',
 	familyHistory: [],
 	isEmployed: true,
 	isInsured: false,
 	icdHealthCodes: [],
 	visits: [
 		{
-			dateTime: '2023-03-08T09:15:00Z',
-			note: "He's sick",
-			hivViralLoad: '12.5',
+			dateTime: '2023-03-29T09:15:00Z',
+			note: "",
+			hivViralLoad: '',
+		},
+		{
+			dateTime: '2023-03-29T09:15:00Z',
+			note: "",
+			hivViralLoad: '',
 		},
 	],
 	isEligible: false,
