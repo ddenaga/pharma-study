@@ -17,6 +17,7 @@ export default function AllPatients(props) {
 		setViewType(!viewType);
 	};
 
+
 	return (
 		<div className="flex" id="site-content">
 			<Sidebar />
