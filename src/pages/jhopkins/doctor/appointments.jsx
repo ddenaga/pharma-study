@@ -158,7 +158,7 @@ function Appointments(props) {
 						<p className="mt-6 text-lg text-gray-500">You have the following appointments for today</p>
 					</div>
 					<Link
-						href="/jhopkins/new-appointment"
+						href="/jhopkins/doctor/new-appointment"
 						className="m-20 rounded-2xl border bg-teal-600 p-2 text-lg text-white"
 					>
 						+ New Appointment
