@@ -24,6 +24,7 @@
     "formik": "^2.2.9",
     "framer-motion": "^10.0.1",
     "fs": "^0.0.1-security",
+    "git": "^0.1.5",
     "next": "^13.2.4",
     "react": "^18.2.0",
     "react-calendar": "^4.1.0",
