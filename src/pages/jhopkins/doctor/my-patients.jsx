@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 import PatientList from '@/components/PatientList';
 
 const patient = {
-	name: 'Anthony',
+	name: 'Jess',
 	pictureUrl: '',
 	dob: '2000-01-01',
 	insuranceNumber: 'AC1234H',
@@ -26,16 +26,20 @@ const patient = {
 	},
 	allergies: [],
 	medications: [],
-	treatmentId: '',
 	familyHistory: [],
 	isEmployed: true,
 	isInsured: false,
 	icdHealthCodes: [],
 	visits: [
 		{
-			dateTime: '2023-03-08T09:15:00Z',
-			note: "He's sick",
-			hivViralLoad: '12.5',
+			dateTime: '2023-03-29T09:15:00Z',
+			note: '',
+			hivViralLoad: '',
+		},
+		{
+			dateTime: '2023-03-29T09:15:00Z',
+			note: '',
+			hivViralLoad: '',
 		},
 	],
 	isEligible: false,
@@ -70,53 +74,47 @@ export default function MyPatients(props) {
 	return (
 		<div className="flex" id="site-content">
 			<Sidebar />
-			<div className="w-full bg-gray-100 ">
-				<div className="mt-16 flex justify-between">
-					<h1 className="ml-10 text-4xl font-bold text-zinc-600" onClick={() => createPatient(patient)}>
-						My Patients
-					</h1>
-					<motion.a
-						whileHover={{ scale: 1.2 }}
-						href="#"
-						onClick={addPatient}
-						className="rounded-2xl border bg-teal-600 p-2 text-white"
-					>
-						+ New Patient
-					</motion.a>
-					<motion.span
-						onClick={deletePatients}
-						className="border bg-red-500 p-2 text-white"
-						whileHover={{ scale: 1.2 }}
-					>
-						Delete all Patient
-					</motion.span>
-				</div>
-				<div>
-					<form className="w-92 mt-10 ml-5 max-w-sm px-4">
-						<div className="relative">
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								className="absolute top-0 bottom-0 left-3 my-auto h-6 w-6 text-gray-400"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke="currentColor"
-							>
-								<path
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									strokeWidth={2}
-									d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+			<div className="w-full overflow-y-scroll bg-gray-50 px-20 py-12">
+				<h1 className="attention-voice mb-12" onClick={() => createPatient(patient)}>
+					My Patients
+				</h1>
+				<div className="mb-10 flex flex-row items-center justify-between">
+					<div className="max-w-sm">
+						<form className="">
+							<div className="relative">
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									className="absolute top-0 bottom-0 left-3 my-auto h-6 w-6 text-gray-400"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke="currentColor"
+								>
+									<path
+										strokeLinecap="round"
+										strokeLinejoin="round"
+										strokeWidth={2}
+										d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+									/>
+								</svg>
+								<input
+									type="text"
+									placeholder="Search"
+									className="w-full rounded-md border py-3 pl-12 pr-4 text-gray-500 outline-none  focus:border-indigo-600 focus:bg-white"
+									onChange={handleChange}
+									value={searchInput}
 								/>
-							</svg>
-							<input
-								type="text"
-								placeholder="Search"
-								className="w-full rounded-md border py-3 pl-12 pr-4 text-gray-500 outline-none  focus:border-indigo-600 focus:bg-white"
-								onChange={handleChange}
-								value={searchInput}
-							/>
-						</div>
-					</form>
+							</div>
+						</form>
+					</div>
+					<div className="">
+						<motion.a
+							whileHover={{ scale: 1.2 }}
+							href="/patient/create"
+							className="inline-flex items-center justify-center rounded-md border border-transparent bg-teal-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 focus:ring-offset-gray-100"
+						>
+							+ New Patient
+						</motion.a>
+					</div>
 				</div>
 				{/* sourced out to a separatecomponent to enabble search option */}
 				<PatientList patients={patients} searchInput={searchInput} />

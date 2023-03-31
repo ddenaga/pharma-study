@@ -12,15 +12,15 @@ const Routes = {
 		valid: [
 			'/jhopkins/admin/all-patients',
 			'/jhopkins/admin/live-results',
-			'/jhopkins/admin/create-patient',
+			'/patient/create',
 			'/jhopkins/doctor/my-patients',
 			'/jhopkins/doctor/appointments',
 			'/jhopkins/doctor/new-appointment',
 		],
-		validDynamic: ['/patient/'],
+		validDynamic: [`/patient/*`,],
 	},
 	fda: {
-		default: '/fda/assign-drugs',
+		default: '/fda/live-results',
 		valid: ['/fda/assign-drugs', '/fda/live-results'],
 	},
 	bavaria: {
