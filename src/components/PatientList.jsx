@@ -1,5 +1,5 @@
 import React from 'react';
-import PatientCard from '@/components/PatientCard';
+import PatientCard from '../components/PatientCard';
 
 export default function PatientList({ patients, searchInput }) {
 	const filteredData = patients.filter((patient) => {

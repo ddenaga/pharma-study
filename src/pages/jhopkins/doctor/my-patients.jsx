@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import Sidebar from "@/components/Sidebar";
-import { jhClient } from "@/lib/vendia.js";
+import Sidebar from "../../../components/Sidebar";
+import { jhClient } from "../../../lib/vendia";
 import { useUser } from "@auth0/nextjs-auth0/client";
-import createPatient from "@/lib/createPatient.js";
+import createPatient from "../../../lib/createPatient";
 import { motion } from "framer-motion";
-import PatientList from "@/components/PatientList";
+import PatientList from "../../../components/PatientList";
 
 const patient = {
   name: "Anthony",

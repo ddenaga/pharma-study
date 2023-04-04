@@ -13,6 +13,9 @@ module.exports = {
       '!<rootDir>/coverage/**',
     ],
     moduleNameMapper: {
+      // Handle module aliases
+      '^@/(.*)$': '<rootDir>/src/$1',
+      
       // Handle CSS imports (with CSS modules)
       // https://jestjs.io/docs/webpack#mocking-css-modules
       '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
