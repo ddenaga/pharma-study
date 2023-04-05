@@ -20,9 +20,9 @@ export async function getServerSideProps() {
 }
 
 export default function AssignDrugs({ data }) {
-  const [isDisabled,setIsDisabled] = useState(Array(data).fill(false))
+  const [isDisabled, setIsDisabled] = useState(Array(data).fill(false))
 
-  async function handleUpdate(patientId, drug,index) {
+  async function handleUpdate(patientId, drug, index) {
     const res = await fdaClient.entities.treatment.add({
       isGeneric: drug,
       numberOfDoses: 0,
@@ -47,16 +47,16 @@ export default function AssignDrugs({ data }) {
     const trackers = await jhClient.entities.tracker.list()
     const res = await jhClient.entities.treatment.list()
     const pat = await jhClient.entities.patient.list()
-    trackers.items.forEach((item) => {
-      const res = fdaClient.entities.tracker.remove(item._id)
-      console.log(res)
-    })
-    res.items.forEach((item) => {
-      const res = fdaClient.entities.treatment.remove(item._id)
-      console.log(res)
-    })
+    // trackers.items.forEach((item) => {
+    //   const res = fdaClient.entities.tracker.remove(item._id)
+    //   console.log(res)
+    // })
+    // res.items.forEach((item) => {
+    //   const res = fdaClient.entities.treatment.remove(item._id)
+    //   console.log(res)
+    // })
     pat.items.forEach((item) => {
-      const res = jhClient.entities.treatment.update({
+      const res = jhClient.entities.patient.update({
         _id: item._id,
         treatmentId: '0',
       })
@@ -85,7 +85,7 @@ export default function AssignDrugs({ data }) {
               </tr>
             </thead>
             <tbody>
-              {data.map((item,index) => (
+              {data.map((item, index) => (
                 <tr key={item._id}>
                   <td>{item._id}</td>
                   <td>{item.bloodPressure}</td>
@@ -96,7 +96,7 @@ export default function AssignDrugs({ data }) {
                   <td className="flex flex-col justify-center">{
                     item.treatmentId === null || item.treatmentId == '0' ?
                       <div className="flex justify-center" >
-                        <button className="btn btn-outline btn-info py-2 mr-2" onClick={() => handleUpdate(item._id, false,index)} disabled={isDisabled[index]}>Bavaria</button>
+                        <button className="btn btn-outline btn-info py-2 mr-2" onClick={() => handleUpdate(item._id, false, index)} disabled={isDisabled[index]}>Bavaria</button>
                         <button className="btn  btn-outline btn-info" disabled={isDisabled[index]} onClick={() => handleUpdate(item._id, true, index)} >Generic</button>
                       </div>
                       :

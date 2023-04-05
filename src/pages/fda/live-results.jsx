@@ -102,7 +102,7 @@ function LiveResults(props) {
 						:
 						<div className=' h-64 rounded-lg border border-gray-300 shadow-md border-dashed flex flex-col items-center justify-around'>
 							<span className='text-2xl'>No tracking information yet</span>
-							<Link href="/assign-drugs"><button className="btn btn-outline btn-info">Assign Drugs</button></Link>
+							<Link href="/fda/assign-drugs"><button className="btn btn-outline btn-info">Assign Drugs</button></Link>
 						</div>
 					}
 				</div>

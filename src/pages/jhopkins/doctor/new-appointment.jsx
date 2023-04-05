@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Formik, Form, Field } from "formik";
 import Sidebar from "@/components/Sidebar";
 import { jhClient } from "@/lib/vendia.js";
@@ -7,7 +7,7 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
 
-const timeSlots = Array.from({ length: (40-9) }, (_, i) => {
+const timeSlots = Array.from({ length: (40 - 9) }, (_, i) => {
   const hour = Math.floor((i + 8) / 2);
   const minute = ((i + 8) % 2) * 30;
   const amPm = hour < 12 ? 'AM' : 'PM';
@@ -24,6 +24,7 @@ const ScheduleAppointment = ({ data }) => {
   const handleSubmit = (values, { setSubmitting }) => {
     setAppointments([...appointments, values]);
     setSubmitting(false);
+    console.log(values)
   };
 
   useEffect(() => {
@@ -45,7 +46,7 @@ const ScheduleAppointment = ({ data }) => {
       })
     );
   }, [appointments]);
-  
+
   const onDateChange = (value) => {
     setSelectedDate(value);
   };
@@ -53,7 +54,7 @@ const ScheduleAppointment = ({ data }) => {
   const onTimeClick = (time) => {
     setSelectedTime(time);
   };
- 
+
   return (
     <div className="flex" id="site-content">
       <Sidebar />
@@ -68,8 +69,8 @@ const ScheduleAppointment = ({ data }) => {
           onSubmit={handleSubmit}
 
         >
-          {({ isSubmitting, setFieldValue }) => (            
-             <Form className="space-y-4">
+          {({ isSubmitting, setFieldValue }) => (
+            <Form className="space-y-4">
               <div className="flex flex-col">
                 <label htmlFor="patientId" className="mb-1">Select Patient:</label>
                 <Field as="select" name="patientId" className="p-2 border">
@@ -82,48 +83,47 @@ const ScheduleAppointment = ({ data }) => {
                 </Field>
               </div>
               <div className="flex flex-col md:flex-row md:space-x-4">
-              <div className="border rounded p-2">
-              <div className="flex flex-col md:flex-row md:space-x-4">
-              <div className="flex flex-col">
-                <label htmlFor="appointmentDate" className="mb-1">
-                  Select Date:
-                </label>
-                <div style={{ width: "fit-content" }}>
-                  <Calendar
-                    value={selectedDate}
-                    onChange={(value) => {
-                      onDateChange(value);
-                      setFieldValue("appointmentDate", value);
-                    }}
-                  />
+                <div className="border rounded p-2">
+                  <div className="flex flex-col md:flex-row md:space-x-4">
+                    <div className="flex flex-col">
+                      <label htmlFor="appointmentDate" className="mb-1">
+                        Select Date:
+                      </label>
+                      <div style={{ width: "fit-content" }}>
+                        <Calendar
+                          value={selectedDate}
+                          onChange={(value) => {
+                            onDateChange(value);
+                            setFieldValue("appointmentDate", value);
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <div className="flex flex-col">
+                      <label htmlFor="appointmentTime" className="mb-1">
+                        Select Time:
+                      </label>
+                      <div className="h-50 overflow-y-scroll">
+                        <div className="grid grid-cols-4 gap-2">
+                          {timeSlots.map((time, index) => (
+                            <div
+                              key={index}
+                              onClick={() => {
+                                setSelectedTime(time);
+                                setFieldValue("appointmentTime", time);
+                              }}
+                              className={`p-2 text-center border rounded ${selectedTime === time ? "bg-blue-500 text-white" : ""
+                                }`}
+                            >
+                              {time}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div className="flex flex-col">
-          <label htmlFor="appointmentTime" className="mb-1">
-            Select Time:
-          </label>
-          <div className="h-50 overflow-y-scroll">
-            <div className="grid grid-cols-4 gap-2">
-              {timeSlots.map((time, index) => (
-                <div
-                  key={index}
-                  onClick={() => {
-                    setSelectedTime(time);
-                    setFieldValue("appointmentTime", time);
-                  }}
-                  className={`p-2 text-center border rounded ${
-                    selectedTime === time ? "bg-blue-500 text-white" : ""
-                  }`}
-                >
-                  {time}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    </div>
               <button
                 type="submit"
                 disabled={isSubmitting}
@@ -131,7 +131,7 @@ const ScheduleAppointment = ({ data }) => {
               >
                 Create New Appointment
               </button>
-             
+
             </Form>
           )}
         </Formik>
