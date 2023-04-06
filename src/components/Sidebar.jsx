@@ -6,7 +6,11 @@ import { useUser } from '@auth0/nextjs-auth0/client';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Logo from './icons/Logo';
-
+import Reports from './icons/Reports';
+import SendDrugs from './icons/SendDrugs';
+import AssignDrugs from './icons/AssignDrugs';
+import Live from './icons/Live';
+import AllPatients from './icons/AllPatients';
 export default function Sidebar() {
 	const [date, setDate] = useState(null);
 	const [time, setTime] = useState(null);
@@ -23,11 +27,11 @@ export default function Sidebar() {
 			return (
 				<nav>
 					<ul className="space-y-6 uppercase">
-						<motion.li className="flex gap-2" whileHover={{ scale: 1.1 }}>
+						<motion.li className="flex gap-2 hover:scale-105" whileHover={{ scale: 1.1 }}>
 							<Calendar className="hover:bg-green-500" />
 							<Link href="/jhopkins/doctor/appointments">Appointments</Link>
 						</motion.li>
-						<motion.li className="flex gap-2" whileHover={{ scale: 1.1 }}>
+						<motion.li className="flex gap-2 hover:scale-105" whileHover={{ scale: 1.1 }}>
 							<Patient />
 							<Link href="/jhopkins/doctor/my-patients">My Patients</Link>
 						</motion.li>
@@ -39,15 +43,15 @@ export default function Sidebar() {
 			return (
 				<nav>
 					<ul className="space-y-6 uppercase">
-						<li className="flex gap-2">
-							<Calendar className="hover:bg-green-500" />
+						<li className="flex gap-2 hover:scale-105">
+							<AllPatients />
 							<Link href="/jhopkins/admin/all-patients">All Patients</Link>
 						</li>
-						<li className="flex gap-2">
-							<Patient />
+						<li className="flex gap-2 hover:scale-105">
+							<Live />
 							<Link href="/jhopkins/admin/live-results">Live Results</Link>
 						</li>
-						<li className="flex gap-2">
+						<li className="flex gap-2 hover:scale-105">
 							<Patient />
 							<Link href="/patient/create">Create patient</Link>
 						</li>
@@ -59,12 +63,12 @@ export default function Sidebar() {
 			return (
 				<nav>
 					<ul className="space-y-6 uppercase">
-						<li className="flex gap-2">
-							<Calendar className="hover:bg-green-500" />
+						<li className="flex gap-2 hover:scale-105">
+							<AssignDrugs />
 							<Link href="/fda/assign-drugs">Assign Drugs</Link>
 						</li>
-						<li className="flex gap-2">
-							<Patient />
+						<li className="flex gap-2 hover:scale-105">
+							<Live />
 							<Link href="/fda/live-results">Live Results</Link>
 						</li>
 					</ul>
@@ -75,16 +79,12 @@ export default function Sidebar() {
 			return (
 				<nav>
 					<ul className="space-y-6 uppercase">
-						<li className="flex gap-2">
-							<Calendar className="hover:bg-green-500" />
+						<li className="flex gap-2 hover:scale-105">
+							<SendDrugs />
 							<Link href="/bavaria/send-drugs">Send Drugs</Link>
 						</li>
-						<li className="flex gap-2">
-							<Patient />
-							<Link href="/bavaria/trial-results">Trial Results</Link>
-						</li>
-						<li className="flex gap-2">
-							<Patient />
+						<li className="flex gap-2 hover:scale-105">
+							<Reports />
 							<Link href="/bavaria/reports">Reports</Link>
 						</li>
 					</ul>
@@ -96,7 +96,7 @@ export default function Sidebar() {
 		<aside className="flex w-full max-w-xs flex-col justify-between border-r border-slate-400">
 			<div className="flex flex-col gap-20 p-5">
 				<div id="logo" className="max-w-[50px]">
-					<Link href="/">
+					<Link href="/" className='hover:scale-105'>
 						<Logo />
 					</Link>
 				</div>
@@ -117,7 +117,7 @@ export default function Sidebar() {
 						</picture>
 						<div>
 							<p className="font-medium">{user?.name}</p>
-							<p>Doctor Specialist</p>
+							{user?.role == 'doctor' && <p>Doctor Specialist</p>}
 						</div>
 					</div>
 					<Link href="/api/auth/logout" className="mt-1">
