@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "@/components/Sidebar";
 import { bavariaClient } from "@/lib/vendia";
 import { Chart as ChartJS } from 'chart.js/auto'
@@ -10,13 +10,24 @@ import PieChart from "@/components/chartjs/PieChart";
 Chart.register(CategoryScale);
 
 
-export default function Reports(props) {
+export default function Reports({ data }) {
+  const [patients, setPatients] = useState(data.patients.items)
+  const [treatments, setTreatments] = useState(data.treatments.items)
+  var genericTotal = 0, bavariaTotal = 0
 
+  treatments.map((treatment) => {
+    if (treatment.isGeneric == true) {
+      genericTotal += 1
+    }
+    else {
+      bavariaTotal++
+    }
+  })
   const barData = {
     labels: ['Drug'],
     datasets: [{
       label: 'Bavaria',
-      data: [8],
+      data: [bavariaTotal],
       backgroundColor: [
         'rgba(66, 108, 245, 0.5)',
 
@@ -28,7 +39,7 @@ export default function Reports(props) {
     },
     {
       label: 'Generic',
-      data: [5],
+      data: [genericTotal],
       backgroundColor: [
         'rgba(189, 4, 96, 0.5)',
 
@@ -40,40 +51,27 @@ export default function Reports(props) {
     }
     ]
   };
+
+  const lineDataSet = patients.map((patient) => {
+    var viralLoadReadings = 0
+    if (patient.visits != null) {
+      viralLoadReadings = patient?.visits?.map(visit => ({ x: visit?.dateTime.substring(0, 10), y: visit?.hivViralLoad }))
+    }
+    return {
+      label: patient._id.slice(-5),
+      data: viralLoadReadings,
+      //data: patient.viralLoad,
+      fill: false,
+      borderColor: 'rgb(75, 192, 192)',
+      tension: 0.1
+    };
+  })
   const lineData = {
-    labels: ['January', "February", "March", "April", "May"],
-    datasets: [
-      {
-        label: 'John',
-        data: [1000, 889, 554, 350, 0],
-        fill: false,
-        borderColor: 'rgba(66, 108, 245, 0.5)',
-        tension: 0.1
-      },
-      {
-        label: 'Mary',
-        data: [1000, 784, 561, 260, 0],
-        fill: false,
-        borderColor: 'rgba(66, 108, 245, 0.5)',
-        tension: 0.1
-      },
-      {
-        label: 'Alex',
-        data: [1000, 988, 685, 895, 764],
-        fill: false,
-        borderColor: 'rgba(66, 108, 245, 0.5)',
-        tension: 0.1
-      },
-      {
-        label: "Bob",
-        data: [1000, 854, 561, 157, 0],
-        fill: false,
-        borderColor: 'rgba(66, 108, 245, 0.5)',
-        tension: 0.1
-      },
-    ]
+    labels: [],
+    datasets: lineDataSet
   };
   const pieData = {
+    //patients.map(patient => patient.address.city) - bavaria client does not have access to addres info
     labels: ['Sacramento', 'New York', 'Ontario', 'Atlanda', 'Reno'],
     datasets: [
       {
@@ -92,14 +90,16 @@ export default function Reports(props) {
   return (
     <div className="flex" id="site-content">
       <Sidebar />
-      <div className="bg-gray-100 w-full overflow-y-scroll" onClick={console.log(props)}>
+      <div className="bg-gray-100 w-full overflow-y-scroll" onClick={console.log(data)}>
         <div className="flex justify-between items-center ">
           <h1 className="text-4xl m-20">Reports</h1>
-          <span className="inline-block animate-pulse rounded-full py-2 px-4 bg-red-600 text-white text-md mr-20 shadow-lg">Study still Ongoing</span>
+          {data.studyIsDone ? <span className="inline-block rounded-full py-2 px-4 bg-green-600 text-white text-md mr-20 shadow-lg">Study Is Complete</span> :
+            <span className="inline-block animate-pulse rounded-full py-2 px-4 bg-red-600 text-white text-md mr-20 shadow-lg">Study still Ongoing</span>
+          }
         </div>
         <div className=" mx-20 grid grid-cols-12 gap-20">
-          <BarChart chartData={barData} />
           <LineChart chartData={lineData} />
+          <BarChart chartData={barData} />
           <PieChart chartData={pieData} />
         </div>
       </div>
@@ -108,10 +108,18 @@ export default function Reports(props) {
 }
 
 export async function getServerSideProps() {
-  const myData = await bavariaClient.entities.patient.list();
+  var studyIsDone = true
+  const patients = await bavariaClient.entities.patient.list();
+  const treatments = await bavariaClient.entities.treatment.list();
+  treatments.items.map((treatment) => {
+    if (treatment.numberOfDoses > 0) {
+      studyIsDone = false
+    }
+  }
+  )
   return {
     props: {
-      data: myData,
+      data: { studyIsDone, patients, treatments },
     },
   };
 }

@@ -21,7 +21,7 @@ export default function SendDrugs(props) {
 	const [treatments, setTreatments] = useState(items);
 
 	return (
-		<div className="flex" id="site-content">
+		<div className="flex" id="site-content" >
 			<Sidebar />
 			<div className="w-full bg-gray-100">
 				<table className="table-zebra table w-full shadow-xl">
