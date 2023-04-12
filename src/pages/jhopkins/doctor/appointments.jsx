@@ -9,54 +9,76 @@ import Link from 'next/link';
 export async function getServerSideProps() {
 	const data = await jhClient.entities.patient.list();
 
-	let patients = data.items;
-
-	// Get current date
-	const currentDate = new Date();
-
-	// Get patients who have an appointment today
-	patients = patients.filter((patient) => {
-		return patient.visits.some((visit) => {
-			const visitDate = new Date(visit.dateTime);
-			return (
-				visitDate.getFullYear() === currentDate.getFullYear() &&
-				visitDate.getMonth() === currentDate.getMonth() &&
-				visitDate.getDate() === currentDate.getDate() &&
-				(!visit.hivViralLoad || visit.hivViralLoad.length === 0) // Dose is given once the viral load has been measured
-			);
-		});
-	});
+	const patients = data.items;
+	const patientVisits = getPatientVisitsToday(patients);
 
 	return {
 		props: {
 			patients,
+			patientVisits,
 		},
 	};
+}
+
+function getPatientVisitsToday(patients) {
+	// Get current date
+	const currentDate = new Date();
+
+	let patientVisits = [];
+	for (let i = 0; i < patients.length; i++) {
+		for (let j = 0; j < patients[i].visits.length; j++) {
+			patientVisits.push([i, j]);
+		}
+	}
+
+	patientVisits = patientVisits.filter((pv) => {
+		const visit = patients[pv[0]].visits[pv[1]];
+		const visitDate = new Date(visit.dateTime);
+
+		return (
+			visitDate.getFullYear() === currentDate.getFullYear() &&
+			visitDate.getMonth() === currentDate.getMonth() &&
+			visitDate.getDate() === currentDate.getDate() &&
+			(!visit.hivViralLoad || visit.hivViralLoad.length === 0) // Dose is given once the viral load has been measured
+		);
+	});
+
+	return patientVisits;
 }
 
 export default function Appointments(props) {
 	const { patients } = props;
 
 	const { user, error, isLoading } = useUser();
+
+	const [patientVisits, setPatientVisits] = useState(props.patientVisits);
+
 	const [showModal, setShowModal] = useState(false);
-	const [reading, setReading] = useState();
-	const [currentPatient, setCurrentPatient] = useState();
-	const [notes, setNotes] = useState();
-	const [index, setIndex] = useState();
+	const [patientVisit, setPatientVisit] = useState([]);
+
+	const [reading, setReading] = useState('');
+	const [note, setNote] = useState('');
 
 	async function handleSubmit(e) {
 		e.preventDefault();
 		setShowModal(false);
 
-		// TODO: Update the patient's visit
-		const res = await jhClient.entities.patient.update({
-			_id: currentPatient,
-			visits: {
-				dateTime: '2023-03-06T09:15:00Z',
-				hivViralLoad: reading,
-				note: notes,
-			},
-		});
+		// Get patient and visit
+		const patient = patients[patientVisit[0]];
+		const visit = patient.visits[patientVisit[1]];
+
+		// Update the visit
+		visit.hivViralLoad = reading;
+		visit.note = note;
+
+		// TODO: Update the patient's visit in Vendia
+		const updatePatient = (({ _id, visits }) => ({ _id, visits }))(patient);
+		const res = await jhClient.entities.patient.update(updatePatient);
+		// console.log(updatePatient);
+		console.log(res);
+
+		// Update the patientVisits
+		setPatientVisits(getPatientVisitsToday(patients));
 	}
 
 	if (isLoading) return <div>Loading...</div>;
@@ -96,7 +118,8 @@ export default function Appointments(props) {
 												<input
 													required
 													type="text"
-													name="name"
+													name="reading"
+													value={reading}
 													className="ml-16 border py-2"
 													onChange={(e) => setReading(e.target.value)}
 												/>
@@ -107,9 +130,10 @@ export default function Appointments(props) {
 												Note:
 												<input
 													type="textarea"
-													name="notes"
+													name="note"
+													value={note}
 													className="ml-28 border py-10"
-													onChange={(e) => setNotes(e.target.value)}
+													onChange={(e) => setNote(e.target.value)}
 												/>
 											</label>
 										</div>
@@ -140,9 +164,19 @@ export default function Appointments(props) {
 			) : null}
 			<Sidebar />
 			<div className="w-full overflow-y-scroll bg-gray-50 px-20 py-12">
-				<div className="mb-12 flex justify-between" onClick={() => console.log(patients)}>
+				<div className="mb-12 flex justify-between">
 					<div className="">
 						<h1 className="attention-voice mb-6">Appointments</h1>
+
+						<button
+							className="btn"
+							onClick={() => {
+								console.log(patientVisits);
+							}}
+						>
+							Click me
+						</button>
+
 						<p className="text-lg text-gray-500">You have the following appointments for today</p>
 					</div>
 					<div>
@@ -155,25 +189,24 @@ export default function Appointments(props) {
 					</div>
 				</div>
 				<div className="flex flex-wrap justify-between">
-					{patients.map((patient, index) => (
-						<div
-							key={index}
-							onClick={() => {
-								setShowModal(true);
-								setCurrentPatient(patient._id);
-								setIndex(index);
-								console.log(index);
-							}}
-						>
-							<PatientCardAppts
-								name={patient.name}
-								dob={patient.dob}
-								familyHistory={patient.familyHistory}
-								id={patient._id}
-								eligibility={true}
-							/>
-						</div>
-					))}
+					{patientVisits.map((pv, index) => {
+						const patient = patients[pv[0]];
+						const visit = patient.visits[pv[1]];
+
+						return (
+							<div
+								key={index}
+								onClick={() => {
+									setPatientVisit(pv);
+									setShowModal(true);
+									setReading(visit.hivViralLoad);
+									setNote(visit.note);
+								}}
+							>
+								<PatientCardAppts patient={patient} visit={visit} />
+							</div>
+						);
+					})}
 				</div>
 			</div>
 		</div>
