@@ -5,64 +5,63 @@ import React, { useState, useEffect } from 'react';
 import PatientCardAppts from '@/components/patientCardAppts';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { setIn } from 'formik';
-function Appointments(props) {
+
+export async function getServerSideProps() {
+	const data = await jhClient.entities.patient.list();
+
+	let patients = data.items;
+
+	// Get current date
+	const currentDate = new Date();
+
+	// Get patients who have an appointment today
+	patients = patients.filter((patient) => {
+		return patient.visits.some((visit) => {
+			const visitDate = new Date(visit.dateTime);
+			return (
+				visitDate.getFullYear() === currentDate.getFullYear() &&
+				visitDate.getMonth() === currentDate.getMonth() &&
+				visitDate.getDate() === currentDate.getDate() &&
+				(!visit.hivViralLoad || visit.hivViralLoad.length === 0) // Dose is given once the viral load has been measured
+			);
+		});
+	});
+
+	return {
+		props: {
+			patients,
+		},
+	};
+}
+
+export default function Appointments(props) {
+	const { patients } = props;
+
 	const { user, error, isLoading } = useUser();
-	const [sortedPatients, setSortedPatients] = useState([]);
 	const [showModal, setShowModal] = useState(false);
-	const [hivReading, setHivReading] = useState();
-	const [dose, setDose] = useState(false);
+	const [reading, setReading] = useState();
 	const [currentPatient, setCurrentPatient] = useState();
 	const [notes, setNotes] = useState();
 	const [index, setIndex] = useState();
-	useEffect(() => {
-		const patients = props.data;
-		const now = new Date().toISOString();
-		const clientOffset = new Date().getTimezoneOffset();
-		const formatedNow = new Date(now);
-		let appt;
-		const scheduledToday = Array();
-		if (patients.length > 0) {
-			for (let i = 0; i < patients.length; i++) {
-				if (patients[i].visits.length > 0) {
-					for (let j = 0; j < patients[i].visits.length; j++) {
-						if (patients[i].visits[j] != undefined) {
-							appt = new Date(patients[i].visits[j].dateTime).toISOString();
-							let formatedAppt = new Date(appt);
-							if (formatedAppt.getDate() == formatedNow.getDate()) {
-								scheduledToday.push(patients[i]);
-							}
-						}
-					}
-				}
-			}
-		}
-		setSortedPatients(scheduledToday);
-		console.log(sortedPatients);
-	}, [props]);
 
 	async function handleSubmit(e) {
 		e.preventDefault();
 		setShowModal(false);
+
+		// TODO: Update the patient's visit
 		const res = await jhClient.entities.patient.update({
 			_id: currentPatient,
 			visits: {
 				dateTime: '2023-03-06T09:15:00Z',
-				hivViralLoad: hivReading,
+				hivViralLoad: reading,
 				note: notes,
 			},
 		});
-		const treatmentRes = await jhClient.entities.tracker.list({
-			filter: {
-				patientId: {
-					eq: currentPatient,
-				},
-			},
-		});
-		console.log(treatmentRes);
 	}
+
 	if (isLoading) return <div>Loading...</div>;
 	if (error) return <div>{error.message}</div>;
+
 	return (
 		<div className="flex" id="site-content">
 			{showModal ? (
@@ -78,7 +77,7 @@ function Appointments(props) {
 							<div className="relative flex w-full flex-col rounded-lg border-0 bg-white shadow-lg outline-none focus:outline-none">
 								{/*header*/}
 								<div className="flex items-start justify-between rounded-t border-b border-solid border-slate-200 p-5">
-									<h3 className="text-3xl font-semibold">Enter Dose & HIV Reading</h3>
+									<h3 className="text-3xl font-semibold">Enter viral load and note</h3>
 									<button
 										className="float-right ml-auto border-0 bg-transparent p-1 text-3xl font-semibold leading-none text-black opacity-5 outline-none focus:outline-none"
 										onClick={() => setShowModal(false)}
@@ -93,30 +92,19 @@ function Appointments(props) {
 									<div className="relative flex flex-col justify-between p-6">
 										<div>
 											<label className="mr-2">
-												Hiv Reading:
+												Viral load:
 												<input
 													required
 													type="text"
 													name="name"
 													className="ml-16 border py-2"
-													onChange={(e) => setHivReading(e.target.value)}
+													onChange={(e) => setReading(e.target.value)}
 												/>
 											</label>
 										</div>
 										<div className="mt-5">
 											<label>
-												Adminstered Dose:
-												<input
-													type="checkbox"
-													name="doseAdministered"
-													className="ml-5 p-5"
-													onClick={(e) => setDose(!dose)}
-												/>
-											</label>
-										</div>
-										<div className="mt-5">
-											<label>
-												Notes:
+												Note:
 												<input
 													type="textarea"
 													name="notes"
@@ -152,7 +140,7 @@ function Appointments(props) {
 			) : null}
 			<Sidebar />
 			<div className="w-full overflow-y-scroll bg-gray-50 px-20 py-12">
-				<div className="mb-12 flex justify-between" onClick={console.log(sortedPatients)}>
+				<div className="mb-12 flex justify-between" onClick={() => console.log(patients)}>
 					<div className="">
 						<h1 className="attention-voice mb-6">Appointments</h1>
 						<p className="text-lg text-gray-500">You have the following appointments for today</p>
@@ -167,7 +155,7 @@ function Appointments(props) {
 					</div>
 				</div>
 				<div className="flex flex-wrap justify-between">
-					{sortedPatients.map((patient, index) => (
+					{patients.map((patient, index) => (
 						<div
 							key={index}
 							onClick={() => {
@@ -190,14 +178,4 @@ function Appointments(props) {
 			</div>
 		</div>
 	);
-}
-
-export default Appointments;
-export async function getServerSideProps() {
-	const myData = await jhClient.entities.patient.list();
-	return {
-		props: {
-			data: myData.items,
-		},
-	};
 }
