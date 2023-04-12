@@ -9,7 +9,7 @@ export default function patient_card({ name, dob, familyHistory, img, id, eligib
             <div>
                 <div className='flex flex-col'>
                     <span className='text-2xl'>{name}</span>
-                    <span className='text-gray-400'>{dob}</span>
+                    <span className='text-gray-400'>{dob.split('T')[0]}</span>
                     <span className='text-gray-400'>{familyHistory}</span>
                 </div>
                 {/* <div>
