@@ -10,15 +10,19 @@ export async function getServerSideProps() {
 			},
 		},
 	});
+
+	const patients = data.items;
+
 	return {
 		props: {
-			data: data.items,
+			patients,
 		},
 	};
 }
 
-export default function AssignDrugs({ data }) {
-	const [isDisabled, setIsDisabled] = useState(Array(data).fill(false));
+export default function AssignDrugs(props) {
+	const { patients } = props;
+	const [isDisabled, setIsDisabled] = useState(Array(patients).fill(false));
 
 	async function handleUpdate(patientId, drug, index) {
 		const res = await fdaClient.entities.treatment.add({
@@ -40,6 +44,7 @@ export default function AssignDrugs({ data }) {
 		console.log('click called');
 	}
 
+	// NOTE: Used to reset and re-assign drugs to patients
 	async function deleteTracks() {
 		console.log('called');
 		const trackers = await jhClient.entities.tracker.list();
@@ -47,18 +52,18 @@ export default function AssignDrugs({ data }) {
 		const pat = await jhClient.entities.patient.list();
 		trackers.items.forEach((item) => {
 			const res = fdaClient.entities.tracker.remove(item._id);
-			console.log(res);
+			// console.log(res);
 		});
 		res.items.forEach((item) => {
 			const res = fdaClient.entities.treatment.remove(item._id);
-			console.log(res);
+			// console.log(res);
 		});
 		pat.items.forEach((item) => {
-			const res = jhClient.entities.treatment.update({
+			const res = fdaClient.entities.patient.update({
 				_id: item._id,
-				treatmentId: '0',
+				treatmentId: '',
 			});
-			console.log(res);
+			// console.log(res);
 		});
 		console.log(pat.items);
 	}
@@ -66,10 +71,8 @@ export default function AssignDrugs({ data }) {
 		<div className="flex" id="site-content">
 			<Sidebar />
 			<div className="w-full overflow-y-scroll bg-gray-50 px-20 py-12">
-				<div className="" onClick={console.log(data)}>
-					<h1 className="attention-voice mb-12" onClick={deleteTracks}>
-						Assign Drugs
-					</h1>
+				<div className="">
+					<h1 className="attention-voice mb-12">Assign Drugs</h1>
 				</div>
 				<div className="scrollbar xl:no-scrollbar -mx-4 mt-8 overflow-x-scroll shadow ring-1 ring-black ring-opacity-5 sm:-mx-6 md:mx-0 md:rounded-lg">
 					<table className="min-w-full divide-y divide-gray-300">
@@ -102,22 +105,22 @@ export default function AssignDrugs({ data }) {
 							</tr>
 						</thead>
 						<tbody className="divide-y divide-gray-200 bg-white">
-							{data.map((item, index) => (
-								<tr key={item._id}>
+							{patients.map((patient, index) => (
+								<tr key={patient._id}>
 									<td className="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6">
-										{item._id}
+										{patient._id}
 									</td>
-									<td className="px-3 py-4 text-sm text-gray-500">{item.bloodPressure}</td>
-									<td className="px-3 py-4 text-sm text-gray-500">{item.height}</td>
-									<td className="px-3 py-4 text-sm text-gray-500">{item.weight}</td>
-									<td className="px-3 py-4 text-sm text-gray-500">{item.oxygenSaturation}</td>
-									<td className="px-3 py-4 text-sm text-gray-500">{item.temperature}</td>
+									<td className="px-3 py-4 text-sm text-gray-500">{patient.bloodPressure}</td>
+									<td className="px-3 py-4 text-sm text-gray-500">{patient.height}</td>
+									<td className="px-3 py-4 text-sm text-gray-500">{patient.weight}</td>
+									<td className="px-3 py-4 text-sm text-gray-500">{patient.oxygenSaturation}</td>
+									<td className="px-3 py-4 text-sm text-gray-500">{patient.temperature}</td>
 									<td className="px-3 py-4 text-sm text-gray-500">
-										{item.treatmentId === null || item.treatmentId == '0' ? (
+										{!patient.treatmentId || patient.treatmentId.length === 0 ? (
 											<div className="flex gap-2">
 												<button
 													className="inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-30"
-													onClick={() => handleUpdate(item._id, false, index)}
+													onClick={() => handleUpdate(patient._id, false, index)}
 													disabled={isDisabled[index]}
 												>
 													Bavaria
@@ -125,7 +128,7 @@ export default function AssignDrugs({ data }) {
 												<button
 													className="inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-30"
 													disabled={isDisabled[index]}
-													onClick={() => handleUpdate(item._id, true, index)}
+													onClick={() => handleUpdate(patient._id, true, index)}
 												>
 													Generic
 												</button>
