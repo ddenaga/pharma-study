@@ -19,7 +19,13 @@ export default function patient_card({ patient, visit }) {
 				</div>
 				{/* TODO change eligibility to icons */}
 				<div className="flex h-full flex-col justify-between ">
-					<Image src="/../public/favicon.ico" width="50" height="50" alt="patient avatar" />
+					<Image
+						src={patient.pictureUrl == '' ? '/../public/favicon.ico' : patient.pictureUrl}
+						width="50"
+						height="50"
+						alt="patient avatar"
+						className="rounded-full"
+					/>
 				</div>
 			</div>
 		</div>
