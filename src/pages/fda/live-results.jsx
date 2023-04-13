@@ -59,6 +59,11 @@ function LiveResults(props) {
 			}
 		});
 	}
+
+	function isNumber(s) {
+		return /^\d+$/.test(s);
+	}
+
 	useEffect(() => {
 		checkStatus();
 		fdaClient.entities.treatment.onUpdate(({ result }) => {
@@ -132,25 +137,26 @@ function LiveResults(props) {
 													<td className="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6">
 														{pr.patient._id}
 													</td>
+													{/* Doses */}
 													<td className="px-3 py-4 text-sm text-gray-500">
 														{
-															pr.patient.visits.filter(
-																(visit) => visit.hivViralLoad != '',
+															pr.patient.visits.filter((visit) =>
+																isNumber(visit.hivViralLoad),
 															).length
 														}{' '}
 														/ {pr.treatment.numberOfDoses}
 														<motion.progress
 															animate={{ x: [50, 0] }}
 															className={
-																pr.patient.visits.filter(
-																	(visit) => visit.hivViralLoad != '',
+																pr.patient.visits.filter((visit) =>
+																	isNumber(visit.hivViralLoad),
 																).length >= pr.treatment.numberOfDoses
 																	? 'progress progress-success block w-40'
 																	: 'progress progress-warning  block w-40'
 															}
 															value={
-																(pr.patient.visits.filter(
-																	(visit) => visit.hivViralLoad != '',
+																(pr.patient.visits.filter((visit) =>
+																	isNumber(visit.hivViralLoad),
 																).length /
 																	pr.treatment.numberOfDoses) *
 																100
@@ -158,27 +164,15 @@ function LiveResults(props) {
 															max="100"
 														></motion.progress>
 													</td>
+													{/* Last reading */}
 													<td className="px-3 py-4 text-sm text-gray-500">
-														{/* {pr.patient.visits == null
-															? 'No Reading yet'
-															: pr.patient.visits[0].hivViralLoad} */}
 														{(() => {
 															const visits = pr.patient.visits;
-															if (
-																!visits.some(
-																	(visit) =>
-																		!isNaN(visit.hivViralLoad) &&
-																		visit.hivViralLoad,
-																)
-															)
+															if (!visits.some((visit) => isNumber(visit.hivViralLoad)))
 																return 'No reading yet';
 
 															const lastVisit = visits
-																.filter(
-																	(visit) =>
-																		!isNaN(visit.hivViralLoad) &&
-																		visit.hivViralLoad,
-																)
+																.filter((visit) => isNumber(visit.hivViralLoad))
 																.reduce((last, curr) =>
 																	new Date(last.dateTime) > new Date(curr.dateTime)
 																		? last
@@ -188,8 +182,11 @@ function LiveResults(props) {
 															return lastVisit.hivViralLoad;
 														})()}
 													</td>
+													{/* Status */}
 													<td className="px-3 py-4 text-sm text-gray-500">
-														{pr.treatment.numberOfDoses >= 5 ? (
+														{pr.patient.visits.filter((visit) =>
+															isNumber(visit.hivViralLoad),
+														).length >= pr.treatment.numberOfDoses ? (
 															<motion.span
 																animate={{ scale: [1, 2, 1] }}
 																transition={{ duration: 0.2 }}
@@ -207,6 +204,7 @@ function LiveResults(props) {
 															</motion.span>
 														)}
 													</td>
+													{/* Medication */}
 													<td className="px-3 py-4 text-sm text-gray-500">
 														{pr.treatment.isGeneric == true ? 'Generic' : 'Bavaria'}
 													</td>
