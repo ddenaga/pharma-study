@@ -9,7 +9,7 @@ export default function PatientCard(props) {
 				<div className="flex flex-col justify-between gap-8">
 					<div className="flex flex-col">
 						<span className="text-base font-semibold leading-6 text-gray-900">{patient.name}</span>
-						<span className="text-sm text-gray-500">{patient.dob}</span>
+						<span className="text-sm text-gray-500">{patient.dob.split('T')[0]}</span>
 						<span className="text-sm text-gray-500">{patient.familyHistory}</span>
 					</div>
 					<div>

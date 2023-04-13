@@ -5,64 +5,85 @@ import React, { useState, useEffect } from 'react';
 import PatientCardAppts from '@/components/patientCardAppts';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { setIn } from 'formik';
-function Appointments(props) {
-	const { user, error, isLoading } = useUser();
-	const [sortedPatients, setSortedPatients] = useState([]);
-	const [showModal, setShowModal] = useState(false);
-	const [hivReading, setHivReading] = useState();
-	const [dose, setDose] = useState(false);
-	const [currentPatient, setCurrentPatient] = useState();
-	const [notes, setNotes] = useState();
-	const [index, setIndex] = useState();
-	useEffect(() => {
-		const patients = props.data;
-		const now = new Date().toISOString();
-		const clientOffset = new Date().getTimezoneOffset();
-		const formatedNow = new Date(now);
-		let appt;
-		const scheduledToday = Array();
-		if (patients.length > 0) {
-			for (let i = 0; i < patients.length; i++) {
-				if (patients[i].visits.length > 0) {
-					for (let j = 0; j < patients[i].visits.length; j++) {
-						if (patients[i].visits[j] != undefined) {
-							appt = new Date(patients[i].visits[j].dateTime).toISOString();
-							let formatedAppt = new Date(appt);
-							if (formatedAppt.getDate() == formatedNow.getDate()) {
-								scheduledToday.push(patients[i]);
-							}
-						}
-					}
-				}
-			}
+
+export async function getServerSideProps() {
+	const data = await jhClient.entities.patient.list();
+
+	const patients = data.items;
+	const patientVisits = getPatientVisitsToday(patients);
+
+	return {
+		props: {
+			patients,
+			patientVisits,
+		},
+	};
+}
+
+function getPatientVisitsToday(patients) {
+	// Get current date
+	const currentDate = new Date();
+
+	let patientVisits = [];
+	for (let i = 0; i < patients.length; i++) {
+		for (let j = 0; j < patients[i].visits.length; j++) {
+			patientVisits.push([i, j]);
 		}
-		setSortedPatients(scheduledToday);
-		console.log(sortedPatients);
-	}, [props]);
+	}
+
+	patientVisits = patientVisits.filter((pv) => {
+		const visit = patients[pv[0]].visits[pv[1]];
+		const visitDate = new Date(visit.dateTime);
+
+		return (
+			visitDate.getFullYear() === currentDate.getFullYear() &&
+			visitDate.getMonth() === currentDate.getMonth() &&
+			visitDate.getDate() === currentDate.getDate() &&
+			(!visit.hivViralLoad || visit.hivViralLoad.length === 0) // Dose is given once the viral load has been measured
+		);
+	});
+
+	return patientVisits;
+}
+
+export default function Appointments(props) {
+	const { patients } = props;
+
+	const { user, error, isLoading } = useUser();
+
+	const [patientVisits, setPatientVisits] = useState(props.patientVisits);
+
+	const [showModal, setShowModal] = useState(false);
+	const [patientVisit, setPatientVisit] = useState([]);
+
+	const [reading, setReading] = useState('');
+	const [note, setNote] = useState('');
 
 	async function handleSubmit(e) {
 		e.preventDefault();
 		setShowModal(false);
-		const res = await jhClient.entities.patient.update({
-			_id: currentPatient,
-			visits: {
-				dateTime: '2023-03-06T09:15:00Z',
-				hivViralLoad: hivReading,
-				note: notes,
-			},
-		});
-		const treatmentRes = await jhClient.entities.tracker.list({
-			filter: {
-				patientId: {
-					eq: currentPatient,
-				},
-			},
-		});
-		console.log(treatmentRes);
+
+		// Get patient and visit
+		const patient = patients[patientVisit[0]];
+		const visit = patient.visits[patientVisit[1]];
+
+		// Update the visit
+		visit.hivViralLoad = reading;
+		visit.note = note;
+
+		// TODO: Update the patient's visit in Vendia
+		const updatePatient = (({ _id, visits }) => ({ _id, visits }))(patient);
+		const res = await jhClient.entities.patient.update(updatePatient);
+		// console.log(updatePatient);
+		console.log(res);
+
+		// Update the patientVisits
+		setPatientVisits(getPatientVisitsToday(patients));
 	}
+
 	if (isLoading) return <div>Loading...</div>;
 	if (error) return <div>{error.message}</div>;
+
 	return (
 		<div className="flex" id="site-content">
 			{showModal ? (
@@ -78,7 +99,7 @@ function Appointments(props) {
 							<div className="relative flex w-full flex-col rounded-lg border-0 bg-white shadow-lg outline-none focus:outline-none">
 								{/*header*/}
 								<div className="flex items-start justify-between rounded-t border-b border-solid border-slate-200 p-5">
-									<h3 className="text-3xl font-semibold">Enter Dose & HIV Reading</h3>
+									<h3 className="text-3xl font-semibold">Enter viral load and note</h3>
 									<button
 										className="float-right ml-auto border-0 bg-transparent p-1 text-3xl font-semibold leading-none text-black opacity-5 outline-none focus:outline-none"
 										onClick={() => setShowModal(false)}
@@ -93,35 +114,26 @@ function Appointments(props) {
 									<div className="relative flex flex-col justify-between p-6">
 										<div>
 											<label className="mr-2">
-												Hiv Reading:
+												Viral load:
 												<input
 													required
 													type="text"
-													name="name"
+													name="reading"
+													value={reading}
 													className="ml-16 border py-2"
-													onChange={(e) => setHivReading(e.target.value)}
+													onChange={(e) => setReading(e.target.value)}
 												/>
 											</label>
 										</div>
 										<div className="mt-5">
 											<label>
-												Adminstered Dose:
-												<input
-													type="checkbox"
-													name="doseAdministered"
-													className="ml-5 p-5"
-													onClick={(e) => setDose(!dose)}
-												/>
-											</label>
-										</div>
-										<div className="mt-5">
-											<label>
-												Notes:
+												Note:
 												<input
 													type="textarea"
-													name="notes"
+													name="note"
+													value={note}
 													className="ml-28 border py-10"
-													onChange={(e) => setNotes(e.target.value)}
+													onChange={(e) => setNote(e.target.value)}
 												/>
 											</label>
 										</div>
@@ -152,9 +164,19 @@ function Appointments(props) {
 			) : null}
 			<Sidebar />
 			<div className="w-full overflow-y-scroll bg-gray-50 px-20 py-12">
-				<div className="mb-12 flex justify-between" onClick={console.log(sortedPatients)}>
+				<div className="mb-12 flex justify-between">
 					<div className="">
 						<h1 className="attention-voice mb-6">Appointments</h1>
+
+						<button
+							className="btn"
+							onClick={() => {
+								console.log(patientVisits);
+							}}
+						>
+							Click me
+						</button>
+
 						<p className="text-lg text-gray-500">You have the following appointments for today</p>
 					</div>
 					<div>
@@ -167,37 +189,26 @@ function Appointments(props) {
 					</div>
 				</div>
 				<div className="flex flex-wrap justify-between">
-					{sortedPatients.map((patient, index) => (
-						<div
-							key={index}
-							onClick={() => {
-								setShowModal(true);
-								setCurrentPatient(patient._id);
-								setIndex(index);
-								console.log(index);
-							}}
-						>
-							<PatientCardAppts
-								name={patient.name}
-								dob={patient.dob}
-								familyHistory={patient.familyHistory}
-								id={patient._id}
-								eligibility={true}
-							/>
-						</div>
-					))}
+					{patientVisits.map((pv, index) => {
+						const patient = patients[pv[0]];
+						const visit = patient.visits[pv[1]];
+
+						return (
+							<div
+								key={index}
+								onClick={() => {
+									setPatientVisit(pv);
+									setShowModal(true);
+									setReading(visit.hivViralLoad);
+									setNote(visit.note);
+								}}
+							>
+								<PatientCardAppts patient={patient} visit={visit} />
+							</div>
+						);
+					})}
 				</div>
 			</div>
 		</div>
 	);
-}
-
-export default Appointments;
-export async function getServerSideProps() {
-	const myData = await jhClient.entities.patient.list();
-	return {
-		props: {
-			data: myData.items,
-		},
-	};
 }

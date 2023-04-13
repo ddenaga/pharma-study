@@ -7,7 +7,7 @@ export default function patient_card({ name, dob, familyHistory, img, id, eligib
 				<div className="flex flex-col justify-between gap-8">
 					<div className="flex flex-col">
 						<span className="text-base font-semibold leading-6 text-gray-900">{name}</span>
-						<span className="text-sm text-gray-500">{dob}</span>
+						<span className="text-sm text-gray-500">{dob.split('T')[0]}</span>
 						<span className="text-sm text-gray-500">{familyHistory}</span>
 					</div>
 					<div>
