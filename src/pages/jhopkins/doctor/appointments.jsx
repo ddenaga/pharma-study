@@ -5,6 +5,8 @@ import React, { useState, useEffect } from 'react';
 import PatientCardAppts from '@/components/patientCardAppts';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export async function getServerSideProps() {
 	const data = await jhClient.entities.patient.list();
@@ -73,9 +75,14 @@ export default function Appointments(props) {
 
 		// TODO: Update the patient's visit in Vendia
 		const updatePatient = (({ _id, visits }) => ({ _id, visits }))(patient);
-		const res = await jhClient.entities.patient.update(updatePatient);
+		// const res = await jhClient.entities.patient.update(updatePatient);
+		toast.promise(jhClient.entities.patient.update(updatePatient), {
+			success: 'Patient visit recorded',
+			pending: 'Recording patient visit',
+			error: 'Failed to record patient visit',
+		});
 		// console.log(updatePatient);
-		console.log(res);
+		// console.log(res);
 
 		// Update the patientVisits
 		setPatientVisits(getPatientVisitsToday(patients));
@@ -119,7 +126,7 @@ export default function Appointments(props) {
 													required
 													type="text"
 													name="reading"
-													value={reading}
+													value={reading || ''}
 													className="ml-16 border py-2"
 													onChange={(e) => setReading(e.target.value)}
 												/>
@@ -131,7 +138,7 @@ export default function Appointments(props) {
 												<input
 													type="textarea"
 													name="note"
-													value={note}
+													value={note || ''}
 													className="ml-28 border py-10"
 													onChange={(e) => setNote(e.target.value)}
 												/>
@@ -161,10 +168,13 @@ export default function Appointments(props) {
 					</motion.div>
 					<div className="fixed inset-0 z-40 bg-black opacity-25"></div>
 				</>
-			) : null}
+			) : (
+				''
+			)}
 			<Sidebar />
 			<div className="w-full overflow-y-scroll bg-gray-50 px-20 py-12">
 				<h1 className="attention-voice mb-10">Appointments</h1>
+				<ToastContainer />
 
 				<div className="mb-10 flex flex-row items-center justify-between">
 					<div>

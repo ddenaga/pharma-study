@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import Sidebar from '@/components/Sidebar';
 import { bavariaClient } from '@/lib/vendia';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export async function getServerSideProps() {
 	const listResponse = await bavariaClient.entities.treatment.list();
@@ -21,9 +23,11 @@ export default function SendDrugs(props) {
 	const [treatments, setTreatments] = useState(items);
 
 	return (
-		<div className="flex" id="site-content" >
+		<div className="flex" id="site-content">
 			<Sidebar />
 			<div className="w-full bg-gray-100">
+				<h3 className="text-3xl font-semibold">Send Drugs</h3>
+				<ToastContainer />
 				<table className="table-zebra table w-full shadow-xl">
 					<thead>
 						<tr>
@@ -61,10 +65,12 @@ export default function SendDrugs(props) {
 				<button
 					className="btn"
 					type="button"
-					onClick={async () => {
-						// console.log(treatments);
-						treatments.forEach(
-							async (treatment) => await bavariaClient.entities.treatment.update(treatment),
+					onClick={() => {
+						toast.promise(
+							Promise.all(
+								treatments.map((treatment) => bavariaClient.entities.treatment.update(treatment)),
+							),
+							{ success: 'Drugs sent', pending: 'Sending drugs', error: 'Failed to send drugs' },
 						);
 					}}
 				>

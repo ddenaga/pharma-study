@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { Formik, Form, Field } from 'formik';
+import React, { useState } from 'react';
+import { Formik, Form } from 'formik';
 import Sidebar from '@/components/Sidebar';
 import { jhClient } from '@/lib/vendia.js';
-import FormikDatePicker from 'src/components/formik/FormikDatePicker';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import FormikSelect from '@/components/formik/FormikSelect';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export async function getServerSideProps() {
 	const data = await jhClient.entities.patient.list();
@@ -33,6 +34,23 @@ export default function ScheduleAppointment(props) {
 	const [selectedDate, setSelectedDate] = useState(new Date());
 	const [selectedTime, setSelectedTime] = useState('');
 
+	// Source from: https://stackoverflow.com/a/40197728
+	const convertTime12to24 = (time12h) => {
+		const [time, modifier] = time12h.split(' ');
+
+		let [hours, minutes] = time.split(':');
+
+		if (hours === '12') {
+			hours = '00';
+		}
+
+		if (modifier === 'PM') {
+			hours = parseInt(hours, 10) + 12;
+		}
+
+		return `${hours}:${minutes}`;
+	};
+
 	const getPatientById = (id) => {
 		return patients.find((patient) => patient._id === id);
 	};
@@ -59,7 +77,7 @@ export default function ScheduleAppointment(props) {
 			<Sidebar />
 			<div className="flex-1 bg-gray-100 p-8">
 				<h1 className="title mb-9 text-3xl font-bold">Schedule New Appointment</h1>
-
+				<ToastContainer />
 				<Formik
 					initialValues={{
 						patientId: '',
@@ -187,47 +205,38 @@ export default function ScheduleAppointment(props) {
 								type="button"
 								className="btn"
 								onClick={() => {
-									appointments.forEach(async (appt) => {
-										const patient = getPatientById(appt.patientId);
+									if (appointments.length === 0) return;
+									toast.promise(
+										Promise.all(
+											appointments.map((appt) => {
+												const patient = getPatientById(appt.patientId);
 
-										// Combine appointmentDate and appointmentTime into
-										// appointmentDate is a Date object
-										// appointmentTime is a time string
+												// Combine appointmentDate and appointmentTime
+												const scheduledDateTime = `${
+													appt.appointmentDate.toISOString().split('T')[0]
+												}T${convertTime12to24(appt.appointmentTime)}`;
 
-										// Source from: https://stackoverflow.com/a/40197728
-										const convertTime12to24 = (time12h) => {
-											const [time, modifier] = time12h.split(' ');
+												const visit = {
+													dateTime: new Date(scheduledDateTime).toISOString(),
+													note: '',
+													hivViralLoad: '',
+												};
 
-											let [hours, minutes] = time.split(':');
+												patient.visits = [...patient.visits, visit];
 
-											if (hours === '12') {
-												hours = '00';
-											}
-
-											if (modifier === 'PM') {
-												hours = parseInt(hours, 10) + 12;
-											}
-
-											return `${hours}:${minutes}`;
-										};
-
-										const scheduledDateTime = `${
-											appt.appointmentDate.toISOString().split('T')[0]
-										}T${convertTime12to24(appt.appointmentTime)}`;
-
-										const visit = {
-											dateTime: new Date(scheduledDateTime).toISOString(),
-											note: '',
-											hivViralLoad: '',
-										};
-
-										patient.visits = [...patient.visits, visit];
-
-										// Update the patient's visit in Vendia
-										const updatePatient = (({ _id, visits }) => ({ _id, visits }))(patient);
-										const res = await jhClient.entities.patient.update(updatePatient);
-										console.log(res);
-									});
+												// Update the patient's visit in Vendia
+												const updatePatient = (({ _id, visits }) => ({ _id, visits }))(patient);
+												// const res = await jhClient.entities.patient.update(updatePatient);
+												// console.log(res);
+												return jhClient.entities.patient.update(updatePatient);
+											}),
+										),
+										{
+											success: 'Appointments scheduled',
+											pending: 'Scheduling appointments',
+											error: 'Failed to schedule',
+										},
+									);
 
 									setAppointments([]);
 								}}
