@@ -5,15 +5,19 @@ import { motion } from 'framer-motion';
 import { TEMPORARY_REDIRECT_STATUS } from 'next/dist/shared/lib/constants';
 import Link from 'next/link';
 export async function getServerSideProps() {
-	const data = await fdaClient.entities.tracker.list();
-	const mappings = data.items;
+	function getEntityById(entities, id) {
+		return entities.find((entity) => entity._id === id);
+	}
 
-	// Note: This could be intensive on the API.
-	const entities = await Promise.all(
-		mappings.map(async (ids) => {
+	const trackers = (await fdaClient.entities.tracker.list()).items;
+	const patients = (await fdaClient.entities.patient.list()).items;
+	const treatments = (await fdaClient.entities.treatment.list()).items;
+
+	const pairings = await Promise.all(
+		trackers.map(async (ids) => {
 			const { _id, patientId, treatmentId } = ids;
-			const patient = await fdaClient.entities.patient.get(patientId);
-			const treatment = await fdaClient.entities.treatment.get(treatmentId);
+			const patient = getEntityById(patients, patientId); // await fdaClient.entities.patient.get(patientId);
+			const treatment = getEntityById(treatments, treatmentId); // await fdaClient.entities.treatment.get(treatmentId);
 			return {
 				_id,
 				patient,
@@ -24,37 +28,42 @@ export async function getServerSideProps() {
 
 	return {
 		props: {
-			entities,
+			pairings,
 		},
 	};
 }
 
 function LiveResults(props) {
-	const [patients, setPatients] = useState(props.entities);
+	const [pairings, setPairings] = useState(props.pairings);
 	const [studyStatus, setStudyStatus] = useState(true);
 	const [refresh, setRefresh] = useState(true);
 
 	async function updateDoses(id) {
 		const updatedTreatment = await fdaClient.entities.treatment.get(id);
-		const tempArray = [...patients];
-		//remove the patient that had a change and add back with the change
-		for (const patient of tempArray) {
-			if (patient.treatment._id == updatedTreatment._id) {
-				delete patient.treatment;
-				patient.treatment = updatedTreatment;
+		const tempArray = [...pairings];
+		// remove the patient that had a change and add back with the change
+		for (const pr of tempArray) {
+			if (pr.treatment._id == updatedTreatment._id) {
+				delete pr.treatment;
+				pr.treatment = updatedTreatment;
 			}
 		}
-		setPatients(tempArray);
+		setPairings(tempArray);
 	}
 
 	function checkStatus() {
 		setStudyStatus(true);
-		patients.forEach((patient) => {
-			if (patient.treatment.numberOfDoses < 5) {
+		pairings.forEach((pr) => {
+			if (pr.patient.visits.length < pr.treatment.numberOfDoses) {
 				setStudyStatus(false);
 			}
 		});
 	}
+
+	function isNumber(s) {
+		return /^\d+$/.test(s);
+	}
+
 	useEffect(() => {
 		checkStatus();
 		fdaClient.entities.treatment.onUpdate(({ result }) => {
@@ -65,10 +74,10 @@ function LiveResults(props) {
 	return (
 		<div className="flex" id="site-content">
 			<Sidebar />
-			<div className="w-full overflow-y-scroll bg-gray-50 px-20 py-12" onClick={console.log(props)}>
+			<div className="w-full overflow-y-scroll bg-gray-50 px-20 py-12">
 				<div className="mb-12 flex items-center justify-between">
 					<h1 className="attention-voice">Live results</h1>
-					{patients.length > 0 ? (
+					{pairings.length > 0 ? (
 						studyStatus ? (
 							<span className="text-md inline-block rounded-full bg-green-600 py-2 px-4 text-white shadow-lg">
 								Study is Complete
@@ -83,7 +92,7 @@ function LiveResults(props) {
 					)}
 				</div>
 				<div className="">
-					{patients.length > 0 ? (
+					{pairings.length > 0 ? (
 						<div className="-mx-4 mt-8 overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:-mx-6 md:mx-0 md:rounded-lg">
 							<table className="min-w-full divide-y divide-gray-300">
 								<thead className="bg-gray-100">
@@ -121,33 +130,63 @@ function LiveResults(props) {
 									</tr>
 								</thead>
 								<tbody className="divide-y divide-gray-200 bg-white">
-									{patients.map(
-										(item) =>
-											item.patient.isEligible && (
-												<tr key={item.patient._id}>
+									{pairings.map(
+										(pr) =>
+											pr.patient.isEligible && (
+												<tr key={pr.patient._id}>
 													<td className="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6">
-														{item.patient._id}
+														{pr.patient._id}
 													</td>
+													{/* Doses */}
 													<td className="px-3 py-4 text-sm text-gray-500">
-														{item.treatment?.numberOfDoses}/5
+														{
+															pr.patient.visits.filter((visit) =>
+																isNumber(visit.hivViralLoad),
+															).length
+														}{' '}
+														/ {pr.treatment.numberOfDoses}
 														<motion.progress
 															animate={{ x: [50, 0] }}
 															className={
-																item.treatment.numberOfDoses >= 5
+																pr.patient.visits.filter((visit) =>
+																	isNumber(visit.hivViralLoad),
+																).length >= pr.treatment.numberOfDoses
 																	? 'progress progress-success block w-40'
 																	: 'progress progress-warning  block w-40'
 															}
-															value={(item.treatment.numberOfDoses / 5) * 100}
+															value={
+																(pr.patient.visits.filter((visit) =>
+																	isNumber(visit.hivViralLoad),
+																).length /
+																	pr.treatment.numberOfDoses) *
+																100
+															}
 															max="100"
 														></motion.progress>
 													</td>
+													{/* Last reading */}
 													<td className="px-3 py-4 text-sm text-gray-500">
-														{item.patient.visits == null
-															? 'No Reading yet'
-															: item.patient.visits[0].hivViralLoad}
+														{(() => {
+															const visits = pr.patient.visits;
+															if (!visits.some((visit) => isNumber(visit.hivViralLoad)))
+																return 'No reading yet';
+
+															const lastVisit = visits
+																.filter((visit) => isNumber(visit.hivViralLoad))
+																.reduce((last, curr) =>
+																	new Date(last.dateTime) > new Date(curr.dateTime)
+																		? last
+																		: curr,
+																);
+
+															return lastVisit.hivViralLoad;
+														})()}
 													</td>
+													{/* Status */}
 													<td className="px-3 py-4 text-sm text-gray-500">
-														{item.treatment.numberOfDoses >= 5 ? (
+														{pr.patient.visits.filter((visit) =>
+															isNumber(visit.hivViralLoad),
+														).length >= pr.treatment.numberOfDoses ? (
 															<motion.span
 																animate={{ scale: [1, 2, 1] }}
 																transition={{ duration: 0.2 }}
@@ -165,8 +204,9 @@ function LiveResults(props) {
 															</motion.span>
 														)}
 													</td>
+													{/* Medication */}
 													<td className="px-3 py-4 text-sm text-gray-500">
-														{item.treatment.isGeneric == true ? 'Generic' : 'Bavaria'}
+														{pr.treatment.isGeneric == true ? 'Generic' : 'Bavaria'}
 													</td>
 												</tr>
 											),
