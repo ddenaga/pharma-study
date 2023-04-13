@@ -158,6 +158,23 @@
         }
       },
       "uniqueItems": true
+    },
+    "Appointement": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "treatmentId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "patientId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "uniqueItems": true
     }
   }
 }

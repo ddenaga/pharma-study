@@ -164,21 +164,13 @@ export default function Appointments(props) {
 			) : null}
 			<Sidebar />
 			<div className="w-full overflow-y-scroll bg-gray-50 px-20 py-12">
-				<div className="mb-12 flex justify-between">
-					<div className="">
-						<h1 className="attention-voice mb-6">Appointments</h1>
+				<h1 className="attention-voice mb-10">Appointments</h1>
 
-						<button
-							className="btn"
-							onClick={() => {
-								console.log(patientVisits);
-							}}
-						>
-							Click me
-						</button>
-
+				<div className="mb-10 flex flex-row items-center justify-between">
+					<div>
 						<p className="text-lg text-gray-500">You have the following appointments for today</p>
 					</div>
+
 					<div>
 						<Link
 							href="/jhopkins/doctor/new-appointment"
@@ -188,7 +180,8 @@ export default function Appointments(props) {
 						</Link>
 					</div>
 				</div>
-				<div className="flex flex-wrap justify-between">
+
+				<div className="grid grid-cols-1 gap-8 lg:grid-cols-2 xl:grid-cols-3 xl:gap-4">
 					{patientVisits.map((pv, index) => {
 						const patient = patients[pv[0]];
 						const visit = patient.visits[pv[1]];
