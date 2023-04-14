@@ -22,7 +22,13 @@ export default function patient_card({ name, dob, familyHistory, img, id, eligib
 
 				{/* TODO change eligibility to icons */}
 				<div className="flex flex-col items-end justify-between">
-					<Image src="/../public/favicon.ico" width="50" height="50" alt="patient avatar" />
+					<Image
+						src={img == '' ? '/../public/favicon.ico' : img}
+						width="50"
+						height="50"
+						alt="patient avatar"
+						className="rounded-full"
+					/>
 					{eligibility ? (
 						<span className="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800">
 							Eligible

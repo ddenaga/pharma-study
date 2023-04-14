@@ -32,6 +32,7 @@
     "react-datepicker": "^4.10.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.7.1",
+    "react-toastify": "^9.1.2",
     "sort-nested-json": "^0.3.2"
   },
   "devDependencies": {

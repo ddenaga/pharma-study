@@ -196,6 +196,77 @@ enum Vendia_SyncMode {
   ASYNC
 }
 
+input Self_Appointement_ConditionInput_ {
+  patientId: Vendia_ModelStringInput_
+  treatmentId: Vendia_ModelStringInput_
+  _and: [Self_Appointement_ConditionInput_]
+  _or: [Self_Appointement_ConditionInput_]
+  _not: Self_Appointement_ConditionInput_
+}
+
+input Self_Appointement_FilterInput_ {
+  _owner: Vendia_ModelStringInput_
+  patientId: Vendia_ModelStringInput_
+  treatmentId: Vendia_ModelStringInput_
+  _and: [Self_Appointement_FilterInput_]
+  _or: [Self_Appointement_FilterInput_]
+  _not: Self_Appointement_FilterInput_
+}
+
+input Self_Appointement_OrderInput_ {
+  _id: Vendia_ModelSortDirection
+}
+
+type Self_Appointement {
+  _id: ID!
+  patientId: String
+  treatmentId: String
+  _owner: String
+}
+
+type Self_Appointement_Partial_ {
+  _id: ID!
+  patientId: String
+  treatmentId: String
+  _owner: String
+}
+
+union Self_Appointement_PartialUnion_ = Self_Appointement | Self_Appointement_Partial_
+
+type Self_Appointement_Result_ {
+  error: String
+  result: Self_Appointement
+}
+
+type Self_Appointement_Transaction_Result_ {
+  transaction: Vendia_Transaction!
+  result: Self_Appointement
+}
+
+type Self_Appointement_Delete_Transaction_Result_ {
+  transaction: Vendia_Transaction!
+}
+
+type Self_Appointement_Connection_ {
+  _AppointementItems: [Self_Appointement]
+  nextToken: String
+}
+
+input Self_Appointement_Input_ {
+  patientId: String
+  treatmentId: String
+}
+
+input Self_Appointement_UpdateInput_ {
+  patientId: String
+  treatmentId: String
+}
+
+input Self_Appointement_PartialInput_ {
+  patientId: String
+  treatmentId: String
+}
+
 input Self_Patient_ConditionInput_ {
   address: Self_Patient_address_ConditionInput_
   allergies: Vendia_ModelStringInput_
@@ -903,6 +974,46 @@ type Vendia_File_vendia_checksums_checksumsItem_Delete_Transaction_Result_ {
   transaction: Vendia_Transaction!
 }
 
+input Vendia_FileTask_error_ConditionInput_ {
+  errorType: Vendia_ModelStringInput_
+  errorDetails: Vendia_ModelStringInput_
+  _and: [Vendia_FileTask_error_ConditionInput_]
+  _or: [Vendia_FileTask_error_ConditionInput_]
+  _not: Vendia_FileTask_error_ConditionInput_
+}
+
+input Vendia_FileTask_error_FilterInput_ {
+  errorType: Vendia_ModelStringInput_
+  errorDetails: Vendia_ModelStringInput_
+  _and: [Vendia_FileTask_error_FilterInput_]
+  _or: [Vendia_FileTask_error_FilterInput_]
+  _not: Vendia_FileTask_error_FilterInput_
+}
+
+type Vendia_FileTask_error {
+  errorType: Vendia_FileTask_error_errorTypeEnum
+  errorDetails: String
+}
+
+type Vendia_FileTask_error_Partial_ {
+  errorType: Vendia_FileTask_error_errorTypeEnum
+  errorDetails: String
+}
+
+type Vendia_FileTask_error_Result_ {
+  error: String
+  result: Vendia_FileTask_error
+}
+
+type Vendia_FileTask_error_Transaction_Result_ {
+  transaction: Vendia_Transaction!
+  result: Vendia_FileTask_error
+}
+
+type Vendia_FileTask_error_Delete_Transaction_Result_ {
+  transaction: Vendia_Transaction!
+}
+
 input Vendia_Contract_resource_ConditionInput_ {
   uri: Vendia_ModelStringInput_
   csp: Vendia_ModelStringInput_
@@ -922,7 +1033,7 @@ input Vendia_Contract_resource_FilterInput_ {
 }
 
 type Vendia_Contract_resource {
-  uri: String!
+  uri: String
   csp: Vendia_Contract_resource_cspEnum
   metadata: [Vendia_Contract_resource_metadata_metadataItem]
 }
@@ -984,6 +1095,46 @@ type Vendia_Contract_resource_metadata_metadataItem_Transaction_Result_ {
 }
 
 type Vendia_Contract_resource_metadata_metadataItem_Delete_Transaction_Result_ {
+  transaction: Vendia_Transaction!
+}
+
+input Vendia_ContractTask_error_ConditionInput_ {
+  errorType: Vendia_ModelStringInput_
+  errorDetails: Vendia_ModelStringInput_
+  _and: [Vendia_ContractTask_error_ConditionInput_]
+  _or: [Vendia_ContractTask_error_ConditionInput_]
+  _not: Vendia_ContractTask_error_ConditionInput_
+}
+
+input Vendia_ContractTask_error_FilterInput_ {
+  errorType: Vendia_ModelStringInput_
+  errorDetails: Vendia_ModelStringInput_
+  _and: [Vendia_ContractTask_error_FilterInput_]
+  _or: [Vendia_ContractTask_error_FilterInput_]
+  _not: Vendia_ContractTask_error_FilterInput_
+}
+
+type Vendia_ContractTask_error {
+  errorType: Vendia_ContractTask_error_errorTypeEnum
+  errorDetails: String
+}
+
+type Vendia_ContractTask_error_Partial_ {
+  errorType: Vendia_ContractTask_error_errorTypeEnum
+  errorDetails: String
+}
+
+type Vendia_ContractTask_error_Result_ {
+  error: String
+  result: Vendia_ContractTask_error
+}
+
+type Vendia_ContractTask_error_Transaction_Result_ {
+  transaction: Vendia_Transaction!
+  result: Vendia_ContractTask_error
+}
+
+type Vendia_ContractTask_error_Delete_Transaction_Result_ {
   transaction: Vendia_Transaction!
 }
 
@@ -1625,6 +1776,8 @@ input Vendia_UniInfo_nodes_nodesItem_ConditionInput_ {
   csp: Vendia_ModelStringInput_
   region: Vendia_ModelStringInput_
   bucketName: Vendia_ModelStringInput_
+  bucket: Vendia_ModelStringInput_
+  uploadBucket: Vendia_ModelStringInput_
   tier: Vendia_UniInfo_nodes_nodesItem_tier_ConditionInput_
   vendiaAccount: Vendia_UniInfo_nodes_nodesItem_vendiaAccount_ConditionInput_
   vendiaAccounts: Vendia_UniInfo_nodes_nodesItem_vendiaAccounts_ConditionInput_
@@ -1644,6 +1797,8 @@ input Vendia_UniInfo_nodes_nodesItem_FilterInput_ {
   csp: Vendia_ModelStringInput_
   region: Vendia_ModelStringInput_
   bucketName: Vendia_ModelStringInput_
+  bucket: Vendia_ModelStringInput_
+  uploadBucket: Vendia_ModelStringInput_
   tier: Vendia_UniInfo_nodes_nodesItem_tier_FilterInput_
   vendiaAccount: Vendia_UniInfo_nodes_nodesItem_vendiaAccount_FilterInput_
   vendiaAccounts: Vendia_UniInfo_nodes_nodesItem_vendiaAccounts_FilterInput_
@@ -1663,6 +1818,8 @@ type Vendia_UniInfo_nodes_nodesItem {
   csp: Vendia_UniInfo_nodes_nodesItem_cspEnum
   region: String!
   bucketName: String
+  bucket: String
+  uploadBucket: String
   tier: Vendia_UniInfo_nodes_nodesItem_tier
   vendiaAccount: Vendia_UniInfo_nodes_nodesItem_vendiaAccount
   vendiaAccounts: Vendia_UniInfo_nodes_nodesItem_vendiaAccounts
@@ -1679,6 +1836,8 @@ type Vendia_UniInfo_nodes_nodesItem_Partial_ {
   csp: Vendia_UniInfo_nodes_nodesItem_cspEnum
   region: String
   bucketName: String
+  bucket: String
+  uploadBucket: String
   tier: Vendia_UniInfo_nodes_nodesItem_tier_Partial_
   vendiaAccount: Vendia_UniInfo_nodes_nodesItem_vendiaAccount_Partial_
   vendiaAccounts: Vendia_UniInfo_nodes_nodesItem_vendiaAccounts_Partial_
@@ -2010,6 +2169,7 @@ type Vendia_UniInfo_nodes_nodesItem_temporaryCredentials_Delete_Transaction_Resu
 input Vendia_UniInfo_nodes_nodesItem_temporaryCredentials_uploadFile_ConditionInput_ {
   accessKeyId: Vendia_ModelStringInput_
   expiration: Vendia_ModelStringInput_
+  preSignedUrl: Vendia_ModelStringInput_
   secretAccessKey: Vendia_ModelStringInput_
   sessionToken: Vendia_ModelStringInput_
   _and: [Vendia_UniInfo_nodes_nodesItem_temporaryCredentials_uploadFile_ConditionInput_]
@@ -2020,6 +2180,7 @@ input Vendia_UniInfo_nodes_nodesItem_temporaryCredentials_uploadFile_ConditionIn
 input Vendia_UniInfo_nodes_nodesItem_temporaryCredentials_uploadFile_FilterInput_ {
   accessKeyId: Vendia_ModelStringInput_
   expiration: Vendia_ModelStringInput_
+  preSignedUrl: Vendia_ModelStringInput_
   secretAccessKey: Vendia_ModelStringInput_
   sessionToken: Vendia_ModelStringInput_
   _and: [Vendia_UniInfo_nodes_nodesItem_temporaryCredentials_uploadFile_FilterInput_]
@@ -2030,6 +2191,7 @@ input Vendia_UniInfo_nodes_nodesItem_temporaryCredentials_uploadFile_FilterInput
 type Vendia_UniInfo_nodes_nodesItem_temporaryCredentials_uploadFile {
   accessKeyId: String
   expiration: String
+  preSignedUrl: String
   secretAccessKey: String
   sessionToken: String
 }
@@ -2037,6 +2199,7 @@ type Vendia_UniInfo_nodes_nodesItem_temporaryCredentials_uploadFile {
 type Vendia_UniInfo_nodes_nodesItem_temporaryCredentials_uploadFile_Partial_ {
   accessKeyId: String
   expiration: String
+  preSignedUrl: String
   secretAccessKey: String
   sessionToken: String
 }
@@ -2060,8 +2223,23 @@ enum Vendia_File_vendia_checksums_checksumsItem_algorithmEnum {
   sha256
 }
 
+enum Vendia_FileTask_error_errorTypeEnum {
+  INTERNAL_ERROR
+  NOT_FOUND
+  PERMISSIONS
+}
+
 enum Vendia_Contract_resource_cspEnum {
   aws
+}
+
+enum Vendia_ContractTask_error_errorTypeEnum {
+  PERMISSIONS
+  INTERNAL_ERROR
+  CONTRACT
+  THROTTLE
+  RESULT_MUTATION
+  REJECTED
 }
 
 enum Vendia_Settings_apiSettings_auth_authorizerTypeEnum {
@@ -2106,10 +2284,45 @@ enum Vendia_File_copyStrategyEnum {
   ON_ACCESS
 }
 
+enum Vendia_FileTask_typeEnum {
+  UPLOAD
+}
+
+enum Vendia_FileTask_actionEnum {
+  add
+  put
+  update
+}
+
+enum Vendia_FileTask_statusEnum {
+  IN_PROGRESS
+  SUCCESS
+  ERROR
+}
+
+enum Vendia_FileTask_copyStrategyEnum {
+  ALWAYS
+  NEVER
+  ON_ACCESS
+}
+
 enum Vendia_Folder_copyStrategyEnum {
   ALWAYS
   NEVER
   ON_ACCESS
+}
+
+enum Vendia_ContractTask_statusEnum {
+  INVOKING
+  SUCCESS
+  REJECTED
+  ERROR
+}
+
+enum Vendia_EraseTask_statusEnum {
+  IN_PROGRESS
+  SUCCESS
+  ERROR
 }
 
 enum Vendia_ApiKey_statusEnum {
@@ -2476,6 +2689,177 @@ input Vendia_File_PartialInput_ {
   _owner: String
 }
 
+input Vendia_FileTask_ConditionInput_ {
+  fileId: Vendia_ModelStringInput_
+  startTime: Vendia_ModelStringInput_
+  completionTime: Vendia_ModelStringInput_
+  type: Vendia_ModelStringInput_
+  action: Vendia_ModelStringInput_
+  status: Vendia_ModelStringInput_
+  sourceBucket: Vendia_ModelStringInput_
+  sourceKey: Vendia_ModelStringInput_
+  sourceRegion: Vendia_ModelStringInput_
+  sourceVersion: Vendia_ModelStringInput_
+  sourceUri: Vendia_ModelStringInput_
+  destinationKey: Vendia_ModelStringInput_
+  copyStrategy: Vendia_ModelStringInput_
+  read: Vendia_ModelStringInput_
+  write: Vendia_ModelStringInput_
+  error: Vendia_FileTask_error_ConditionInput_
+  _and: [Vendia_FileTask_ConditionInput_]
+  _or: [Vendia_FileTask_ConditionInput_]
+  _not: Vendia_FileTask_ConditionInput_
+}
+
+input Vendia_FileTask_FilterInput_ {
+  _owner: Vendia_ModelStringInput_
+  fileId: Vendia_ModelStringInput_
+  startTime: Vendia_ModelStringInput_
+  completionTime: Vendia_ModelStringInput_
+  type: Vendia_ModelStringInput_
+  action: Vendia_ModelStringInput_
+  status: Vendia_ModelStringInput_
+  sourceBucket: Vendia_ModelStringInput_
+  sourceKey: Vendia_ModelStringInput_
+  sourceRegion: Vendia_ModelStringInput_
+  sourceVersion: Vendia_ModelStringInput_
+  sourceUri: Vendia_ModelStringInput_
+  destinationKey: Vendia_ModelStringInput_
+  copyStrategy: Vendia_ModelStringInput_
+  read: Vendia_ModelStringInput_
+  write: Vendia_ModelStringInput_
+  error: Vendia_FileTask_error_FilterInput_
+  _and: [Vendia_FileTask_FilterInput_]
+  _or: [Vendia_FileTask_FilterInput_]
+  _not: Vendia_FileTask_FilterInput_
+}
+
+input Vendia_FileTask_OrderInput_ {
+  _id: Vendia_ModelSortDirection
+}
+
+type Vendia_FileTask {
+  _id: ID!
+  fileId: String
+  startTime: String
+  completionTime: String
+  type: Vendia_FileTask_typeEnum
+  action: Vendia_FileTask_actionEnum
+  status: Vendia_FileTask_statusEnum
+  sourceBucket: String
+  sourceKey: String
+  sourceRegion: String
+  sourceVersion: String
+  sourceUri: String
+  destinationKey: String
+  copyStrategy: Vendia_FileTask_copyStrategyEnum
+  read: [String]
+  write: [String]
+  error: Vendia_FileTask_error
+  _acl: [Vendia_Acl!]
+  _owner: String
+}
+
+type Vendia_FileTask_Partial_ {
+  _id: ID!
+  fileId: String
+  startTime: String
+  completionTime: String
+  type: Vendia_FileTask_typeEnum
+  action: Vendia_FileTask_actionEnum
+  status: Vendia_FileTask_statusEnum
+  sourceBucket: String
+  sourceKey: String
+  sourceRegion: String
+  sourceVersion: String
+  sourceUri: String
+  destinationKey: String
+  copyStrategy: Vendia_FileTask_copyStrategyEnum
+  read: [String]
+  write: [String]
+  error: Vendia_FileTask_error_Partial_
+  _acl: [Vendia_Acl!]
+  _owner: String
+}
+
+union Vendia_FileTask_PartialUnion_ = Vendia_FileTask | Vendia_FileTask_Partial_
+
+type Vendia_FileTask_Result_ {
+  error: String
+  result: Vendia_FileTask
+}
+
+type Vendia_FileTask_Transaction_Result_ {
+  transaction: Vendia_Transaction!
+  result: Vendia_FileTask_PartialUnion_
+}
+
+type Vendia_FileTask_Delete_Transaction_Result_ {
+  transaction: Vendia_Transaction!
+}
+
+type Vendia_FileTask_Connection_ {
+  Vendia_FileTaskItems: [Vendia_FileTask_PartialUnion_]
+  nextToken: String
+}
+
+input Vendia_FileTask_Input_ {
+  fileId: String
+  startTime: String
+  completionTime: String
+  type: Vendia_FileTask_typeEnum
+  action: Vendia_FileTask_actionEnum!
+  status: Vendia_FileTask_statusEnum!
+  sourceBucket: String
+  sourceKey: String
+  sourceRegion: String
+  sourceVersion: String
+  sourceUri: String
+  destinationKey: String
+  copyStrategy: Vendia_FileTask_copyStrategyEnum
+  read: [String]
+  write: [String]
+  error: Vendia_FileTask_error_Input_
+}
+
+input Vendia_FileTask_UpdateInput_ {
+  fileId: String
+  startTime: String
+  completionTime: String
+  type: Vendia_FileTask_typeEnum
+  action: Vendia_FileTask_actionEnum
+  status: Vendia_FileTask_statusEnum
+  sourceBucket: String
+  sourceKey: String
+  sourceRegion: String
+  sourceVersion: String
+  sourceUri: String
+  destinationKey: String
+  copyStrategy: Vendia_FileTask_copyStrategyEnum
+  read: [String]
+  write: [String]
+  error: Vendia_FileTask_error_UpdateInput_
+}
+
+input Vendia_FileTask_PartialInput_ {
+  fileId: String
+  startTime: String
+  completionTime: String
+  type: Vendia_FileTask_typeEnum
+  action: Vendia_FileTask_actionEnum
+  status: Vendia_FileTask_statusEnum
+  sourceBucket: String
+  sourceKey: String
+  sourceRegion: String
+  sourceVersion: String
+  sourceUri: String
+  destinationKey: String
+  copyStrategy: Vendia_FileTask_copyStrategyEnum
+  read: [String]
+  write: [String]
+  error: Vendia_FileTask_error_PartialInput_
+}
+
 input Vendia_Folder_ConditionInput_ {
   name: Vendia_ModelStringInput_
   parent: Vendia_ModelStringInput_
@@ -2607,12 +2991,12 @@ input Vendia_Contract_OrderInput_ {
 
 type Vendia_Contract {
   _id: ID!
-  name: String!
+  name: String
   description: String
   revisionId: String
   resource: Vendia_Contract_resource
   inputQuery: String
-  outputMutation: String!
+  outputMutation: String
   _acl: [Vendia_Acl!]
   _owner: String
 }
@@ -2672,6 +3056,220 @@ input Vendia_Contract_PartialInput_ {
   resource: Vendia_Contract_resource_PartialInput_
   inputQuery: String
   outputMutation: String
+}
+
+input Vendia_ContractTask_ConditionInput_ {
+  startTime: Vendia_ModelStringInput_
+  completionTime: Vendia_ModelStringInput_
+  status: Vendia_ModelStringInput_
+  invokedBy: Vendia_ModelStringInput_
+  contractId: Vendia_ModelStringInput_
+  revisionId: Vendia_ModelStringInput_
+  rawInput: Vendia_ModelStringInput_
+  transactionIds: Vendia_ModelStringInput_
+  error: Vendia_ContractTask_error_ConditionInput_
+  _and: [Vendia_ContractTask_ConditionInput_]
+  _or: [Vendia_ContractTask_ConditionInput_]
+  _not: Vendia_ContractTask_ConditionInput_
+}
+
+input Vendia_ContractTask_FilterInput_ {
+  _owner: Vendia_ModelStringInput_
+  startTime: Vendia_ModelStringInput_
+  completionTime: Vendia_ModelStringInput_
+  status: Vendia_ModelStringInput_
+  invokedBy: Vendia_ModelStringInput_
+  contractId: Vendia_ModelStringInput_
+  revisionId: Vendia_ModelStringInput_
+  rawInput: Vendia_ModelStringInput_
+  transactionIds: Vendia_ModelStringInput_
+  error: Vendia_ContractTask_error_FilterInput_
+  _and: [Vendia_ContractTask_FilterInput_]
+  _or: [Vendia_ContractTask_FilterInput_]
+  _not: Vendia_ContractTask_FilterInput_
+}
+
+input Vendia_ContractTask_OrderInput_ {
+  _id: Vendia_ModelSortDirection
+}
+
+type Vendia_ContractTask {
+  _id: ID!
+  startTime: String
+  completionTime: String
+  status: Vendia_ContractTask_statusEnum
+  invokedBy: String
+  contractId: String
+  revisionId: String
+  rawInput: String
+  transactionIds: [String]
+  error: Vendia_ContractTask_error
+  _acl: [Vendia_Acl!]
+  _owner: String
+}
+
+type Vendia_ContractTask_Partial_ {
+  _id: ID!
+  startTime: String
+  completionTime: String
+  status: Vendia_ContractTask_statusEnum
+  invokedBy: String
+  contractId: String
+  revisionId: String
+  rawInput: String
+  transactionIds: [String]
+  error: Vendia_ContractTask_error_Partial_
+  _acl: [Vendia_Acl!]
+  _owner: String
+}
+
+union Vendia_ContractTask_PartialUnion_ = Vendia_ContractTask | Vendia_ContractTask_Partial_
+
+type Vendia_ContractTask_Result_ {
+  error: String
+  result: Vendia_ContractTask
+}
+
+type Vendia_ContractTask_Transaction_Result_ {
+  transaction: Vendia_Transaction!
+  result: Vendia_ContractTask_PartialUnion_
+}
+
+type Vendia_ContractTask_Delete_Transaction_Result_ {
+  transaction: Vendia_Transaction!
+}
+
+type Vendia_ContractTask_Connection_ {
+  Vendia_ContractTaskItems: [Vendia_ContractTask_PartialUnion_]
+  nextToken: String
+}
+
+input Vendia_ContractTask_Input_ {
+  startTime: String
+  completionTime: String
+  status: Vendia_ContractTask_statusEnum!
+  invokedBy: String!
+  contractId: String!
+  revisionId: String
+  rawInput: String
+  transactionIds: [String]
+  error: Vendia_ContractTask_error_Input_
+}
+
+input Vendia_ContractTask_UpdateInput_ {
+  startTime: String
+  completionTime: String
+  status: Vendia_ContractTask_statusEnum
+  invokedBy: String
+  contractId: String
+  revisionId: String
+  rawInput: String
+  transactionIds: [String]
+  error: Vendia_ContractTask_error_UpdateInput_
+}
+
+input Vendia_ContractTask_PartialInput_ {
+  startTime: String
+  completionTime: String
+  status: Vendia_ContractTask_statusEnum
+  invokedBy: String
+  contractId: String
+  revisionId: String
+  rawInput: String
+  transactionIds: [String]
+  error: Vendia_ContractTask_error_PartialInput_
+}
+
+input Vendia_EraseTask_ConditionInput_ {
+  startTime: Vendia_ModelStringInput_
+  completionTime: Vendia_ModelStringInput_
+  node: Vendia_ModelStringInput_
+  status: Vendia_ModelStringInput_
+  transactionId: Vendia_ModelStringInput_
+  _and: [Vendia_EraseTask_ConditionInput_]
+  _or: [Vendia_EraseTask_ConditionInput_]
+  _not: Vendia_EraseTask_ConditionInput_
+}
+
+input Vendia_EraseTask_FilterInput_ {
+  _owner: Vendia_ModelStringInput_
+  startTime: Vendia_ModelStringInput_
+  completionTime: Vendia_ModelStringInput_
+  node: Vendia_ModelStringInput_
+  status: Vendia_ModelStringInput_
+  transactionId: Vendia_ModelStringInput_
+  _and: [Vendia_EraseTask_FilterInput_]
+  _or: [Vendia_EraseTask_FilterInput_]
+  _not: Vendia_EraseTask_FilterInput_
+}
+
+input Vendia_EraseTask_OrderInput_ {
+  _id: Vendia_ModelSortDirection
+}
+
+type Vendia_EraseTask {
+  _id: ID!
+  startTime: String!
+  completionTime: String
+  node: String!
+  status: Vendia_EraseTask_statusEnum!
+  transactionId: String!
+  _owner: String
+}
+
+type Vendia_EraseTask_Partial_ {
+  _id: ID!
+  startTime: String
+  completionTime: String
+  node: String
+  status: Vendia_EraseTask_statusEnum
+  transactionId: String
+  _owner: String
+}
+
+union Vendia_EraseTask_PartialUnion_ = Vendia_EraseTask | Vendia_EraseTask_Partial_
+
+type Vendia_EraseTask_Result_ {
+  error: String
+  result: Vendia_EraseTask
+}
+
+type Vendia_EraseTask_Transaction_Result_ {
+  transaction: Vendia_Transaction!
+  result: Vendia_EraseTask
+}
+
+type Vendia_EraseTask_Delete_Transaction_Result_ {
+  transaction: Vendia_Transaction!
+}
+
+type Vendia_EraseTask_Connection_ {
+  Vendia_EraseTaskItems: [Vendia_EraseTask]
+  nextToken: String
+}
+
+input Vendia_EraseTask_Input_ {
+  startTime: String!
+  completionTime: String
+  node: String!
+  status: Vendia_EraseTask_statusEnum!
+  transactionId: String!
+}
+
+input Vendia_EraseTask_UpdateInput_ {
+  startTime: String
+  completionTime: String
+  node: String
+  status: Vendia_EraseTask_statusEnum
+  transactionId: String
+}
+
+input Vendia_EraseTask_PartialInput_ {
+  startTime: String
+  completionTime: String
+  node: String
+  status: Vendia_EraseTask_statusEnum
+  transactionId: String
 }
 
 input Vendia_ApiKey_ConditionInput_ {
@@ -3156,6 +3754,9 @@ input Vendia_Contract_InvokeInput_ {
 }
 
 type Query {
+  get_Appointement(id: ID!, version: Int, readMode: Vendia_ReadMode = NODE_COMMITTED): Self_Appointement
+  list_AppointementItems(filter: Self_Appointement_FilterInput_, readMode: Vendia_ReadMode = NODE_COMMITTED, order: [Self_Appointement_OrderInput_!], limit: Int, nextToken: String): Self_Appointement_Connection_
+  list_AppointementVersions(id: ID!, limit: Int, nextToken: String): Vendia_Version_Connection_
   get_Patient(id: ID!, version: Int, readMode: Vendia_ReadMode = NODE_COMMITTED): Self_Patient_PartialUnion_
   list_PatientItems(filter: Self_Patient_FilterInput_, readMode: Vendia_ReadMode = NODE_COMMITTED, order: [Self_Patient_OrderInput_!], limit: Int, nextToken: String): Self_Patient_Connection_
   list_PatientVersions(id: ID!, limit: Int, nextToken: String): Vendia_Version_Connection_
@@ -3171,12 +3772,18 @@ type Query {
   getVendia_File(id: ID!, version: Int): Vendia_File
   listVendia_FileItems(filter: Vendia_File_FilterInput_, order: [Vendia_File_OrderInput_!], limit: Int, nextToken: String): Vendia_File_Connection_
   listVendia_FileVersions(id: ID!, limit: Int, nextToken: String): Vendia_Version_Connection_
+  getVendia_FileTask(id: ID!): Vendia_FileTask_PartialUnion_
+  listVendia_FileTaskItems(filter: Vendia_FileTask_FilterInput_, order: [Vendia_FileTask_OrderInput_!], limit: Int, nextToken: String): Vendia_FileTask_Connection_
   getVendia_Folder(id: ID!, version: Int): Vendia_Folder
   listVendia_FolderItems(filter: Vendia_Folder_FilterInput_, order: [Vendia_Folder_OrderInput_!], limit: Int, nextToken: String): Vendia_Folder_Connection_
   listVendia_FolderVersions(id: ID!, limit: Int, nextToken: String): Vendia_Version_Connection_
   getVendia_Contract(id: ID!, version: Int): Vendia_Contract_PartialUnion_
   listVendia_ContractItems(filter: Vendia_Contract_FilterInput_, order: [Vendia_Contract_OrderInput_!], limit: Int, nextToken: String): Vendia_Contract_Connection_
   listVendia_ContractVersions(id: ID!, limit: Int, nextToken: String): Vendia_Version_Connection_
+  getVendia_ContractTask(id: ID!): Vendia_ContractTask_PartialUnion_
+  listVendia_ContractTaskItems(filter: Vendia_ContractTask_FilterInput_, order: [Vendia_ContractTask_OrderInput_!], limit: Int, nextToken: String): Vendia_ContractTask_Connection_
+  getVendia_EraseTask(id: ID!): Vendia_EraseTask
+  listVendia_EraseTaskItems(filter: Vendia_EraseTask_FilterInput_, order: [Vendia_EraseTask_OrderInput_!], limit: Int, nextToken: String): Vendia_EraseTask_Connection_
   getVendia_ApiKey(id: ID!, version: Int): Vendia_ApiKey
   listVendia_ApiKeyItems(filter: Vendia_ApiKey_FilterInput_, order: [Vendia_ApiKey_OrderInput_!], limit: Int, nextToken: String): Vendia_ApiKey_Connection_
   listVendia_ApiKeyVersions(id: ID!, limit: Int, nextToken: String): Vendia_Version_Connection_
@@ -3191,6 +3798,10 @@ type Query {
 }
 
 type Mutation {
+  add_Appointement(input: Self_Appointement_Input_!, syncMode: Vendia_SyncMode = NODE_COMMITTED): Self_Appointement_Transaction_Result_
+  put_Appointement(id: ID!, input: Self_Appointement_Input_!, condition: Self_Appointement_ConditionInput_, syncMode: Vendia_SyncMode = NODE_COMMITTED): Self_Appointement_Transaction_Result_
+  update_Appointement(id: ID!, input: Self_Appointement_UpdateInput_!, condition: Self_Appointement_ConditionInput_, syncMode: Vendia_SyncMode = NODE_COMMITTED): Self_Appointement_Transaction_Result_
+  remove_Appointement(id: ID!, condition: Self_Appointement_ConditionInput_, syncMode: Vendia_SyncMode = NODE_COMMITTED): Self_Appointement_Delete_Transaction_Result_
   add_Patient(input: Self_Patient_Input_!, aclInput: Vendia_Acls_Input_, syncMode: Vendia_SyncMode = NODE_COMMITTED): Self_Patient_Transaction_Result_
   put_Patient(id: ID!, input: Self_Patient_Input_!, condition: Self_Patient_ConditionInput_, aclInput: Vendia_Acls_Input_!, syncMode: Vendia_SyncMode = NODE_COMMITTED): Self_Patient_Transaction_Result_
   update_Patient(id: ID!, input: Self_Patient_UpdateInput_!, condition: Self_Patient_ConditionInput_, aclInput: Vendia_Acls_Input_, syncMode: Vendia_SyncMode = NODE_COMMITTED): Self_Patient_Transaction_Result_
@@ -3223,6 +3834,10 @@ type Mutation {
 }
 
 type Subscription {
+  onAdd_Appointement: Self_Appointement_Result_
+  onUpdate_Appointement: Self_Appointement_Result_
+  onPut_Appointement: Self_Appointement_Result_
+  onRemove_Appointement: Self_Appointement_Result_
   onAdd_Patient: Self_Patient_Result_
   onUpdate_Patient: Self_Patient_Result_
   onPut_Patient: Self_Patient_Result_
@@ -3240,6 +3855,10 @@ type Subscription {
   onUpdateVendia_File: Vendia_File_Result_
   onPutVendia_File: Vendia_File_Result_
   onRemoveVendia_File: Vendia_File_Result_
+  onAddVendia_FileTask: Vendia_FileTask_Result_
+  onUpdateVendia_FileTask: Vendia_FileTask_Result_
+  onPutVendia_FileTask: Vendia_FileTask_Result_
+  onRemoveVendia_FileTask: Vendia_FileTask_Result_
   onAddVendia_Folder: Vendia_Folder_Result_
   onUpdateVendia_Folder: Vendia_Folder_Result_
   onPutVendia_Folder: Vendia_Folder_Result_
@@ -3248,6 +3867,14 @@ type Subscription {
   onUpdateVendia_Contract: Vendia_Contract_Result_
   onPutVendia_Contract: Vendia_Contract_Result_
   onRemoveVendia_Contract: Vendia_Contract_Result_
+  onAddVendia_ContractTask: Vendia_ContractTask_Result_
+  onUpdateVendia_ContractTask: Vendia_ContractTask_Result_
+  onPutVendia_ContractTask: Vendia_ContractTask_Result_
+  onRemoveVendia_ContractTask: Vendia_ContractTask_Result_
+  onAddVendia_EraseTask: Vendia_EraseTask_Result_
+  onUpdateVendia_EraseTask: Vendia_EraseTask_Result_
+  onPutVendia_EraseTask: Vendia_EraseTask_Result_
+  onRemoveVendia_EraseTask: Vendia_EraseTask_Result_
   onAddVendia_ApiKey: Vendia_ApiKey_Result_
   onUpdateVendia_ApiKey: Vendia_ApiKey_Result_
   onPutVendia_ApiKey: Vendia_ApiKey_Result_
@@ -3430,6 +4057,21 @@ input Vendia_File_vendia_checksums_checksumsItem_PartialInput_ {
   value: String
 }
 
+input Vendia_FileTask_error_Input_ {
+  errorType: Vendia_FileTask_error_errorTypeEnum
+  errorDetails: String
+}
+
+input Vendia_FileTask_error_UpdateInput_ {
+  errorType: Vendia_FileTask_error_errorTypeEnum
+  errorDetails: String
+}
+
+input Vendia_FileTask_error_PartialInput_ {
+  errorType: Vendia_FileTask_error_errorTypeEnum
+  errorDetails: String
+}
+
 input Vendia_Contract_resource_Input_ {
   uri: String!
 }
@@ -3455,6 +4097,21 @@ input Vendia_Contract_resource_metadata_metadataItem_UpdateInput_ {
 input Vendia_Contract_resource_metadata_metadataItem_PartialInput_ {
   name: String
   value: String
+}
+
+input Vendia_ContractTask_error_Input_ {
+  errorType: Vendia_ContractTask_error_errorTypeEnum
+  errorDetails: String
+}
+
+input Vendia_ContractTask_error_UpdateInput_ {
+  errorType: Vendia_ContractTask_error_errorTypeEnum
+  errorDetails: String
+}
+
+input Vendia_ContractTask_error_PartialInput_ {
+  errorType: Vendia_ContractTask_error_errorTypeEnum
+  errorDetails: String
 }
 
 input Vendia_Settings_aws_Input_ {
@@ -3728,6 +4385,8 @@ input Vendia_UniInfo_nodes_nodesItem_Input_ {
   csp: Vendia_UniInfo_nodes_nodesItem_cspEnum
   region: String!
   bucketName: String
+  bucket: String
+  uploadBucket: String
   tier: Vendia_UniInfo_nodes_nodesItem_tier_Input_
   vendiaAccount: Vendia_UniInfo_nodes_nodesItem_vendiaAccount_Input_
   vendiaAccounts: Vendia_UniInfo_nodes_nodesItem_vendiaAccounts_Input_
@@ -3744,6 +4403,8 @@ input Vendia_UniInfo_nodes_nodesItem_UpdateInput_ {
   csp: Vendia_UniInfo_nodes_nodesItem_cspEnum
   region: String
   bucketName: String
+  bucket: String
+  uploadBucket: String
   tier: Vendia_UniInfo_nodes_nodesItem_tier_UpdateInput_
   vendiaAccount: Vendia_UniInfo_nodes_nodesItem_vendiaAccount_UpdateInput_
   vendiaAccounts: Vendia_UniInfo_nodes_nodesItem_vendiaAccounts_UpdateInput_
@@ -3760,6 +4421,8 @@ input Vendia_UniInfo_nodes_nodesItem_PartialInput_ {
   csp: Vendia_UniInfo_nodes_nodesItem_cspEnum
   region: String
   bucketName: String
+  bucket: String
+  uploadBucket: String
   tier: Vendia_UniInfo_nodes_nodesItem_tier_PartialInput_
   vendiaAccount: Vendia_UniInfo_nodes_nodesItem_vendiaAccount_PartialInput_
   vendiaAccounts: Vendia_UniInfo_nodes_nodesItem_vendiaAccounts_PartialInput_
@@ -3895,6 +4558,7 @@ input Vendia_UniInfo_nodes_nodesItem_temporaryCredentials_PartialInput_ {
 input Vendia_UniInfo_nodes_nodesItem_temporaryCredentials_uploadFile_Input_ {
   accessKeyId: String
   expiration: String
+  preSignedUrl: String
   secretAccessKey: String
   sessionToken: String
 }
@@ -3902,6 +4566,7 @@ input Vendia_UniInfo_nodes_nodesItem_temporaryCredentials_uploadFile_Input_ {
 input Vendia_UniInfo_nodes_nodesItem_temporaryCredentials_uploadFile_UpdateInput_ {
   accessKeyId: String
   expiration: String
+  preSignedUrl: String
   secretAccessKey: String
   sessionToken: String
 }
@@ -3909,6 +4574,7 @@ input Vendia_UniInfo_nodes_nodesItem_temporaryCredentials_uploadFile_UpdateInput
 input Vendia_UniInfo_nodes_nodesItem_temporaryCredentials_uploadFile_PartialInput_ {
   accessKeyId: String
   expiration: String
+  preSignedUrl: String
   secretAccessKey: String
   sessionToken: String
 }

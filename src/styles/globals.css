@@ -90,3 +90,41 @@ p a {
 		color-adjust: exact;
 	}
 }
+
+@layer components {
+	.scrollbar::-webkit-scrollbar {
+		width: 15px;
+		height: 15px;
+	}
+
+	.scrollbar::-webkit-scrollbar-track {
+		border-radius: 100vh;
+		background: #f7f4ed;
+	}
+
+	.scrollbar::-webkit-scrollbar-thumb {
+		background: #94a3b8;
+		border-radius: 100vh;
+		border: 3px solid #f6f7ed;
+	}
+
+	.scrollbar::-webkit-scrollbar-thumb:hover {
+		background: #cbd5e1;
+	}
+
+	.no-scrollbar::-webkit-scrollbar {
+		width: auto;
+		height: auto;
+	}
+
+	.no-scrollbar::-webkit-scrollbar-track {
+		border-radius: 0;
+		background: transparent;
+	}
+
+	.no-scrollbar::-webkit-scrollbar-thumb {
+		background: transparent;
+		border-radius: 0;
+		border: medium none color;
+	}
+}

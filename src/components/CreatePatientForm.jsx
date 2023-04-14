@@ -5,6 +5,8 @@ import FormikDatePicker from './formik/FormikDatePicker';
 import FormikList from './formik/FormikList';
 import FormikSelect from './formik/FormikSelect';
 import FormikTextInput from './formik/FormikTextInput';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const CreatePatientForm = () => {
 	const initialValues = {
@@ -38,11 +40,16 @@ const CreatePatientForm = () => {
 
 	const validationSchema = {};
 
-	const onSubmit = async (values) => {
-		// await new Promise((r) => setTimeout(r, 500));
-		alert(JSON.stringify(values, null, 2));
-		const createResponse = await createPatient(values);
-		console.log(createResponse);
+	const onSubmit = async (values, { resetForm }) => {
+		// alert(JSON.stringify(values, null, 2));
+
+		toast.promise(createPatient(values), {
+			success: 'Patient created',
+			pending: 'Creating patient',
+			error: 'Failed to create patient',
+		});
+
+		resetForm();
 	};
 
 	return (
