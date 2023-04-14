@@ -142,7 +142,7 @@ const CreatePatientForm = () => {
 
 					<button
 						type="submit"
-						className=" row-start-[14]group mt-6 inline-flex items-center justify-center rounded-md bg-slate-900 py-2 px-3 text-sm font-semibold text-white hover:bg-slate-700 hover:text-slate-100 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 active:bg-slate-800 active:text-slate-300"
+						className="row-start-[14] mt-6 inline-flex justify-center rounded-md border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
 					>
 						Submit
 					</button>
