@@ -7,9 +7,15 @@ export default function patient_card({ patient, visit }) {
 				<div className="flex flex-col justify-between gap-8">
 					<div className="flex flex-col">
 						<span className="text-base font-semibold leading-6 text-gray-900">{patient.name}</span>
-						<span className="text-sm text-gray-500">{patient.dob.split('T')[0]}</span>
-						<span className="text-sm text-gray-500">{patient.familyHistory}</span>
-						<span className="text-xs text-gray-500">{visit.dateTime}</span>
+						{/* <span className="text-sm text-gray-500">{patient.dob.split('T')[0]}</span> */}
+						{/* <span className="text-sm text-gray-500">{patient.familyHistory}</span> */}
+						<span className="text-lg text-gray-500">
+							{new Date(visit.dateTime).toLocaleString('en-US', {
+								hour: 'numeric',
+								minute: 'numeric',
+								hour12: true,
+							})}
+						</span>
 					</div>
 					<div>
 						<div className="inline-flex	 cursor-pointer rounded-full border border-slate-200 px-2 text-xs font-semibold leading-5 hover:bg-slate-100 ">
