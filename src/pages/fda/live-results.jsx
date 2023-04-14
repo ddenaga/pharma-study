@@ -54,7 +54,7 @@ function LiveResults(props) {
 	function checkStatus() {
 		setStudyStatus(true);
 		pairings.forEach((pr) => {
-			if (pr.patient.visits.length < pr.treatment.numberOfDoses) {
+			if (pr.patient.visits?.length < pr.treatment.numberOfDoses) {
 				setStudyStatus(false);
 			}
 		});
@@ -140,7 +140,7 @@ function LiveResults(props) {
 													{/* Doses */}
 													<td className="px-3 py-4 text-sm text-gray-500">
 														{
-															pr.patient.visits.filter((visit) =>
+															pr.patient.visits?.filter((visit) =>
 																isNumber(visit.hivViralLoad),
 															).length
 														}{' '}
@@ -148,14 +148,14 @@ function LiveResults(props) {
 														<motion.progress
 															animate={{ x: [50, 0] }}
 															className={
-																pr.patient.visits.filter((visit) =>
+																pr.patient.visits?.filter((visit) =>
 																	isNumber(visit.hivViralLoad),
 																).length >= pr.treatment.numberOfDoses
 																	? 'progress progress-success block w-40'
 																	: 'progress progress-warning  block w-40'
 															}
 															value={
-																(pr.patient.visits.filter((visit) =>
+																(pr.patient.visits?.filter((visit) =>
 																	isNumber(visit.hivViralLoad),
 																).length /
 																	pr.treatment.numberOfDoses) *
@@ -168,7 +168,7 @@ function LiveResults(props) {
 													<td className="px-3 py-4 text-sm text-gray-500">
 														{(() => {
 															const visits = pr.patient.visits;
-															if (!visits.some((visit) => isNumber(visit.hivViralLoad)))
+															if (!visits?.some((visit) => isNumber(visit.hivViralLoad)))
 																return 'No reading yet';
 
 															const lastVisit = visits
@@ -184,7 +184,7 @@ function LiveResults(props) {
 													</td>
 													{/* Status */}
 													<td className="px-3 py-4 text-sm text-gray-500">
-														{pr.patient.visits.filter((visit) =>
+														{pr.patient.visits?.filter((visit) =>
 															isNumber(visit.hivViralLoad),
 														).length >= pr.treatment.numberOfDoses ? (
 															<motion.span
