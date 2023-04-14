@@ -93,7 +93,7 @@ function LiveResults(props) {
 				</div>
 				<div className="">
 					{pairings.length > 0 ? (
-						<div className="-mx-4 mt-8 overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:-mx-6 md:mx-0 md:rounded-lg">
+						<div className="scrollbar xl:no-scrollbar-mx-4 mt-8 overflow-x-scroll shadow ring-1 ring-black ring-opacity-5 sm:-mx-6 md:mx-0 md:rounded-lg">
 							<table className="min-w-full divide-y divide-gray-300">
 								<thead className="bg-gray-100">
 									<tr>

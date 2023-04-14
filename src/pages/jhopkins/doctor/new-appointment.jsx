@@ -75,8 +75,8 @@ export default function ScheduleAppointment(props) {
 	return (
 		<div className="flex" id="site-content">
 			<Sidebar />
-			<div className="flex-1 bg-gray-100 p-8">
-				<h1 className="title mb-9 text-3xl font-bold">Schedule New Appointment</h1>
+			<div className="w-full overflow-y-scroll bg-gray-50 px-20 py-12">
+				<h1 className="attention-voice mb-12">Schedule a new appointment</h1>
 				<ToastContainer />
 				<Formik
 					initialValues={{
@@ -89,10 +89,10 @@ export default function ScheduleAppointment(props) {
 					{({ isSubmitting, setFieldValue }) => (
 						<Form className="space-y-4">
 							<div className="flex flex-col">
-								<label htmlFor="patientId" className="mb-1">
+								<label htmlFor="patientId" className="mb-1 font-semibold">
 									Select Patient:
 								</label>
-								<FormikSelect name="patientId">
+								<FormikSelect name="patientId" className="max-w-[300px]">
 									<option value="">Select a patient</option>
 									{patients.map((patient, index) => (
 										<option key={index} value={patient._id}>
@@ -105,7 +105,7 @@ export default function ScheduleAppointment(props) {
 								<div className="rounded border p-2">
 									<div className="flex flex-col md:flex-row md:space-x-4">
 										<div className="flex flex-col">
-											<label htmlFor="appointmentDate" className="mb-1">
+											<label htmlFor="appointmentDate" className="mb-1 font-semibold">
 												Select Date:
 											</label>
 											<div style={{ width: 'fit-content' }}>
@@ -126,7 +126,7 @@ export default function ScheduleAppointment(props) {
 											</div>
 										</div>
 										<div className="flex flex-col">
-											<label htmlFor="appointmentTime" className="mb-1">
+											<label htmlFor="appointmentTime" className="mb-1 font-semibold">
 												Select Time:
 											</label>
 											<div className="h-50 overflow-y-scroll">
@@ -138,8 +138,10 @@ export default function ScheduleAppointment(props) {
 																setSelectedTime(time);
 																setFieldValue('appointmentTime', time);
 															}}
-															className={`rounded border p-2 text-center ${
-																selectedTime === time ? 'bg-blue-500 text-white' : ''
+															className={`cursor-pointer rounded border p-2 text-center hover:bg-slate-200 ${
+																selectedTime === time
+																	? 'bg-blue-500 text-white hover:bg-blue-700'
+																	: ''
 															}`}
 														>
 															{time}
@@ -151,8 +153,8 @@ export default function ScheduleAppointment(props) {
 									</div>
 								</div>
 								<div className="flex-1 rounded border p-2">
-									<h2 className="upcoming mb-4 text-xl font-semibold">Upcoming Appointments</h2>
-									<ul className="space-y-2">
+									<h2 className="upcoming mb-4 text-xl font-semibold">Selected appointments</h2>
+									<ul className="mt-4 divide-y divide-gray-300 text-sm leading-6 lg:col-span-7 xl:col-span-8">
 										{appointments
 											.slice()
 											.sort((a, b) => {
@@ -174,21 +176,22 @@ export default function ScheduleAppointment(props) {
 												const patient = getPatientById(appointment.patientId);
 
 												return (
-													<li
-														key={index}
-														className="flex items-center justify-between border-b py-2"
-													>
-														<span>
-															{patient.name} {' - '}
-															{new Date(
-																appointment.appointmentDate,
-															).toLocaleDateString()}{' '}
-															{appointment.appointmentTime}
-														</span>
+													<li key={index} className="flex items-center justify-between py-2">
+														<div>
+															<span className="block font-semibold text-gray-900 xl:pr-0">
+																{patient.name}
+															</span>
+															<span className="text-gray-500">
+																{new Date(
+																	appointment.appointmentDate,
+																).toLocaleDateString()}{' '}
+																{appointment.appointmentTime}
+															</span>
+														</div>
 														<button
 															type="button"
 															onClick={() => deleteAppointment(appointment.id)}
-															className="rounded bg-red-500 py-1 px-3 text-white"
+															className="inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
 														>
 															Delete
 														</button>
@@ -198,51 +201,58 @@ export default function ScheduleAppointment(props) {
 									</ul>
 								</div>
 							</div>
-							<button type="submit" className="mt-4 rounded bg-blue-500 py-2 px-4 text-white">
-								Create New Appointment
-							</button>
-							<button
-								type="button"
-								className="btn"
-								onClick={() => {
-									if (appointments.length === 0) return;
-									toast.promise(
-										Promise.all(
-											appointments.map((appt) => {
-												const patient = getPatientById(appt.patientId);
+							<div className="flex flex-row justify-between">
+								<button
+									type="submit"
+									className="inline-flex justify-center rounded-md border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+								>
+									Create New Appointment
+								</button>
+								<button
+									type="button"
+									className="inline-flex justify-center rounded-md border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+									onClick={() => {
+										if (appointments.length === 0) return;
+										toast.promise(
+											Promise.all(
+												appointments.map((appt) => {
+													const patient = getPatientById(appt.patientId);
 
-												// Combine appointmentDate and appointmentTime
-												const scheduledDateTime = `${
-													appt.appointmentDate.toISOString().split('T')[0]
-												}T${convertTime12to24(appt.appointmentTime)}`;
+													// Combine appointmentDate and appointmentTime
+													const scheduledDateTime = `${
+														appt.appointmentDate.toISOString().split('T')[0]
+													}T${convertTime12to24(appt.appointmentTime)}`;
 
-												const visit = {
-													dateTime: new Date(scheduledDateTime).toISOString(),
-													note: '',
-													hivViralLoad: '',
-												};
+													const visit = {
+														dateTime: new Date(scheduledDateTime).toISOString(),
+														note: '',
+														hivViralLoad: '',
+													};
 
-												patient.visits = [...patient.visits, visit];
+													patient.visits = [...patient.visits, visit];
 
-												// Update the patient's visit in Vendia
-												const updatePatient = (({ _id, visits }) => ({ _id, visits }))(patient);
-												// const res = await jhClient.entities.patient.update(updatePatient);
-												// console.log(res);
-												return jhClient.entities.patient.update(updatePatient);
-											}),
-										),
-										{
-											success: 'Appointments scheduled',
-											pending: 'Scheduling appointments',
-											error: 'Failed to schedule',
-										},
-									);
+													// Update the patient's visit in Vendia
+													const updatePatient = (({ _id, visits }) => ({ _id, visits }))(
+														patient,
+													);
+													// const res = await jhClient.entities.patient.update(updatePatient);
+													// console.log(res);
+													return jhClient.entities.patient.update(updatePatient);
+												}),
+											),
+											{
+												success: 'Appointments scheduled',
+												pending: 'Scheduling appointments',
+												error: 'Failed to schedule',
+											},
+										);
 
-									setAppointments([]);
-								}}
-							>
-								Submit
-							</button>
+										setAppointments([]);
+									}}
+								>
+									Submit
+								</button>
+							</div>
 						</Form>
 					)}
 				</Formik>
