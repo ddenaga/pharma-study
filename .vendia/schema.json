@@ -27,8 +27,7 @@
             "type": "string"
           },
           "dob": {
-            "type": "string",
-            "format": "date"
+            "type": "string"
           },
           "insuranceNumber": {
             "type": "string"
@@ -64,7 +63,7 @@
                 "type": "string"
               },
               "zipCode": {
-                "type": "integer"
+                "type": "string"
               },
               "country": {
                 "type": "string"
@@ -110,8 +109,7 @@
               "type": "object",
               "properties": {
                 "dateTime": {
-                  "type": "string",
-                  "format": "date-time"
+                  "type": "string"
                 },
                 "note": {
                   "type": "string"
@@ -134,9 +132,6 @@
       "items": {
         "type": "object",
         "properties": {
-          "name": {
-            "type": "string"
-          },
           "isGeneric": {
             "type": "boolean"
           },
@@ -148,6 +143,23 @@
       "uniqueItems": true
     },
     "Tracker": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "treatmentId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "patientId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "uniqueItems": true
+    },
+    "Appointement": {
       "type": "array",
       "items": {
         "type": "object",

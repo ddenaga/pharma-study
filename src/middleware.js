@@ -12,15 +12,15 @@ const Routes = {
 		valid: [
 			'/jhopkins/admin/all-patients',
 			'/jhopkins/admin/live-results',
-			'/jhopkins/admin/create-patient',
+			'/patient/create',
 			'/jhopkins/doctor/my-patients',
 			'/jhopkins/doctor/appointments',
 			'/jhopkins/doctor/new-appointment',
 		],
-		validDynamic: ['/patient/'],
+		validDynamic: [`/patient/*`,],
 	},
 	fda: {
-		default: '/fda/assign-drugs',
+		default: '/fda/live-results',
 		valid: ['/fda/assign-drugs', '/fda/live-results'],
 	},
 	bavaria: {
@@ -45,14 +45,18 @@ export default withMiddlewareAuthRequired(async (req) => {
 
 		if (roleRoutes) {
 			let valid = false;
-			roleRoutes.validDynamic.forEach((dynamicRoute) => {
-				if (currentRoute.startsWith(dynamicRoute)) {
-					valid = true;
-				}
-			});
+			if (roleRoutes.validDynamic != undefined) {
+				roleRoutes.validDynamic.forEach((dynamicRoute) => {
+					if (currentRoute.startsWith(dynamicRoute)) {
+						valid = true;
+					}
+				});
+			}
+
 			if (valid) {
 				return res;
 			}
+
 			if (roleRoutes.valid.includes(currentRoute)) {
 				console.log('valid');
 				return res;

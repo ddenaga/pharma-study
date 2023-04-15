@@ -1,55 +1,23 @@
-import createPatient from '@/lib/createPatient';
+import { jhClient } from '@/lib/vendia';
 import { Form, Formik, Field, FieldArray } from 'formik';
 import FormikCheckbox from './formik/FormikCheckbox';
 import FormikDatePicker from './formik/FormikDatePicker';
 import FormikList from './formik/FormikList';
 import FormikSelect from './formik/FormikSelect';
 import FormikTextInput from './formik/FormikTextInput';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
-const CreatePatientForm = () => {
-	const initialValues = {
-		name: '',
-		pictureUrl: '',
-		dob: new Date('1990/1/1'),
-		insuranceNumber: '',
-		height: '',
-		weight: '',
-		bloodPressure: '',
-		bloodType: '',
-		temperature: '',
-		oxygenSaturation: '',
-		address: {
-			streetAddress: '',
-			city: '',
-			state: '',
-			zipCode: '',
-			country: '',
-		},
-		allergies: [],
-		medications: [],
-		treatmentId: '',
-		familyHistory: [],
-		isEmployed: false,
-		isInsured: false,
-		icdHealthCodes: [],
-		visits: [],
-		isEligible: false,
-	};
+const EditPatientForm = (props) => {
+	const initialValues = props.patient;
+	delete initialValues._owner;
+	initialValues.dob = new Date(initialValues.dob);
 
 	const validationSchema = {};
 
-	const onSubmit = async (values, { resetForm }) => {
-		// alert(JSON.stringify(values, null, 2));
-
-		toast.promise(createPatient(values), {
-			success: 'Patient created',
-			pending: 'Creating patient',
-			error: 'Failed to create patient',
-		});
-
-		resetForm();
+	const onSubmit = async (values) => {
+		// await new Promise((r) => setTimeout(r, 500));
+		alert(JSON.stringify(values, null, 2));
+		const saveResponse = await jhClient.entities.patient.update(values);
+		console.log(saveResponse);
 	};
 
 	return (
@@ -142,9 +110,9 @@ const CreatePatientForm = () => {
 
 					<button
 						type="submit"
-						className="row-start-[14] mt-6 inline-flex justify-center rounded-md border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+						className=" row-start-[14]group mt-6 inline-flex items-center justify-center rounded-md bg-slate-900 py-2 px-3 text-sm font-semibold text-white hover:bg-slate-700 hover:text-slate-100 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 active:bg-slate-800 active:text-slate-300"
 					>
-						Submit
+						Save
 					</button>
 				</Form>
 			</Formik>
@@ -152,4 +120,4 @@ const CreatePatientForm = () => {
 	);
 };
 
-export default CreatePatientForm;
+export default EditPatientForm;

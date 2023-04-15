@@ -1,4 +1,4 @@
-export default function Logout() {
+export default function Live() {
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -6,12 +6,12 @@ export default function Logout() {
 			viewBox="0 0 24 24"
 			strokeWidth="1.5"
 			stroke="currentColor"
-			className="h-10 w-10 hover:scale-110"
+			className="h-6 w-6"
 		>
 			<path
 				strokeLinecap="round"
 				strokeLinejoin="round"
-				d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
+				d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941"
 			/>
 		</svg>
 	);
