@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import Sidebar from '@/components/Sidebar';
 import { fdaClient } from '@/lib/vendia';
 import { motion } from 'framer-motion';
-import { TEMPORARY_REDIRECT_STATUS } from 'next/dist/shared/lib/constants';
 import Link from 'next/link';
+
 export async function getServerSideProps() {
 	function getEntityById(entities, id) {
 		return entities.find((entity) => entity._id === id);
@@ -33,7 +33,7 @@ export async function getServerSideProps() {
 	};
 }
 
-function LiveResults(props) {
+export default function LiveResults(props) {
 	const [pairings, setPairings] = useState(props.pairings);
 	const [studyStatus, setStudyStatus] = useState(true);
 	const [refresh, setRefresh] = useState(true);
@@ -227,5 +227,3 @@ function LiveResults(props) {
 		</div>
 	);
 }
-
-export default LiveResults;

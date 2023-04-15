@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Sidebar from '@/components/Sidebar';
 import { jhClient } from '@/lib/vendia';
 import { motion } from 'framer-motion';
+
 export async function getServerSideProps() {
 	const data = await jhClient.entities.tracker.list();
 	const mappings = data.items;
@@ -135,7 +136,7 @@ function LiveResults(props) {
 											<motion.span
 												animate={{ scale: [1, 2, 1] }}
 												transition={{ duration: 0.2 }}
-												className="badge badge-success"
+												className="badge-success badge"
 											>
 												Done
 											</motion.span>
@@ -143,7 +144,7 @@ function LiveResults(props) {
 											<motion.span
 												animate={{ scale: [1, 2, 1] }}
 												transition={{ duration: 0.2 }}
-												className="badge badge-warning"
+												className="badge-warning badge"
 											>
 												Ongoing
 											</motion.span>

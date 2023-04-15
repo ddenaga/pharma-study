@@ -27,7 +27,7 @@ const timeSlots = Array.from({ length: 40 - 9 }, (_, i) => {
 	return `${formattedHour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')} ${amPm}`;
 });
 
-export default function ScheduleAppointment(props) {
+export default function NewAppointment(props) {
 	const { patients } = props;
 
 	const [appointments, setAppointments] = useState([]);

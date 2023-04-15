@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
-export default function patient_card({ name, dob, familyHistory, img, id, eligibility }) {
+
+export default function PatientCardAdmin({ name, dob, familyHistory, img, id, eligibility }) {
 	return (
 		<div className="max-w-md rounded-lg bg-white p-4 leading-5 shadow sm:rounded-lg">
 			<div className="flex flex-row justify-between">
