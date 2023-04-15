@@ -1,7 +1,5 @@
-import React from 'react'
+import React from 'react';
 
-export default function Unotharized() {
-    return (
-        <div>Unotharized</div>
-    )
+export default function Unauthorized() {
+	return <div>Unauthorized</div>;
 }
