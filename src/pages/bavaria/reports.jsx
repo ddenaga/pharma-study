@@ -80,20 +80,21 @@ export default function Reports({ data }) {
 		labels: [],
 		datasets: lineDataSet,
 	};
+	const drugWorkedCount = patients.filter(patient => {
+		if (patient.visits != null) {
+			const lastVisit = patient.visits[0]
+			return lastVisit.hivViralLoad == 0;
+		}
+	}).length
 	const pieData = {
-		//patients.map(patient => patient.address.city) - bavaria client does not have access to addres info
-		labels: ['Sacramento', 'New York', 'Ontario', 'Atlanda', 'Reno'],
+		labels: ['Worked', "Didn't Work"],
 		datasets: [
 			{
-				label: 'Dataset 1',
-				data: [24, 15, 36, 21, 12],
-				backgroundColor: [
-					'rgba(0, 0, 255,0.7)',
-					'rgba(255, 0, 0,0.7)',
-					'rgba(255, 255, 0,0.7)',
-					'rgba(0, 255, 0,0.7)',
-					'rgba(102, 0, 255,0.7)',
-				],
+				//label: ["Didn't Work", 'Worked'],
+				data: [drugWorkedCount, patients.length - drugWorkedCount],
+				backgroundColor: ['rgba(66, 108, 245, 0.5)', 'rgba(189, 4, 96, 0.5)'],
+				borderColor: ['rgba(66, 108, 245, 0.5)', 'rgba(189, 4, 96, 0.5)'],
+				borderWidth: 1,
 			},
 		],
 	};
