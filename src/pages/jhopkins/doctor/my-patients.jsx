@@ -6,44 +6,14 @@ import createPatient from '@/lib/createPatient.js';
 import { motion } from 'framer-motion';
 import PatientList from '@/components/PatientList';
 
-const patient = {
-	name: 'Jess',
-	pictureUrl: '',
-	dob: '2000-01-01',
-	insuranceNumber: 'AC1234H',
-	height: '200',
-	weight: '180',
-	bloodPressure: '12.3',
-	bloodType: 'A',
-	temperature: '100',
-	oxygenSaturation: '100',
-	address: {
-		streetAddress: '1234 Hollywood Street',
-		city: 'Los Angeles',
-		state: 'CA',
-		zipCode: '12345',
-		country: 'US',
-	},
-	allergies: [],
-	medications: [],
-	familyHistory: [],
-	isEmployed: true,
-	isInsured: false,
-	icdHealthCodes: [],
-	visits: [
-		{
-			dateTime: '2023-03-29T09:15:00Z',
-			note: '',
-			hivViralLoad: '',
+export async function getServerSideProps() {
+	const data = await jhClient.entities.patient.list();
+	return {
+		props: {
+			patients: data.items,
 		},
-		{
-			dateTime: '2023-03-29T09:15:00Z',
-			note: '',
-			hivViralLoad: '',
-		},
-	],
-	isEligible: false,
-};
+	};
+}
 
 export default function MyPatients(props) {
 	const { user, error, isLoading } = useUser();
@@ -121,12 +91,4 @@ export default function MyPatients(props) {
 			</div>
 		</div>
 	);
-}
-export async function getServerSideProps() {
-	const data = await jhClient.entities.patient.list();
-	return {
-		props: {
-			patients: data.items,
-		},
-	};
 }

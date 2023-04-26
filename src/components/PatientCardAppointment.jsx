@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-export default function patient_card({ patient, visit }) {
+
+export default function PatientCardAppointment({ patient, visit }) {
 	return (
 		<div className="max-w-md cursor-pointer rounded-lg bg-white p-4 leading-5 shadow sm:rounded-lg	">
 			<div className="flex flex-row justify-between">

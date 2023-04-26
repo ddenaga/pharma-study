@@ -1,8 +1,17 @@
 import React, { useState } from 'react';
 import Sidebar from '@/components/Sidebar';
 import { jhClient } from '@/lib/vendia.js';
-import PatientCardAdmin from '@/components/patientCardAdmin';
+import PatientCardAdmin from '@/components/PatientCardAdmin';
 import { useUser } from '@auth0/nextjs-auth0/client';
+
+export async function getServerSideProps() {
+	const myData = await jhClient.entities.patient.list();
+	return {
+		props: {
+			data: myData,
+		},
+	};
+}
 
 export default function AllPatients(props) {
 	const { user, error, isLoading } = useUser();
@@ -31,13 +40,4 @@ export default function AllPatients(props) {
 			</div>
 		</div>
 	);
-}
-
-export async function getServerSideProps() {
-	const myData = await jhClient.entities.patient.list();
-	return {
-		props: {
-			data: myData,
-		},
-	};
 }

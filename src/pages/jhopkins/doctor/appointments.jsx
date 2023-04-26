@@ -2,7 +2,7 @@ import Sidebar from '@/components/Sidebar';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { jhClient } from '@/lib/vendia.js';
 import React, { useState, useEffect } from 'react';
-import PatientCardAppts from '@/components/patientCardAppts';
+import PatientCardAppts from '@/components/PatientCardAppointment';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { ToastContainer, toast } from 'react-toastify';

@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "jest --watchAll"
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^2.2.1",
@@ -14,8 +15,6 @@
     "@fortawesome/free-solid-svg-icons": "^6.3.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@next/font": "13.1.6",
-    "@vendia/client": "^0.8.5",
-    "@vendia/share-cli": "^0.7.11",
     "chart.js": "^4.2.1",
     "daisyui": "^2.51.5",
     "dotenv": "^16.0.3",
@@ -36,9 +35,19 @@
     "sort-nested-json": "^0.3.2"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^14.0.0",
     "autoprefixer": "^10.4.13",
+    "jest": "^29.5.0",
+    "jest-environment-jsdom": "^29.5.0",
     "postcss": "^8.4.21",
     "prettier-plugin-tailwindcss": "^0.2.4",
-    "tailwindcss": "^3.2.7"
-  }
+    "tailwindcss": "^3.2.7",
+    "@vendia/client": "^0.8.5",
+    "@vendia/share-cli": "^0.7.11"
+  },
+  "moduleDirectories": [
+    "node_modules",
+    "src"
+  ]
 }
