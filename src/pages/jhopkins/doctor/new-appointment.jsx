@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export async function getServerSideProps() {
 	const data = await jhClient.entities.patient.list();
-	const patients = data.items;
+	const patients = data.items.filter((patient) => patient.isEligible);
 
 	return {
 		props: {
