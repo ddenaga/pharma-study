@@ -13,7 +13,7 @@ export async function getServerSideProps() {
 	}
 
 	const trackers = (await fdaClient.entities.tracker.list()).items;
-	const patients = (await fdaClient.entities.patient.list()).items;
+	const patients = (await fdaClient.entities.patient.list()).items.filter((patient) => patient.isEligible);
 	const treatments = (await fdaClient.entities.treatment.list()).items;
 
 	let pairings = await Promise.all(
@@ -89,8 +89,10 @@ export default function Reports(props) {
 	const lineDataSet = patients.map((patient) => {
 		let viralLoadReadings;
 		if (patient.visits != null) {
-			const reversedArray = patient.visits.reverse(); // visits array has the latest visit first
-			viralLoadReadings = reversedArray.map((visit) => ({
+			const sortedByTime = patient.visits.sort((a, b) => {
+				return new Date(a.dateTime) - new Date(b.dateTime);
+			}); // visits array has the latest visit first
+			viralLoadReadings = sortedByTime.map((visit) => ({
 				x: visit?.dateTime.substring(0, 10),
 				y: visit?.hivViralLoad,
 			}));
@@ -110,7 +112,7 @@ export default function Reports(props) {
 	};
 
 	const effectiveCount = patients.filter((patient) => {
-		return patient.visits.find((visit) => parseInt(visit.hivViralLoad) === 0);
+		return patient.visits?.find((visit) => parseInt(visit.hivViralLoad) === 0);
 	}).length;
 
 	const pieData = {

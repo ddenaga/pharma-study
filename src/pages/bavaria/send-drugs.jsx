@@ -82,6 +82,10 @@ export default function SendDrugs(props) {
 					className="mt-6 inline-flex justify-center rounded-md border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
 					type="button"
 					onClick={() => {
+						// treatments.forEach(async (treatment) => {
+						// 	const response = await bavariaClient.entities.treatment.update(treatment);
+						// 	console.log(response);
+						// });
 						toast.promise(
 							Promise.all(
 								treatments.map((treatment) => bavariaClient.entities.treatment.update(treatment)),

@@ -96,10 +96,15 @@ export const treatmentAcl = {
 			{
 				principal: { nodes: ['FDA', 'Bavaria'] },
 				path: 'isGeneric',
-				operations: ['READ', 'WRITE'],
+				operations: ['ALL'],
 			},
-            {
-				principal: { nodes: ['FDA', 'JaneHopkins'] },
+			{
+				principal: { nodes: ['FDA', 'Bavaria'] },
+				path: 'numberOfDoses',
+				operations: ['ALL'],
+			},
+			{
+				principal: { nodes: ['JaneHopkins'] },
 				path: 'numberOfDoses',
 				operations: ['READ'],
 			},
@@ -115,7 +120,7 @@ export const trackerAcl = {
 				path: 'treatmentId',
 				operations: ['ALL'],
 			},
-            {
+			{
 				principal: { nodes: ['FDA'] },
 				path: 'patientId',
 				operations: ['ALL'],
