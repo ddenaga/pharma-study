@@ -13,7 +13,7 @@ export async function getServerSideProps() {
 	}
 
 	const trackers = (await fdaClient.entities.tracker.list()).items;
-	const patients = (await fdaClient.entities.patient.list()).items;
+	const patients = (await fdaClient.entities.patient.list()).items.filter((patient) => patient.isEligible);
 	const treatments = (await fdaClient.entities.treatment.list()).items;
 
 	let pairings = await Promise.all(
@@ -50,7 +50,7 @@ export default function Reports(props) {
 		const { patient, treatment } = pr;
 		// Check if the number of doses match the number of visits with a recorded viral load
 		let numberOfDoses = treatment.numberOfDoses;
-		let numberOfRecordings = patient.visits?.filter((visit) => visit.hivViralLoad !== null).length;
+		let numberOfRecordings = patient.visits?.filter((visit) => visit.hivViralLoad !== null && visit.hivViralLoad.trim().length !== 0).length;
 
 		return numberOfDoses <= numberOfRecordings;
 	});
@@ -89,8 +89,10 @@ export default function Reports(props) {
 	const lineDataSet = patients.map((patient) => {
 		let viralLoadReadings;
 		if (patient.visits != null) {
-			const reversedArray = patient.visits.reverse(); // visits array has the latest visit first
-			viralLoadReadings = reversedArray.map((visit) => ({
+			const sortedByTime = patient.visits.sort((a, b) => {
+				return new Date(a.dateTime) - new Date(b.dateTime);
+			}); // visits array has the latest visit first
+			viralLoadReadings = sortedByTime.map((visit) => ({
 				x: visit?.dateTime.substring(0, 10),
 				y: visit?.hivViralLoad,
 			}));

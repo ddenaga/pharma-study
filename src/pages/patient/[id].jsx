@@ -1,8 +1,6 @@
 import React from 'react';
 import Sidebar from '@/components/Sidebar';
 import { jhClient } from '@/lib/vendia.js';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDroplet, faGauge, faWind, faTemperatureHalf, FaUserCircle } from '@fortawesome/free-solid-svg-icons';
 import Image from 'next/image';
 
 export async function getServerSideProps(context) {
