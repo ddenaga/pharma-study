@@ -110,7 +110,9 @@ export default function Reports(props) {
 	};
 
 	const effectiveCount = patients.filter((patient) => {
-		return patient.visits.find((visit) => parseInt(visit.hivViralLoad) === 0);
+		if (patient.visits) {
+			return patient.visits.find((visit) => parseInt(visit.hivViralLoad) === 0);
+		}
 	}).length;
 
 	const pieData = {

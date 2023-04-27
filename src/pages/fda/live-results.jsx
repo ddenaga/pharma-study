@@ -221,7 +221,7 @@ export default function LiveResults(props) {
 					) : (
 						<div className=" flex h-64 flex-col items-center justify-around rounded-lg border border-dashed border-gray-300 shadow-md">
 							<span className="text-2xl">No tracking information yet</span>
-							<Link href="/assign-drugs">
+							<Link href="/fda/assign-drugs">
 								<button className="btn-outline btn-info btn">Assign Drugs</button>
 							</Link>
 						</div>
