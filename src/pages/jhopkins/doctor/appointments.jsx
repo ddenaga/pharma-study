@@ -192,24 +192,34 @@ export default function Appointments(props) {
 				</div>
 
 				<div className="grid grid-cols-1 gap-8 lg:grid-cols-2 xl:grid-cols-3 xl:gap-4">
-					{patientVisits.map((pv, index) => {
-						const patient = patients[pv[0]];
-						const visit = patient.visits[pv[1]];
+					{patientVisits
+						.sort((a, b) => {
+							const patientA = patients[a[0]];
+							const visitA = patientA.visits[a[1]];
 
-						return (
-							<div
-								key={index}
-								onClick={() => {
-									setPatientVisit(pv);
-									setShowModal(true);
-									setReading(visit.hivViralLoad);
-									setNote(visit.note);
-								}}
-							>
-								<PatientCardAppts patient={patient} visit={visit} />
-							</div>
-						);
-					})}
+							const patientB = patients[b[0]];
+							const visitB = patientB.visits[b[1]];
+
+							return new Date(visitA.dateTime) - new Date(visitB.dateTime);
+						})
+						.map((pv, index) => {
+							const patient = patients[pv[0]];
+							const visit = patient.visits[pv[1]];
+
+							return (
+								<div
+									key={index}
+									onClick={() => {
+										setPatientVisit(pv);
+										setShowModal(true);
+										setReading(visit.hivViralLoad);
+										setNote(visit.note);
+									}}
+								>
+									<PatientCardAppts patient={patient} visit={visit} />
+								</div>
+							);
+						})}
 				</div>
 			</div>
 		</div>

@@ -6,18 +6,19 @@ import Link from 'next/link';
 
 export async function getServerSideProps() {
 	function getEntityById(entities, id) {
-		return entities.find((entity) => entity._id === id);
+		let entity = entities.find((entity) => entity._id === id);
+		return entity !== undefined ? entity : null;
 	}
 
 	const trackers = (await fdaClient.entities.tracker.list()).items;
 	const patients = (await fdaClient.entities.patient.list()).items;
 	const treatments = (await fdaClient.entities.treatment.list()).items;
 
-	const pairings = await Promise.all(
+	let pairings = await Promise.all(
 		trackers.map(async (ids) => {
 			const { _id, patientId, treatmentId } = ids;
-			const patient = getEntityById(patients, patientId); // await fdaClient.entities.patient.get(patientId);
-			const treatment = getEntityById(treatments, treatmentId); // await fdaClient.entities.treatment.get(treatmentId);
+			const patient = getEntityById(patients, patientId);
+			const treatment = getEntityById(treatments, treatmentId);
 			return {
 				_id,
 				patient,
@@ -25,6 +26,9 @@ export async function getServerSideProps() {
 			};
 		}),
 	);
+
+	// Filter out incomplete mappings
+	pairings = pairings.filter((pr) => pr.patient !== null && pr.treatment !== null);
 
 	return {
 		props: {
@@ -217,7 +221,7 @@ export default function LiveResults(props) {
 					) : (
 						<div className=" flex h-64 flex-col items-center justify-around rounded-lg border border-dashed border-gray-300 shadow-md">
 							<span className="text-2xl">No tracking information yet</span>
-							<Link href="/assign-drugs">
+							<Link href="/fda/assign-drugs">
 								<button className="btn-outline btn-info btn">Assign Drugs</button>
 							</Link>
 						</div>
