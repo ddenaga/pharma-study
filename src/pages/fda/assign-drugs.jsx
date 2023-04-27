@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Sidebar from '@/components/Sidebar';
 import { fdaClient, jhClient } from '@/lib/vendia';
+import { trackerAcl, treatmentAcl } from '@/lib/acl';
 
 export async function getServerSideProps() {
 	const data = await fdaClient.entities.patient.list({
@@ -25,19 +26,31 @@ export default function AssignDrugs(props) {
 	const [isDisabled, setIsDisabled] = useState(Array(patients).fill(false));
 
 	async function handleUpdate(patientId, drug, index) {
-		const res = await fdaClient.entities.treatment.add({
-			isGeneric: drug,
-			numberOfDoses: 0,
-		});
+		// Create a treatment
+		const res = await fdaClient.entities.treatment.add(
+			{
+				isGeneric: drug,
+				numberOfDoses: 0,
+			},
+			treatmentAcl,
+		);
 		const treatmentId = res.result._id;
-		const trackerRes = fdaClient.entities.tracker.add({
-			treatmentId: treatmentId,
-			patientId: patientId,
-		});
+
+		// Create a tracker
+		const trackerRes = fdaClient.entities.tracker.add(
+			{
+				treatmentId: treatmentId,
+				patientId: patientId,
+			},
+			trackerAcl,
+		);
+
+		// Update the patient to the corresponding treatmentId
 		const patientRes = fdaClient.entities.patient.update({
 			_id: patientId,
 			treatmentId: treatmentId,
 		});
+
 		const newDisabled = [...isDisabled];
 		newDisabled[index] = true;
 		setIsDisabled(newDisabled);
