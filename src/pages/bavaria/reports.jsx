@@ -58,11 +58,11 @@ export default function Reports({ data }) {
 			},
 		],
 	};
-
 	const lineDataSet = patients.map((patient) => {
 		var viralLoadReadings = 0;
 		if (patient.visits != null) {
-			viralLoadReadings = patient?.visits?.map((visit) => ({
+			const reversedArray = patient.visits.reverse() // visits array has the latest visit first
+			viralLoadReadings = reversedArray.map((visit) => ({
 				x: visit?.dateTime.substring(0, 10),
 				y: visit?.hivViralLoad,
 			}));
@@ -70,7 +70,6 @@ export default function Reports({ data }) {
 		return {
 			label: patient._id.slice(-5),
 			data: viralLoadReadings,
-			//data: patient.viralLoad,
 			fill: false,
 			borderColor: 'rgb(75, 192, 192)',
 			tension: 0.1,
@@ -83,14 +82,13 @@ export default function Reports({ data }) {
 	const drugWorkedCount = patients.filter(patient => {
 		if (patient.visits != null) {
 			const lastVisit = patient.visits[0]
-			return lastVisit.hivViralLoad == 0;
+			return lastVisit.hivViralLoad === 0;
 		}
 	}).length
 	const pieData = {
 		labels: ['Worked', "Didn't Work"],
 		datasets: [
 			{
-				//label: ["Didn't Work", 'Worked'],
 				data: [drugWorkedCount, patients.length - drugWorkedCount],
 				backgroundColor: ['rgba(66, 108, 245, 0.5)', 'rgba(189, 4, 96, 0.5)'],
 				borderColor: ['rgba(66, 108, 245, 0.5)', 'rgba(189, 4, 96, 0.5)'],
