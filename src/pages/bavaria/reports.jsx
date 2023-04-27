@@ -50,7 +50,7 @@ export default function Reports(props) {
 		const { patient, treatment } = pr;
 		// Check if the number of doses match the number of visits with a recorded viral load
 		let numberOfDoses = treatment.numberOfDoses;
-		let numberOfRecordings = patient.visits?.filter((visit) => visit.hivViralLoad !== null).length;
+		let numberOfRecordings = patient.visits?.filter((visit) => visit.hivViralLoad !== null && visit.hivViralLoad.trim().length !== 0).length;
 
 		return numberOfDoses <= numberOfRecordings;
 	});
