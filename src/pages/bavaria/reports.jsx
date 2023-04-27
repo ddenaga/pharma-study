@@ -1,5 +1,5 @@
 import Sidebar from '@/components/Sidebar';
-import { bavariaClient } from '@/lib/vendia';
+import { fdaClient } from '@/lib/vendia';
 import Chart from 'chart.js/auto';
 import { CategoryScale } from 'chart.js';
 import BarChart from '@/components/chartjs/BarChart';
@@ -7,13 +7,36 @@ import LineChart from '@/components/chartjs/LineChart';
 import PieChart from '@/components/chartjs/PieChart';
 
 export async function getServerSideProps() {
-	const patients = await bavariaClient.entities.patient.list();
-	const treatments = await bavariaClient.entities.treatment.list();
+	function getEntityById(entities, id) {
+		let entity = entities.find((entity) => entity._id === id);
+		return entity !== undefined ? entity : null;
+	}
+
+	const trackers = (await fdaClient.entities.tracker.list()).items;
+	const patients = (await fdaClient.entities.patient.list()).items;
+	const treatments = (await fdaClient.entities.treatment.list()).items;
+
+	let pairings = await Promise.all(
+		trackers.map(async (ids) => {
+			const { _id, patientId, treatmentId } = ids;
+			const patient = getEntityById(patients, patientId);
+			const treatment = getEntityById(treatments, treatmentId);
+			return {
+				_id,
+				patient,
+				treatment,
+			};
+		}),
+	);
+
+	// Filter out incomplete mappings
+	pairings = pairings.filter((pr) => pr.patient !== null && pr.treatment !== null);
 
 	return {
 		props: {
-			patients: patients.items,
-			treatments: treatments.items,
+			patients,
+			treatments,
+			pairings,
 		},
 	};
 }
@@ -21,14 +44,15 @@ export async function getServerSideProps() {
 export default function Reports(props) {
 	Chart.register(CategoryScale);
 
-	const { patients, treatments } = props;
+	const { patients, treatments, pairings } = props;
 
-	let isStudyFinished = treatments.every((treatment) => {
+	let isStudyFinished = pairings.every((pr) => {
+		const { patient, treatment } = pr;
 		// Check if the number of doses match the number of visits with a recorded viral load
 		let numberOfDoses = treatment.numberOfDoses;
-		let numberOfRecordings = treatment.visits?.filter((visit) => visit.hivViralLoad !== null).length;
+		let numberOfRecordings = patient.visits?.filter((visit) => visit.hivViralLoad !== null).length;
 
-		return numberOfDoses === numberOfRecordings;
+		return numberOfDoses <= numberOfRecordings;
 	});
 
 	let genericCount = 0;
@@ -63,7 +87,7 @@ export default function Reports(props) {
 	};
 
 	const lineDataSet = patients.map((patient) => {
-		let viralLoadReadings = 0;
+		let viralLoadReadings;
 		if (patient.visits != null) {
 			const reversedArray = patient.visits.reverse(); // visits array has the latest visit first
 			viralLoadReadings = reversedArray.map((visit) => ({
@@ -117,11 +141,13 @@ export default function Reports(props) {
 						</span>
 					)}
 				</div>
-				<div className=" mx-20 grid grid-cols-12 gap-20">
-					<LineChart chartData={lineData} />
-					<BarChart chartData={barData} />
-					<PieChart chartData={pieData} />
-				</div>
+				{isStudyFinished && (
+					<div className=" mx-20 grid grid-cols-12 gap-20">
+						<LineChart chartData={lineData} />
+						<BarChart chartData={barData} />
+						<PieChart chartData={pieData} />
+					</div>
+				)}
 			</div>
 		</div>
 	);
