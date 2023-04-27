@@ -15,8 +15,8 @@ export default function PatientList({ patients, searchInput }) {
 			className="grid grid-cols-1 gap-8 lg:grid-cols-2 xl:grid-cols-3 xl:gap-4"
 			onClick={() => console.log(patients)}
 		>
-			{filteredData.map((patient) => (
-				<PatientCard patient={patient} />
+			{filteredData.map((patient, index) => (
+				<PatientCard key={index} patient={patient} />
 			))}
 		</div>
 	);
