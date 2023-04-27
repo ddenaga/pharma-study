@@ -28,7 +28,11 @@ export default function Patient(props) {
 				<div className="mx-auto flex max-w-3xl items-center space-x-5 px-4 sm:px-6 md:flex md:items-center  md:space-x-5 lg:max-w-7xl lg:px-8  ">
 					<Image
 						onClick={() => console.log(patient)}
-						src="/../public/snoop1.png"
+						src={
+							patient.pictureUrl !== null && patient.pictureUrl.trim().length !== 0
+								? patient.pictureUrl
+								: '/../public/favicon.ico'
+						}
 						width="150"
 						height="150"
 						alt="patient avatar"
@@ -155,7 +159,7 @@ export default function Patient(props) {
 														<div className="relative flex space-x-3">
 															<div className="flex h-8 w-8 items-center justify-center rounded-full bg-green-500 ring-8 ring-white">
 																<svg
-																	class="h-5 w-5 text-white"
+																	className="h-5 w-5 text-white"
 																	x-description="Heroicon name: mini/check"
 																	xmlns="http://www.w3.org/2000/svg"
 																	viewBox="0 0 20 20"
