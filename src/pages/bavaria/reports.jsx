@@ -132,24 +132,24 @@ export default function Reports(props) {
 	return (
 		<div className="flex" id="site-content">
 			<Sidebar />
-			<div className="w-full overflow-y-scroll bg-gray-100">
-				<div className="flex items-center justify-between ">
-					<h1 className="m-20 text-4xl">Reports</h1>
+			<div className="w-full overflow-y-scroll bg-gray-50 px-20 py-12">
+				<div className="mb-12 flex items-center  justify-between">
+					<h1 className="attention-voice">Reports</h1>
 					{isStudyFinished ? (
-						<span className="text-md mr-20 inline-block rounded-full bg-green-600 py-2 px-4 text-white shadow-lg">
+						<span className="text-md inline-block rounded-full bg-green-600 py-2 px-4 text-white shadow-lg">
 							Study is completed
 						</span>
 					) : (
-						<span className="text-md mr-20 inline-block animate-pulse rounded-full bg-red-600 py-2 px-4 text-white shadow-lg">
+						<span className="text-md inline-block animate-pulse rounded-full bg-red-600 py-2 px-4 text-white shadow-lg">
 							Study in progress
 						</span>
 					)}
 				</div>
-				{isStudyFinished && (
-					<div className=" mx-20 grid grid-cols-12 gap-20">
+				{!isStudyFinished && (
+					<div className="grid grid-cols-12 gap-4 lg:gap-8 ">
 						<LineChart chartData={lineData} />
-						<BarChart chartData={barData} />
 						<PieChart chartData={pieData} />
+						<BarChart chartData={barData} />
 					</div>
 				)}
 			</div>
