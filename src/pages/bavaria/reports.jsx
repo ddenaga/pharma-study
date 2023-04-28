@@ -145,7 +145,7 @@ export default function Reports(props) {
 						</span>
 					)}
 				</div>
-				{isStudyFinished && (
+				{!isStudyFinished && (
 					<div className=" mx-20 grid grid-cols-12 gap-20">
 						<LineChart chartData={lineData} />
 						<BarChart chartData={barData} />
