@@ -96,7 +96,7 @@ export default function Sidebar() {
 		<aside className="flex w-full max-w-xs flex-col justify-between border-r border-slate-400">
 			<div className="flex flex-col gap-20 p-5">
 				<div id="logo" className="max-w-[50px]">
-					<Link href="/" className='hover:scale-105'>
+					<Link href="/" className='hover:scale-105' alt="logo">
 						<Logo />
 					</Link>
 				</div>
@@ -120,7 +120,7 @@ export default function Sidebar() {
 							{user?.role == 'doctor' && <p>Doctor Specialist</p>}
 						</div>
 					</div>
-					<Link href="/api/auth/logout" className="mt-1">
+					<Link href="/api/auth/logout" className="mt-1" alt="Logout">
 						<Logout />
 					</Link>
 				</div>

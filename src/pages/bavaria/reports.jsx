@@ -133,8 +133,8 @@ export default function Reports(props) {
 		<div className="flex" id="site-content">
 			<Sidebar />
 			<div className="w-full overflow-y-scroll bg-gray-50 px-20 py-12">
-				<div className="mb-12 flex items-center  justify-between">
-					<h1 className="attention-voice">Reports</h1>
+				<div className="mb-12 flex items-center  justify-between" onClick={console.log(pieData)}>
+					<h1 className="attention-voice" >Reports</h1>
 					{isStudyFinished ? (
 						<span className="text-md inline-block rounded-full bg-green-600 py-2 px-4 text-white shadow-lg">
 							Study is completed
