@@ -72,20 +72,20 @@ export default function Home() {
 						</h2>
 						<div className="mt-6 flex flex-row justify-center gap-4">
 							<div className="flex max-w-[150px] items-center rounded-lg border py-4 px-7">
-								<Image src={Moderna} className=""></Image>
+								<Image src={Moderna} className="" alt='maderna logo'></Image>
 							</div>
 							<div className="flex max-w-[150px] items-center rounded-lg border py-4 px-7">
-								<Image src={Pfizer} className=""></Image>
+								<Image src={Pfizer} className="" alt='pfizer logo'></Image>
 							</div>
 							<div className="flex max-w-[150px] items-center rounded-lg border py-4 px-7">
-								<Image src={Fda} className=""></Image>
+								<Image src={Fda} className="" alt='fda logo'></Image>
 							</div>
 							<div className="flex max-w-[150px] items-center rounded-lg border py-4 px-7">
-								<Image src={JAndJ} className=""></Image>
+								<Image src={JAndJ} className="" alt="J&J logo"></Image>
 							</div>
 
 							<div className="flex max-w-[150px] items-center rounded-lg border py-4 px-7">
-								<Image src={Abbvie} className=""></Image>
+								<Image src={Abbvie} className="" alt='Abbvie Logo'></Image>
 							</div>
 						</div>
 					</div>

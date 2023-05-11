@@ -58,6 +58,7 @@ export default function SendDrugs(props) {
 									<td className="px-3 py-4 text-sm">
 										<div>
 											<input
+												aria-label='input number of doses'
 												className="block max-w-[100px] rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 focus-visible:ring-0 sm:text-sm sm:leading-6"
 												name="numberOfDoses"
 												type="number"
