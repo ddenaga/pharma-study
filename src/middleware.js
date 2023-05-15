@@ -4,7 +4,7 @@ import { withMiddlewareAuthRequired, getSession } from '@auth0/nextjs-auth0/edge
 const Routes = {
 	doctor: {
 		default: '/jhopkins/doctor/appointments',
-		valid: ['/jhopkins/doctor/my-patients', '/jhopkins/doctor/appointments', '/jhopkins/doctor/new-appointment'],
+		valid: ['/jhopkins/doctor/my-patients', '/jhopkins/doctor/appointments', '/jhopkins/doctor/new-appointment', '/jhopkins/doctor/assistant'],
 		validDynamic: [`/patient/`],
 	},
 	admin: {
