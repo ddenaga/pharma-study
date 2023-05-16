@@ -5,6 +5,7 @@ import { CategoryScale } from 'chart.js';
 import BarChart from '@/components/chartjs/BarChart';
 import LineChart from '@/components/chartjs/LineChart';
 import PieChart from '@/components/chartjs/PieChart';
+import seedDb from '@/lib/seed';
 
 export async function getServerSideProps() {
 	function getEntityById(entities, id) {
@@ -12,9 +13,17 @@ export async function getServerSideProps() {
 		return entity !== undefined ? entity : null;
 	}
 
-	const trackers = (await fdaClient.entities.tracker.list()).items;
-	const patients = (await fdaClient.entities.patient.list()).items.filter((patient) => patient.isEligible);
-	const treatments = (await fdaClient.entities.treatment.list()).items;
+	let trackers, patients, treatments;
+	try {
+		trackers = (await fdaClient.entities.tracker.list()).items;
+		patients = (await fdaClient.entities.patient.list()).items.filter((patient) => patient.isEligible);
+		treatments = (await fdaClient.entities.treatment.list()).items;
+	}
+	catch (e) {
+		trackers = [];
+		patients = [];
+		treatments = [];
+	}
 
 	let pairings = await Promise.all(
 		trackers.map(async (ids) => {
@@ -129,6 +138,10 @@ export default function Reports(props) {
 		],
 	};
 
+	async function exportToCSV() {
+
+	}
+
 	return (
 		<div className="flex" id="site-content">
 			<Sidebar />
@@ -136,9 +149,13 @@ export default function Reports(props) {
 				<div className="mb-12 flex items-center  justify-between" onClick={console.log(pieData)}>
 					<h1 className="attention-voice" >Reports</h1>
 					{isStudyFinished ? (
-						<span className="text-md inline-block rounded-full bg-green-600 py-2 px-4 text-white shadow-lg">
-							Study is completed
-						</span>
+						<div>
+							<button className='btn btn-success' onClick={exportToCSV}>Export</button>
+							<button className='btn btn-success' onClick={seedDb}>Seed Database</button>
+							<span className="text-md inline-block rounded-full bg-green-600 py-2 px-4 text-white shadow-lg">
+								Study is completed
+							</span>
+						</div>
 					) : (
 						<span className="text-md inline-block animate-pulse rounded-full bg-red-600 py-2 px-4 text-white shadow-lg">
 							Study in progress

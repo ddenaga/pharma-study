@@ -1,4 +1,7 @@
-export default function SendDrugsTable({treatments, onChange}) {
+import { useState } from "react";
+
+export default function SendDrugsTable({ treatments, setTreatments }) {
+
 	return (
 		<table className="min-w-full divide-y divide-gray-300">
 			<thead className="bg-gray-100">
@@ -31,7 +34,12 @@ export default function SendDrugsTable({treatments, onChange}) {
 									type="number"
 									value={treatment.numberOfDoses}
 									min="1"
-									onChange={onChange}
+									onChange={(event) => {
+										const { name, value } = event.target;
+										const data = [...treatments];
+										data[index][name] = parseInt(value);
+										setTreatments(data);
+									}}
 								/>
 							</div>
 						</td>

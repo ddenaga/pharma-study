@@ -20,7 +20,7 @@ const Routes = {
 		validDynamic: [`/patient/`,],
 	},
 	fda: {
-		default: '/fda/live-results',
+		default: '/fda/assign-drugs',
 		valid: ['/fda/assign-drugs', '/fda/live-results'],
 	},
 	bavaria: {

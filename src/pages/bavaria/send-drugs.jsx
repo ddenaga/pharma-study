@@ -25,7 +25,7 @@ export default function SendDrugs(props) {
 	const [treatments, setTreatments] = useState(items);
 
 	return (
-		<div className="flex" id="site-content">
+		<div className="flex" id="site-content"  >
 			<Sidebar />
 			<div className="w-full overflow-y-scroll bg-gray-50 px-20 py-12">
 				<h1 className="attention-voice mb-12">Send Drugs</h1>
@@ -33,12 +33,7 @@ export default function SendDrugs(props) {
 				<div className="scrollbar lg:no-scrollbar -mx-4 mt-8 overflow-x-scroll shadow ring-1 ring-black ring-opacity-5 sm:-mx-6 md:mx-0 md:rounded-lg">
 					<SendDrugsTable
 						treatments={treatments}
-						onChange={(event) => {
-							const { name, value } = event.target;
-							const data = [...treatments];
-							data[index][name] = parseInt(value);
-							setTreatments(data);
-						}}
+						setTreatments={setTreatments}
 					/>
 				</div>
 
@@ -52,7 +47,7 @@ export default function SendDrugs(props) {
 						// });
 						toast.promise(
 							Promise.all(
-								treatments.map((treatment) => bavariaClient.entities.treatment.update(treatment)),
+								items.map((treatment) => bavariaClient.entities.treatment.update(treatment)),
 							),
 							{ success: 'Drugs sent', pending: 'Sending drugs', error: 'Failed to send drugs' },
 						);
