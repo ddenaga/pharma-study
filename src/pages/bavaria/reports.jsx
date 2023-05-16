@@ -233,7 +233,7 @@ export default function Reports(props) {
 				<div className="mb-12 flex content-start justify-between">
 					<h1 className="attention-voice">Reports</h1>
 					{isStudyFinished ? (
-						<div className="flex flex-col gap-8">
+						<div className="flex flex-col items-end gap-8">
 							{/* <button className="btn-success btn" onClick={seedDb}>
 								Seed Database
 							</button> */}

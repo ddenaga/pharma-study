@@ -104,7 +104,7 @@ export default function Sidebar() {
 	}
 	return (
 		<aside className="flex w-full max-w-none flex-col justify-between border-r border-slate-400 md:flex-row lg:max-w-[250px] lg:flex-col">
-			<div className="flex flex-row items-center  justify-between  p-2 lg:flex-col lg:items-start lg:gap-20 lg:p-5">
+			<div className="flex flex-row items-center justify-between p-2 md:gap-10 lg:flex-col lg:items-start lg:gap-20 lg:p-5">
 				<div id="logo" className="max-w-[50px]">
 					<Link href="/" className="hover:scale-105" alt="logo">
 						<Logo />
