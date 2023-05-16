@@ -7,6 +7,7 @@ export default function Logout() {
 			strokeWidth="1.5"
 			stroke="currentColor"
 			className="h-10 w-10 hover:scale-110"
+			alt="logout"
 		>
 			<path
 				strokeLinecap="round"

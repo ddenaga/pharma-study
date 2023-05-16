@@ -31,11 +31,11 @@ export default function PatientCardAdmin({ name, dob, familyHistory, img, id, el
 						className="rounded-full"
 					/>
 					{eligibility ? (
-						<span className="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800">
+						<span className="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800" id='eligible-icon'>
 							Eligible
 						</span>
 					) : (
-						<span className="inline-flex rounded-full bg-red-100 px-2 text-xs font-semibold leading-5 text-red-800">
+						<span className="inline-flex rounded-full bg-red-100 px-2 text-xs font-semibold leading-5 text-red-800" id='uneligible-icon'>
 							Not Eligible
 						</span>
 					)}

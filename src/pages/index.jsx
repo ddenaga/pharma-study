@@ -55,6 +55,7 @@ export default function Home() {
 							<div className="mt-8">
 								<Link
 									href="/api/auth/login"
+									name="authentication"
 									className="group inline-flex items-center justify-center rounded-full bg-slate-900 py-2 px-4 text-base font-semibold text-white hover:bg-slate-700 hover:text-slate-100 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 active:bg-slate-800 active:text-slate-300"
 								>
 									Get started
@@ -71,20 +72,20 @@ export default function Home() {
 						</h2>
 						<div className="mt-6 flex flex-row justify-center gap-4">
 							<div className="flex max-w-[150px] items-center rounded-lg border py-4 px-7">
-								<Image src={Moderna} className=""></Image>
+								<Image src={Moderna} className="" alt='maderna logo'></Image>
 							</div>
 							<div className="flex max-w-[150px] items-center rounded-lg border py-4 px-7">
-								<Image src={Pfizer} className=""></Image>
+								<Image src={Pfizer} className="" alt='pfizer logo'></Image>
 							</div>
 							<div className="flex max-w-[150px] items-center rounded-lg border py-4 px-7">
-								<Image src={Fda} className=""></Image>
+								<Image src={Fda} className="" alt='fda logo'></Image>
 							</div>
 							<div className="flex max-w-[150px] items-center rounded-lg border py-4 px-7">
-								<Image src={JAndJ} className=""></Image>
+								<Image src={JAndJ} className="" alt="J&J logo"></Image>
 							</div>
 
 							<div className="flex max-w-[150px] items-center rounded-lg border py-4 px-7">
-								<Image src={Abbvie} className=""></Image>
+								<Image src={Abbvie} className="" alt='Abbvie Logo'></Image>
 							</div>
 						</div>
 					</div>
@@ -177,6 +178,7 @@ function renderContent({ user, error, isLoading }) {
 				<li>
 					<Link
 						href="/api/auth/login"
+						name="authentication"
 						className="inline-flex hidden justify-center rounded-lg bg-gray-800 py-2 px-3 text-sm font-semibold text-white outline-2 outline-offset-2 transition-colors hover:bg-gray-900 active:bg-gray-800 active:text-white/80 lg:block"
 					>
 						Login
