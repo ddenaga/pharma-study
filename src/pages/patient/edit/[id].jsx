@@ -14,14 +14,14 @@ export async function getServerSideProps(context) {
 }
 
 const EditPatient = (props) => {
-    const { patient } = props;
+	const { patient } = props;
 
 	return (
-		<div className="flex" id="site-content">
+		<div className="" id="site-content">
 			<Sidebar />
 			<div className="w-full overflow-y-scroll bg-gray-50 px-4 py-12 pl-20">
 				<h2 className="attention-voice col-span-12 mb-12">Edit a Patient</h2>
-                <EditPatientForm patient={patient} />
+				<EditPatientForm patient={patient} />
 			</div>
 		</div>
 	);

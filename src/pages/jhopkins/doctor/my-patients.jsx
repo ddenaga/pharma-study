@@ -17,7 +17,7 @@ export async function getServerSideProps() {
 	} catch {
 		return {
 			props: {},
-		}
+		};
 	}
 }
 
@@ -48,9 +48,9 @@ export default function MyPatients(props) {
 		setSearchInput(e.target.value);
 	}
 	return (
-		<div className="flex" id="site-content" onClick={console.log(patients)}>
+		<div className="" id="site-content" onClick={console.log(patients)}>
 			<Sidebar />
-			<div className="w-full overflow-y-scroll bg-gray-50 px-20 py-12">
+			<div className="w-full overflow-y-scroll bg-gray-50 px-10 py-6 lg:px-20 lg:py-12">
 				<h1 className="attention-voice mb-12" onClick={() => createPatient(patient)}>
 					My Patients
 				</h1>

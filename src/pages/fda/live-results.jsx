@@ -15,8 +15,7 @@ export async function getServerSideProps() {
 		trackers = (await fdaClient.entities.tracker.list()).items;
 		patients = (await fdaClient.entities.patient.list()).items.filter((patient) => patient.isEligible);
 		treatments = (await fdaClient.entities.treatment.list()).items;
-	}
-	catch (e) {
+	} catch (e) {
 		trackers = [];
 		patients = [];
 		treatments = [];
@@ -84,9 +83,9 @@ export default function LiveResults(props) {
 		});
 	}, []);
 	return (
-		<div className="flex" id="site-content">
+		<div className="" id="site-content">
 			<Sidebar />
-			<div className="w-full overflow-y-scroll bg-gray-50 px-20 py-12">
+			<div className="w-full overflow-y-scroll bg-gray-50 px-10 py-6 lg:px-20 lg:py-12">
 				<div className="mb-12 flex items-center justify-between">
 					<h1 className="attention-voice">Live results</h1>
 					{pairings.length > 0 ? (

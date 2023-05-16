@@ -227,19 +227,31 @@ export default function Reports(props) {
 	}
 
 	return (
-		<div className="flex" id="site-content">
+		<div className="" id="site-content">
 			<Sidebar />
-			<div className="w-full overflow-y-scroll bg-gray-50 px-20 py-12">
-				<div className="mb-12 flex items-center  justify-between">
+			<div className="w-full overflow-y-scroll bg-gray-50 px-10 py-6 lg:px-20 lg:py-12">
+				<div className="mb-12 flex content-start justify-between">
 					<h1 className="attention-voice">Reports</h1>
 					{isStudyFinished ? (
-						<div>
+						<div className="flex flex-col gap-8">
 							{/* <button className="btn-success btn" onClick={seedDb}>
 								Seed Database
 							</button> */}
-							<span className="text-md inline-block rounded-full bg-green-600 py-2 px-4 text-white shadow-lg">
-								Study is completed
-							</span>
+							<div>
+								<div className="text-md inline-block rounded-full bg-green-600 py-2 px-4 text-white shadow-lg">
+									Study is completed
+								</div>
+							</div>
+							<div>
+								<CSVLink
+									className="inline-flex min-w-[160px] justify-center rounded-md border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+									headers={csvHeaders}
+									data={csvData}
+									filename={'pharmastudy-data.csv'}
+								>
+									Download as CSV
+								</CSVLink>
+							</div>
 						</div>
 					) : (
 						<span className="text-md inline-block animate-pulse rounded-full bg-red-600 py-2 px-4 text-white shadow-lg">
@@ -253,46 +265,40 @@ export default function Reports(props) {
 						<PieChart chartData={pieData} />
 						<BarChart chartData={barData} />
 
-						<table className="min-w-full divide-y divide-gray-300">
-							<thead className="bg-gray-100">
-								<tr>
-									{csvHeaders.map((header, index) => {
+						<div className="col-span-12 h-[500px] overflow-y-auto xl:col-span-7">
+							<table className="h-24 divide-y divide-gray-300 self-start overflow-scroll ">
+								<thead className="bg-gray-100">
+									<tr>
+										{csvHeaders.map((header, index) => {
+											return (
+												<th
+													key={index}
+													scope="col"
+													className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
+												>
+													{header.label}
+												</th>
+											);
+										})}
+									</tr>
+								</thead>
+								<tbody className="divide-y divide-gray-200 bg-white ">
+									{csvData.map((row, index) => {
 										return (
-											<th
-												key={index}
-												scope="col"
-												className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
-											>
-												{header.label}
-											</th>
+											<tr key={index}>
+												<td className="px-3 py-4 text-sm text-gray-500">{row.patientId}</td>
+												<td className="px-3 py-4 text-sm text-gray-500">{row.doseNumber}</td>
+												<td className="px-3 py-4 text-sm text-gray-500">{row.visitTime}</td>
+												<td className="px-3 py-4 text-sm text-gray-500">
+													{row.viralLoadReading}
+												</td>
+												<td className="px-3 py-4 text-sm text-gray-500">{row.type}</td>
+											</tr>
 										);
 									})}
-								</tr>
-							</thead>
-							<tbody className="divide-y divide-gray-200 bg-white">
-								{csvData.map((row, index) => {
-									return (
-										<tr key={index}>
-											<td className="px-3 py-4 text-sm text-gray-500">{row.patientId}</td>
-											<td className="px-3 py-4 text-sm text-gray-500">{row.doseNumber}</td>
-											<td className="px-3 py-4 text-sm text-gray-500">{row.visitTime}</td>
-											<td className="px-3 py-4 text-sm text-gray-500">{row.viralLoadReading}</td>
-											<td className="px-3 py-4 text-sm text-gray-500">{row.type}</td>
-										</tr>
-									);
-								})}
-							</tbody>
-						</table>
-
-						<CSVLink
-							className="btn"
-							headers={csvHeaders}
-							data={csvData}
-							filename={'pharmastudy-data.csv'}
-						>
-							Download as CSV
-						</CSVLink>
-
+								</tbody>
+							</table>
+						</div>
 					</div>
 				)}
 			</div>

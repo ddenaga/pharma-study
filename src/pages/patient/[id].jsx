@@ -18,9 +18,9 @@ export default function Patient(props) {
 	const patient = props.data;
 
 	return (
-		<div className="flex" id="site-content">
+		<div className="" id="site-content">
 			<Sidebar />
-			<div className="w-full content-start gap-10 overflow-y-scroll bg-gray-50 px-20 py-12">
+			<div className="w-full content-start gap-10 overflow-y-scroll bg-gray-50 px-10 py-6 lg:px-20 lg:py-12">
 				{/* View content goes here */}
 				{/* <button onClick={() => console.log(patient)}>Click me</button> */}
 				<div className="mx-auto flex max-w-3xl items-center space-x-5 px-4 sm:px-6 md:flex md:items-center  md:space-x-5 lg:max-w-7xl lg:px-8  ">

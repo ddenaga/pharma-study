@@ -12,7 +12,15 @@ body {
 }
 
 #site-content {
+	display: flex;
+	flex-direction: column;
 	height: 100vh;
+}
+
+@media (min-width: 1024px) {
+	#site-content {
+		flex-direction: row;
+	}
 }
 
 picture {

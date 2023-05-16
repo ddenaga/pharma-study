@@ -170,7 +170,7 @@ export default function Appointments(props) {
 	}
 
 	return (
-		<div className="flex" id="site-content">
+		<div className="" id="site-content">
 			{showModal ? (
 				<>
 					<motion.div
@@ -251,9 +251,7 @@ export default function Appointments(props) {
 			)}
 			<Sidebar />
 			<div className="w-full overflow-y-scroll bg-gray-50 px-20 py-12">
-				<h1 className="attention-voice mb-10">
-					Appointments
-				</h1>
+				<h1 className="attention-voice mb-10">Appointments</h1>
 				<ToastContainer />
 
 				<div className="mb-10 flex flex-row items-center justify-between">

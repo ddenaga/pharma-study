@@ -64,9 +64,9 @@ function LiveResults(props) {
 		});
 	}, []);
 	return (
-		<div className="flex" id="site-content">
+		<div className="" id="site-content">
 			<Sidebar />
-			<div className="w-full overflow-y-scroll bg-gray-50 px-20 py-12">
+			<div className="w-full overflow-y-scroll bg-gray-50 px-10 py-6 lg:px-20 lg:py-12">
 				<div className="mb-12 flex items-center justify-between">
 					<h1 className="attention-voice">Live Results</h1>
 					{studyStatus ? (
@@ -136,7 +136,7 @@ function LiveResults(props) {
 											<motion.span
 												animate={{ scale: [1, 2, 1] }}
 												transition={{ duration: 0.2 }}
-												className="badge-success badge"
+												className="badge badge-success"
 											>
 												Done
 											</motion.span>
@@ -144,7 +144,7 @@ function LiveResults(props) {
 											<motion.span
 												animate={{ scale: [1, 2, 1] }}
 												transition={{ duration: 0.2 }}
-												className="badge-warning badge"
+												className="badge badge-warning"
 											>
 												Ongoing
 											</motion.span>

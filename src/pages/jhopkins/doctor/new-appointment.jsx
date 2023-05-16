@@ -73,7 +73,7 @@ export default function NewAppointment(props) {
 	};
 
 	return (
-		<div className="flex" id="site-content">
+		<div className="" id="site-content">
 			<Sidebar />
 			<div className="w-full overflow-y-scroll bg-gray-50 px-20 py-12">
 				<h1 className="attention-voice mb-12">Schedule a new appointment</h1>
@@ -138,10 +138,11 @@ export default function NewAppointment(props) {
 																setSelectedTime(time);
 																setFieldValue('appointmentTime', time);
 															}}
-															className={`cursor-pointer rounded border p-2 text-center hover:bg-slate-200 ${selectedTime === time
+															className={`cursor-pointer rounded border p-2 text-center hover:bg-slate-200 ${
+																selectedTime === time
 																	? 'bg-blue-500 text-white hover:bg-blue-700'
 																	: ''
-																}`}
+															}`}
 														>
 															{time}
 														</div>
@@ -218,8 +219,9 @@ export default function NewAppointment(props) {
 													const patient = getPatientById(appt.patientId);
 
 													// Combine appointmentDate and appointmentTime
-													const scheduledDateTime = `${appt.appointmentDate.toISOString().split('T')[0]
-														}T${convertTime12to24(appt.appointmentTime)}`;
+													const scheduledDateTime = `${
+														appt.appointmentDate.toISOString().split('T')[0]
+													}T${convertTime12to24(appt.appointmentTime)}`;
 
 													const visit = {
 														dateTime: new Date(scheduledDateTime).toISOString(),
