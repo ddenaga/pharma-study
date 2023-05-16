@@ -10,9 +10,17 @@ export async function getServerSideProps() {
 		return entity !== undefined ? entity : null;
 	}
 
-	const trackers = (await fdaClient.entities.tracker.list()).items;
-	const patients = (await fdaClient.entities.patient.list()).items;
-	const treatments = (await fdaClient.entities.treatment.list()).items;
+	let trackers, patients, treatments;
+	try {
+		trackers = (await fdaClient.entities.tracker.list()).items;
+		patients = (await fdaClient.entities.patient.list()).items.filter((patient) => patient.isEligible);
+		treatments = (await fdaClient.entities.treatment.list()).items;
+	}
+	catch (e) {
+		trackers = [];
+		patients = [];
+		treatments = [];
+	}
 
 	let pairings = await Promise.all(
 		trackers.map(async (ids) => {
@@ -58,7 +66,7 @@ export default function LiveResults(props) {
 	function checkStatus() {
 		setStudyStatus(true);
 		pairings.forEach((pr) => {
-			if (pr.patient.visits?.length < pr.treatment.numberOfDoses) {
+			if (pr.patient.visits === null || pr.patient.visits?.length < pr.treatment.numberOfDoses) {
 				setStudyStatus(false);
 			}
 		});
@@ -210,7 +218,7 @@ export default function LiveResults(props) {
 													</td>
 													{/* Medication */}
 													<td className="px-3 py-4 text-sm text-gray-500">
-														{pr.treatment.isGeneric == true ? 'Generic' : 'Bavaria'}
+														{pr.treatment.isGeneric ? 'Generic' : 'Bavaria'}
 													</td>
 												</tr>
 											),
