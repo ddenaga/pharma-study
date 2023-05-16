@@ -6,6 +6,7 @@ import BarChart from '@/components/chartjs/BarChart';
 import LineChart from '@/components/chartjs/LineChart';
 import PieChart from '@/components/chartjs/PieChart';
 import seedDb from '@/lib/seed';
+import { CSVLink } from 'react-csv';
 
 export async function getServerSideProps() {
 	function getEntityById(entities, id) {
@@ -127,7 +128,7 @@ export default function Reports(props) {
 
 	const effectiveCount = pairings.filter((pr) => {
 		const { patient, treatment } = pr;
-		return !treatment.isGeneric && patient.visits?.some((visit) => parseInt(visit.hivViralLoad) < 10);
+		return !treatment.isGeneric && patient.visits?.some((visit) => parseInt(visit.hivViralLoad) <= 10);
 	}).length;
 
 	const pieData = {
@@ -141,6 +142,30 @@ export default function Reports(props) {
 			},
 		],
 	};
+
+	// Patient UUID | Dose Number | Time of Visit | Viral Load Reading | Type of Medication
+	const csvData = [];
+	const csvHeaders = [
+		{ label: 'Patient UUID', key: 'patientId' },
+		{ label: 'Dose Number', key: 'doseNumber' },
+		{ label: 'Time of Visit', key: 'visitTime' },
+		{ label: 'Viral Load Reading', key: 'viralLoadReading' },
+		{ label: 'Type of Medication', key: 'type' },
+	];
+	pairings.forEach((pr) => {
+		const { patient, treatment } = pr;
+		patient.visits
+			?.sort((a, b) => new Date(a.dateTime) - new Date(b.dateTime))
+			.forEach((visit, index) => {
+				csvData.push({
+					patientId: patient._id,
+					doseNumber: index + 1,
+					visitTime: visit.dateTime,
+					viralLoadReading: visit.hivViralLoad,
+					type: treatment.isGeneric ? 'Generic' : 'Bavaria',
+				});
+			});
+	});
 
 	async function exportToCSV() {}
 
@@ -227,28 +252,47 @@ export default function Reports(props) {
 						<LineChart chartData={lineData} />
 						<PieChart chartData={pieData} />
 						<BarChart chartData={barData} />
-						<button className="btn-success btn" onClick={exportToCSV}>
-							Export
-						</button>
-						{/* <button
-							className="btn"
-							onClick={() => {
-								let ineligiblePatients = patients.filter((patient) => !patient.isEligible);
-								console.log(ineligiblePatients);
-								let promises = ineligiblePatients.map((patient) => {
-									return jhClient.entities.patient.update({
-										_id: patient._id,
-										visits: [],
-									});
-								});
 
-								Promise.all(promises).then(() =>
-									console.log('Removed visits from ineligible patients'),
-								);
-							}}
+						<table className="min-w-full divide-y divide-gray-300">
+							<thead className="bg-gray-100">
+								<tr>
+									{csvHeaders.map((header, index) => {
+										return (
+											<th
+												key={index}
+												scope="col"
+												className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
+											>
+												{header.label}
+											</th>
+										);
+									})}
+								</tr>
+							</thead>
+							<tbody className="divide-y divide-gray-200 bg-white">
+								{csvData.map((row, index) => {
+									return (
+										<tr key={index}>
+											<td className="px-3 py-4 text-sm text-gray-500">{row.patientId}</td>
+											<td className="px-3 py-4 text-sm text-gray-500">{row.doseNumber}</td>
+											<td className="px-3 py-4 text-sm text-gray-500">{row.visitTime}</td>
+											<td className="px-3 py-4 text-sm text-gray-500">{row.viralLoadReading}</td>
+											<td className="px-3 py-4 text-sm text-gray-500">{row.type}</td>
+										</tr>
+									);
+								})}
+							</tbody>
+						</table>
+
+						<CSVLink
+							className="btn"
+							headers={csvHeaders}
+							data={csvData}
+							filename={'pharmastudy-data.csv'}
 						>
-							Show ineligible patients
-						</button> */}
+							Download as CSV
+						</CSVLink>
+
 					</div>
 				)}
 			</div>
