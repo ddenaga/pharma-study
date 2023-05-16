@@ -25,7 +25,11 @@ export default function PatientCard(props) {
 				{/* TODO change eligibility to icons */}
 				<div className="flex flex-col items-end justify-between">
 					<Image
-						src={patient.pictureUrl == null ? '/../public/favicon.ico' : patient.pictureUrl}
+						src={
+							patient.pictureUrl == '' || patient.pictureUrl == null
+								? '/../public/favicon.ico'
+								: patient.pictureUrl
+						}
 						width="50"
 						height="50"
 						alt="patient avatar"

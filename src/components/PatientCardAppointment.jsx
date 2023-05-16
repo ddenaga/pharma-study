@@ -11,7 +11,7 @@ export default function PatientCardAppointment({ patient, visit }) {
 						{/* <span className="text-sm text-gray-500">{patient.dob.split('T')[0]}</span> */}
 						{/* <span className="text-sm text-gray-500">{patient.familyHistory}</span> */}
 						<span className="text-lg text-gray-500">
-							{new Date(visit.dateTime).toLocaleString('en-US', {
+							{visit.dateTime && new Date(visit.dateTime).toLocaleString('en-US', {
 								hour: 'numeric',
 								minute: 'numeric',
 								hour12: true,
@@ -27,7 +27,7 @@ export default function PatientCardAppointment({ patient, visit }) {
 				{/* TODO change eligibility to icons */}
 				<div className="flex h-full flex-col justify-between ">
 					<Image
-						src={patient.pictureUrl == '' ? '/../public/favicon.ico' : patient.pictureUrl}
+						src={patient.pictureUrl == '' || patient.pictureUrl == null ? '/../public/favicon.ico' : patient.pictureUrl}
 						width="50"
 						height="50"
 						alt="patient avatar"

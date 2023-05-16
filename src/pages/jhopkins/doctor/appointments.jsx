@@ -75,7 +75,7 @@ export default function Appointments(props) {
 		visit.hivViralLoad = reading;
 		visit.note = note;
 
-		// TODO: Update the patient's visit in Vendia
+		// Update the patient's visit in Vendia
 		const updatePatient = (({ _id, visits }) => ({ _id, visits }))(patient);
 		// const res = await jhClient.entities.patient.update(updatePatient);
 		toast.promise(jhClient.entities.patient.update(updatePatient), {
@@ -90,39 +90,85 @@ export default function Appointments(props) {
 
 	if (isLoading) return <div>Loading...</div>;
 	if (error) return <div>{error.message}</div>;
-	async function handleClick() { //populate the visits array for each patient
-		console.log("hadnle click")
+	async function handleClick() {
+		//populate the visits array for each patient
+		console.log('Handle click');
 		const { items } = await jhClient.entities.patient.list();
-		const startDate = new Date("2023-01-01");
-		const endDate = new Date("2023-05-16");
-		for (let i = 0; i < items.length; i++) {
-			let currentDate = new Date(startDate);
-			const patientVisits = [];
-			let viralLoad = 1000;
-			const shouldReachZero = Math.random() < 0.8; // 80% chance of reaching zero
-			const viralLoadDecrementRate = shouldReachZero
-				? viralLoad / 4
-				: viralLoad / (Math.floor(Math.random() * 6) + 8);
-			for (let j = 1; j < 6; j++) {
-				const randomTime = currentDate.getTime() + Math.random() * (endDate.getTime() - currentDate.getTime());
-				const visitDate = new Date(randomTime);
-				const visit = {
-					dateTime: visitDate.toISOString(),
-					note: `Visit ${j} for Patient ${i}`,
-					hivViralLoad: viralLoad.toFixed(2),
-				};
-				viralLoad -= viralLoadDecrementRate;
-				patientVisits.push(visit);
-				currentDate = new Date(visitDate);
-				currentDate.setDate(currentDate.getDate() + 1);
-			}
-			const res = await jhClient.entities.patient.update({
-				_id: patients[i]._id,
-				visits: patientVisits,
-			})
-			console.log(res)
+		// const startDate = new Date("2023-01-01");
+		// const endDate = new Date("2023-05-16");
+		// for (let i = 0; i < items.length; i++) {
+		// 	let currentDate = new Date(startDate);
+		// 	const patientVisits = [];
+		// 	let viralLoad = 1000;
+		// 	const shouldReachZero = Math.random() < 0.8; // 80% chance of reaching zero
+		// 	const viralLoadDecrementRate = shouldReachZero
+		// 		? viralLoad / 4
+		// 		: viralLoad / (Math.floor(Math.random() * 6) + 8);
+		// 	for (let j = 1; j < 6; j++) {
+		// 		const randomTime = currentDate.getTime() + Math.random() * (endDate.getTime() - currentDate.getTime());
+		// 		const visitDate = new Date(randomTime);
+		// 		const visit = {
+		// 			dateTime: visitDate.toISOString(),
+		// 			note: `Visit ${j} for Patient ${i}`,
+		// 			hivViralLoad: viralLoad.toFixed(2),
+		// 		};
+		// 		viralLoad -= viralLoadDecrementRate;
+		// 		patientVisits.push(visit);
+		// 		currentDate = new Date(visitDate);
+		// 		currentDate.setDate(currentDate.getDate() + 1);
+		// 	}
+		// 	const res = await jhClient.entities.patient.update({
+		// 		_id: patients[i]._id,
+		// 		visits: patientVisits,
+		// 	})
+		// 	console.log(res)
+		// }
+
+		// Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random#getting_a_random_integer_between_two_values_inclusive
+		function getRandomIntInclusive(min, max) {
+			min = Math.ceil(min);
+			max = Math.floor(max);
+			return Math.floor(Math.random() * (max - min + 1) + min); // The maximum is inclusive and the minimum is inclusive
 		}
+
+		let promises = items.map((patient) => {
+			return jhClient.entities.patient.update({
+				_id: patient._id,
+				visits: [
+					{
+						dateTime: '2023-05-16T20:00:00.000Z',
+						note: 'Fifth reading.',
+						hivViralLoad: getRandomIntInclusive(0, 50).toString(),
+					},
+					{
+						dateTime: '2023-05-09T20:00:00.000Z',
+						note: 'Fourth reading.',
+						hivViralLoad: getRandomIntInclusive(100, 200).toString(),
+					},
+					{
+						dateTime: '2023-05-02T20:00:00.000Z',
+						note: 'Third reading.',
+						hivViralLoad: getRandomIntInclusive(300, 500).toString(),
+					},
+					{
+						dateTime: '2023-04-25T20:00:00.000Z',
+						note: 'Second reading.',
+						hivViralLoad: getRandomIntInclusive(600, 800).toString(),
+					},
+					{
+						dateTime: '2023-04-18T20:00:00.000Z',
+						note: 'Initial viral load reading.',
+						hivViralLoad: getRandomIntInclusive(900, 1100).toString(),
+					},
+				],
+			});
+		});
+
+		Promise.all(promises).then(() => {
+			console.log('Finished updating visits for each patient.');
+		});
 	}
+
 	return (
 		<div className="flex" id="site-content">
 			{showModal ? (
@@ -205,7 +251,9 @@ export default function Appointments(props) {
 			)}
 			<Sidebar />
 			<div className="w-full overflow-y-scroll bg-gray-50 px-20 py-12">
-				<h1 className="attention-voice mb-10" onClick={handleClick}>Appointments</h1>
+				<h1 className="attention-voice mb-10">
+					Appointments
+				</h1>
 				<ToastContainer />
 
 				<div className="mb-10 flex flex-row items-center justify-between">

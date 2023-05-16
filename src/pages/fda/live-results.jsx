@@ -218,7 +218,7 @@ export default function LiveResults(props) {
 													</td>
 													{/* Medication */}
 													<td className="px-3 py-4 text-sm text-gray-500">
-														{pr.treatment.isGeneric == true ? 'Generic' : 'Bavaria'}
+														{pr.treatment.isGeneric ? 'Generic' : 'Bavaria'}
 													</td>
 												</tr>
 											),
