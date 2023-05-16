@@ -28,4 +28,5 @@ export default async function seedDb() {
     //     const res = createPatient(patient)
     //     console.log(res)
     // });
+
 }

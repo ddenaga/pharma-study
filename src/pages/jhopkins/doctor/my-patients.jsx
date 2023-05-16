@@ -7,12 +7,18 @@ import { motion } from 'framer-motion';
 import PatientList from '@/components/PatientList';
 
 export async function getServerSideProps() {
-	const data = await jhClient.entities.patient.list();
-	return {
-		props: {
-			patients: data.items,
-		},
-	};
+	try {
+		const data = await jhClient.entities.patient.list();
+		return {
+			props: {
+				patients: data.items,
+			},
+		};
+	} catch {
+		return {
+			props: {},
+		}
+	}
 }
 
 export default function MyPatients(props) {
@@ -42,7 +48,7 @@ export default function MyPatients(props) {
 		setSearchInput(e.target.value);
 	}
 	return (
-		<div className="flex" id="site-content">
+		<div className="flex" id="site-content" onClick={console.log(patients)}>
 			<Sidebar />
 			<div className="w-full overflow-y-scroll bg-gray-50 px-20 py-12">
 				<h1 className="attention-voice mb-12" onClick={() => createPatient(patient)}>

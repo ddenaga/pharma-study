@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import seedDb from '@/lib/seed';
 export async function getServerSideProps() {
 	const data = await jhClient.entities.patient.list();
 
@@ -28,7 +28,9 @@ function getPatientVisitsToday(patients) {
 
 	let patientVisits = [];
 	for (let i = 0; i < patients.length; i++) {
-		for (let j = 0; j < patients[i].visits.length; j++) {
+		// if (patients[i].visits) {
+		// }
+		for (let j = 0; patients[i].visits && j < patients[i].visits.length; j++) {
 			patientVisits.push([i, j]);
 		}
 	}
@@ -81,8 +83,6 @@ export default function Appointments(props) {
 			pending: 'Recording patient visit',
 			error: 'Failed to record patient visit',
 		});
-		// console.log(updatePatient);
-		// console.log(res);
 
 		// Update the patientVisits
 		setPatientVisits(getPatientVisitsToday(patients));
@@ -90,7 +90,39 @@ export default function Appointments(props) {
 
 	if (isLoading) return <div>Loading...</div>;
 	if (error) return <div>{error.message}</div>;
-
+	async function handleClick() { //populate the visits array for each patient
+		console.log("hadnle click")
+		const { items } = await jhClient.entities.patient.list();
+		const startDate = new Date("2023-01-01");
+		const endDate = new Date("2023-05-16");
+		for (let i = 0; i < items.length; i++) {
+			let currentDate = new Date(startDate);
+			const patientVisits = [];
+			let viralLoad = 1000;
+			const shouldReachZero = Math.random() < 0.8; // 80% chance of reaching zero
+			const viralLoadDecrementRate = shouldReachZero
+				? viralLoad / 4
+				: viralLoad / (Math.floor(Math.random() * 6) + 8);
+			for (let j = 1; j < 6; j++) {
+				const randomTime = currentDate.getTime() + Math.random() * (endDate.getTime() - currentDate.getTime());
+				const visitDate = new Date(randomTime);
+				const visit = {
+					dateTime: visitDate.toISOString(),
+					note: `Visit ${j} for Patient ${i}`,
+					hivViralLoad: viralLoad.toFixed(2),
+				};
+				viralLoad -= viralLoadDecrementRate;
+				patientVisits.push(visit);
+				currentDate = new Date(visitDate);
+				currentDate.setDate(currentDate.getDate() + 1);
+			}
+			const res = await jhClient.entities.patient.update({
+				_id: patients[i]._id,
+				visits: patientVisits,
+			})
+			console.log(res)
+		}
+	}
 	return (
 		<div className="flex" id="site-content">
 			{showModal ? (
@@ -173,7 +205,7 @@ export default function Appointments(props) {
 			)}
 			<Sidebar />
 			<div className="w-full overflow-y-scroll bg-gray-50 px-20 py-12">
-				<h1 className="attention-voice mb-10">Appointments</h1>
+				<h1 className="attention-voice mb-10" onClick={handleClick}>Appointments</h1>
 				<ToastContainer />
 
 				<div className="mb-10 flex flex-row items-center justify-between">
