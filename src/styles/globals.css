@@ -61,7 +61,7 @@ p a {
 	}
 
 	.attention-voice {
-		@apply text-2xl font-extrabold xs:text-5xl;
+		@apply text-5xl font-extrabold xs:text-5xl;
 	}
 
 	.calm-voice {

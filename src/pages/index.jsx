@@ -40,7 +40,7 @@ export default function Home() {
 				<section className="bg-slate-50 pt-40 pb-20">
 					<div className="inner-column">
 						<div className="flex flex-col items-center justify-center">
-							<h1 className="title-voice max-w-prose text-center leading-tight tracking-tight">
+							<h1 className="attention-voice md:title-voice max-w-prose text-center leading-tight tracking-tight">
 								PharmaStudy, a{' '}
 								<span className="bg-gradient-to-r from-indigo-200 via-sky-400 to-indigo-200 bg-clip-text text-transparent">
 									better
@@ -70,22 +70,22 @@ export default function Home() {
 						<h2 className="text-center text-sm font-bold uppercase tracking-wider">
 							1,000 pharmaceutical and research companies trust PharmaStudy
 						</h2>
-						<div className="mt-6 flex flex-row justify-center gap-4">
+						<div className="mt-6 flex flex-row flex-wrap justify-center gap-4 md:flex-nowrap">
 							<div className="flex max-w-[150px] items-center rounded-lg border py-4 px-7">
-								<Image src={Moderna} className="" alt='maderna logo'></Image>
+								<Image src={Moderna} className="" alt="maderna logo"></Image>
 							</div>
 							<div className="flex max-w-[150px] items-center rounded-lg border py-4 px-7">
-								<Image src={Pfizer} className="" alt='pfizer logo'></Image>
+								<Image src={Pfizer} className="" alt="pfizer logo"></Image>
 							</div>
 							<div className="flex max-w-[150px] items-center rounded-lg border py-4 px-7">
-								<Image src={Fda} className="" alt='fda logo'></Image>
+								<Image src={Fda} className="" alt="fda logo"></Image>
 							</div>
 							<div className="flex max-w-[150px] items-center rounded-lg border py-4 px-7">
 								<Image src={JAndJ} className="" alt="J&J logo"></Image>
 							</div>
 
 							<div className="flex max-w-[150px] items-center rounded-lg border py-4 px-7">
-								<Image src={Abbvie} className="" alt='Abbvie Logo'></Image>
+								<Image src={Abbvie} className="" alt="Abbvie Logo"></Image>
 							</div>
 						</div>
 					</div>
@@ -102,7 +102,7 @@ export default function Home() {
 							</p>
 						</div>
 
-						<div className="mt-16 grid grid-cols-3 gap-16">
+						<div className="mt-16 grid grid-cols-1 gap-16 md:grid-cols-3">
 							<div>
 								<div className="relative flex h-14 w-14 items-center justify-center rounded-full border border-sky-400 border-opacity-20 before:absolute  before:top-1/2 before:left-1/2 before:z-10 before:h-20 before:w-20 before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-full before:bg-sky-500 before:opacity-10 before:blur-lg">
 									<Lock />
@@ -140,9 +140,7 @@ export default function Home() {
 					</div>
 				</section>
 			</main>
-			<footer>
-				<h2>footer</h2>
-			</footer>
+			<footer>{/* <h2>footer</h2> */}</footer>
 		</>
 	);
 }
